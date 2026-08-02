@@ -24,13 +24,32 @@ module.exports = {
    * @param {object}   ytData.nichoStats            - Estatísticas do nicho (avgViews, avgLikes, competitionLevel)
    */
   getPromptText: (titulo, gancho, nicho, formato, ytData = {}) => {
+    let t = titulo;
+    let g = gancho;
+    let n = nicho;
+    let f = formato;
+    let data = ytData;
+
+    if (typeof titulo === 'object' && titulo !== null) {
+      t = titulo.titulo || titulo.title || '';
+      g = titulo.gancho || titulo.descricao || titulo.description || '';
+      n = titulo.nicho || titulo.tag || 'Games';
+      f = titulo.formato || 'Vídeo Longo';
+      data = titulo.ytData || gancho || {};
+    }
+
     const {
       competitorTags = [],
       topVideos = [],
       trendingTitles = [],
       trendingKeywords = [],
       nichoStats = {}
-    } = ytData;
+    } = data || {};
+
+    const tituloVal = typeof t === 'string' ? t : (t?.titulo || 'Vídeo em Destaque');
+    const ganchoVal = typeof g === 'string' ? g : (g?.gancho || '');
+    const nichoVal = typeof n === 'string' ? n : (n?.nicho || 'Geral');
+    const formatoVal = typeof f === 'string' ? f : (f?.formato || 'Vídeo Longo');
 
     // ── Formata os top vídeos para o contexto da IA ─────────────────────────
     const topVideosBlock = topVideos.length > 0
@@ -68,10 +87,10 @@ Você tem acesso a dados em tempo real extraídos diretamente da API do YouTube 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🎥 BRIEFING DO VÍDEO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- Título Base da Ideia: "${titulo}"
-- Gancho / Premissa de Retenção: "${gancho || 'Não especificado'}"
-- Nicho / Tema Principal: "${nicho || 'Geral'}"
-- Formato do Vídeo: "${formato || 'Vídeo Longo'}"
+- Título Base da Ideia: "${tituloVal}"
+- Gancho / Premissa de Retenção: "${ganchoVal || 'Não especificado'}"
+- Nicho / Tema Principal: "${nichoVal || 'Geral'}"
+- Formato do Vídeo: "${formatoVal || 'Vídeo Longo'}"
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 DADOS REAIS DA API DO YOUTUBE — VÍDEOS MAIS RANQUEADOS NO NICHO (FONTE: API)

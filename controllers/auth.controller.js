@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { OAuth2Client } = require('google-auth-library');
 const { JWT_SECRET, BASE_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, ADMIN_ALLOWED_IP_HASH } = require('../config');
-const client = new OAuth2Client(GOOGLE_CLIENT_ID);
+const client = (GOOGLE_CLIENT_ID && typeof GOOGLE_CLIENT_ID === 'string') ? new OAuth2Client(GOOGLE_CLIENT_ID) : new OAuth2Client();
 const { Admin, Padeiro, Criador } = require('../data/db-adapter');
 const emailService = require('../data/emailService');
 const { PrismaClient } = require('@prisma/client');
