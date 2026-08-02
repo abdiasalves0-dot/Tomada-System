@@ -22,7 +22,7 @@ const Planejamento = window.Planejamento = {
 
   // Estados da Sub-aba Sugestões (paginação de ideias)
   paginaAtualSugestoes: 1,
-  itensPorPaginaSugestoes: 10,
+  itensPorPaginaSugestoes: 30,
 
   // Estados da Sub-aba Recomendação (YouTube API + Gemini AI)
   nichoRecomendacao: 'Games & Gameplay',
@@ -2717,7 +2717,7 @@ Responda APENAS com o texto da descrição (3 linhas), sem títulos, numeraçõe
 
   mudarPaginaSugestoes(novaPagina) {
     const allSugs = this.sugestoesList || [];
-    const perPage = this.itensPorPaginaSugestoes || 10;
+    const perPage = this.itensPorPaginaSugestoes || 30;
     const totalPages = Math.ceil(allSugs.length / perPage) || 1;
     if (novaPagina < 1 || novaPagina > totalPages) return;
     this.paginaAtualSugestoes = novaPagina;
@@ -2830,10 +2830,19 @@ Responda APENAS com o texto da descrição (3 linhas), sem títulos, numeraçõe
           ]
         };
         this.sugestoesCacheSeed = this.sugestaoSeed || 0;
-        if (typeof Components !== 'undefined') Components.toast('✨ 30 sugestões geradas pela IA com base na categoria e tags do seu canal!', 'success');
+        if (typeof Components !== 'undefined') Components.toast(`✨ ${data.sugestoes?.length || 0} sugestões geradas pela IA!`, 'success');
+      } else {
+        const msgErro = (data && data.error) ? data.error : 'Serviço de IA indisponível.';
+        console.error('⚠️ [Sugestões IA Erro]:', msgErro);
+        if (typeof Components !== 'undefined') {
+          Components.toast(`❌ Falha da IA: ${msgErro}`, 'error');
+        }
       }
     } catch (e) {
       console.error('Erro ao carregar sugestões do canal:', e);
+      if (typeof Components !== 'undefined') {
+        Components.toast(`❌ Erro ao conectar com a IA: ${e.message}`, 'error');
+      }
     } finally {
       this.loadingSugestoes = false;
       this.render();
@@ -3221,41 +3230,13 @@ Responda APENAS com o texto da descrição (3 linhas), sem títulos, numeraçõe
     let poolFiltrado = poolGameplay;
     if (this.filtroTemaAtual) {
       const termo = this.filtroTemaAtual.toLowerCase();
-      poolFiltrado = poolGameplay.filter(s => 
-        s.nichoTag.toLowerCase().includes(termo) || 
-        s.titulo.toLowerCase().includes(termo) ||
-        (this.filtroTemaDescricao && s.gancho.toLowerCase().includes(termo))
+      const filtrados = poolGameplay.filter(s => 
+        (s.nichoTag && s.nichoTag.toLowerCase().includes(termo)) || 
+        (s.titulo && s.titulo.toLowerCase().includes(termo)) ||
+        (this.filtroTemaDescricao && s.gancho && s.gancho.toLowerCase().includes(termo))
       );
-
-      // Se o filtro for personalizado e retornar poucos itens, gerar ideias dinâmicas no tema!
-      if (poolFiltrado.length < 30) {
-        const temaNome = this.filtroTemaAtual;
-        const temaDesc = this.filtroTemaDescricao || 'Conteúdo de alta performance para o canal';
-        
-        const formatos = ['Shorts (45s)', 'Vídeo Longo (15 min)', 'Tutorial Completo', 'Desafio 100 Dias', 'Gameplay Épico', 'Reação / Collab', 'Top 10 / Ranking', 'Storytelling'];
-        const ganchos = [
-          'mostrar o resultado final explosivo nos primeiros 2 segundos',
-          'revelar um erro fatal que 99% das pessoas cometem',
-          'fazer uma pergunta impossível que prende a atenção',
-          'comparar o antes e depois de forma dramática',
-          'usar um countdown de tensão máxima'
-        ];
-
-        for (let i = poolFiltrado.length + 1; i <= 30; i++) {
-          poolFiltrado.push({
-            id: `sug_custom_${Date.now()}_${i}`,
-            titulo: `${temaNome.toUpperCase()} - DESAFIO EXTREMO #${i}`,
-            gancho: `"${temaDesc.substring(0, 100)}... ${ganchos[(i - 1) % ganchos.length]}!"`,
-            roteiro: `1. Introdução do desafio de ${temaNome}\n2. O plano estratégico e obstáculos iniciais\n3. A reviravolta no momento crítico\n4. Resultado final impressionante e metas alcançadas.`,
-            formato: formatos[(i - 1) % formatos.length],
-            viewsEst: `${400 + i * 50} - ${900 + i * 80} views`,
-            matchPercent: 99 - (i % 10),
-            motivoIA: `Gerado exclusivamente pela IA com foco em viralização para o seu Tema Personalizado: "${temaNome}". Potencial de engajamento calibrado.`,
-            nichoTag: temaNome,
-            thumb: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80',
-            isCategoriaDestaque: i > 25
-          });
-        }
+      if (filtrados.length > 0) {
+        poolFiltrado = filtrados;
       }
     }
 
@@ -3529,7 +3510,7 @@ Responda APENAS com o texto da descrição (3 linhas), sem títulos, numeraçõe
 
           ${(() => {
             const allSugs = this.sugestoesList || [];
-            const perPage = this.itensPorPaginaSugestoes || 10;
+            const perPage = this.itensPorPaginaSugestoes || 30;
             const totalPages = Math.ceil(allSugs.length / perPage) || 1;
             const curPage = Math.min(this.paginaAtualSugestoes || 1, totalPages);
             const startIdx = (curPage - 1) * perPage;

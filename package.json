@@ -7,8 +7,8 @@
     "start": "node server.js",
     "import": "node data/import.js",
     "dev": "node server.js",
-    "electron:start": "electron electron-main.js",
-    "build:installer": "electron-builder --win",
+    "electron:start": "npx electron electron-main.js",
+    "build:installer": "npx electron-builder --win",
     "postinstall": "prisma generate",
     "cap:sync": "npx cap sync",
     "cap:open": "npx cap open android"
@@ -63,6 +63,13 @@
       "electron-main.js",
       "preload.js",
       "public/**/*",
+      "server.js",
+      "controllers/**/*",
+      "routes/**/*",
+      "middleware/**/*",
+      "data/**/*",
+      "prisma/**/*",
+      ".env",
       "package.json"
     ],
     "directories": {

@@ -489,7 +489,8 @@ exports.gerarTextoIA = async (req, res) => {
     ].filter(k => k && k.length > 10).map(k => k.replace(/^[:'"\s]+|[:'"\s]+$/g, '').trim());
 
     if (keysToTry.length > 0) {
-      const modelos = ['gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-2.0-flash', 'gemini-1.5-flash-latest', 'gemini-1.5-flash'];
+      const modelos = ['gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-flash-latest', 'gemini-flash-lite-latest', 'gemini-2.0-flash', 'gemini-2.0-flash-lite'];
+      let ultimoErro = null;
 
       // Monta histórico + mensagem atual
       let contents = [];
@@ -521,8 +522,7 @@ exports.gerarTextoIA = async (req, res) => {
               contents: contents,
               generationConfig: {
                 temperature: 0.7,
-                maxOutputTokens: 1200,
-                thinkingConfig: { thinkingBudget: 0 }
+                maxOutputTokens: 1200
               }
             };
 
@@ -546,21 +546,84 @@ exports.gerarTextoIA = async (req, res) => {
               }
             } else {
               const errTxt = await aiRes.text();
-              console.warn(`[gerarTextoIA] ❌ ${modelo} HTTP ${aiRes.status}: ${errTxt.substring(0, 150)}`);
+              let msgFormatada = errTxt.substring(0, 150);
+              try {
+                const errJson = JSON.parse(errTxt);
+                if (errJson.error && errJson.error.message) {
+                  msgFormatada = errJson.error.message;
+                }
+              } catch (_) {}
+              ultimoErro = `HTTP ${aiRes.status} (${modelo}): ${msgFormatada}`;
+              console.warn(`[gerarTextoIA] ❌ ${ultimoErro}`);
             }
           } catch (e) {
+            ultimoErro = `Erro em ${modelo}: ${e.message}`;
             console.warn(`[gerarTextoIA] Falha no modelo ${modelo}:`, e.message);
           }
         }
       }
+
+      return res.status(500).json({ success: false, error: `Erro na IA Gemini: ${ultimoErro || 'Não foi possível se conectar aos servidores do Gemini.'}` });
     }
 
-    return res.json({ success: false, error: 'Não foi possível gerar com a IA no momento.' });
+    return res.status(400).json({ success: false, error: 'Chave da API do Gemini não configurada no servidor (.env).' });
   } catch (err) {
     console.error('Erro em gerarTextoIA:', err);
     return res.status(500).json({ error: err.message });
   }
 };
+
+// Helper para buscar dados reais do canal logado do usuário
+async function obterDadosCanalConectado(adminId, req) {
+  let canalNome = req.query?.channelName || '';
+  let descricaoCanal = '';
+  let titulosVideos = [];
+
+  try {
+    const titleSalvo = await getConfigVal(adminId, 'youtube_channel_title');
+    if (titleSalvo) canalNome = titleSalvo;
+
+    const accessToken = await getConfigVal(adminId, 'youtube_access_token');
+    const refreshToken = await getConfigVal(adminId, 'youtube_refresh_token');
+
+    if (accessToken) {
+      const oauth2Client = getOAuthClient(req);
+      oauth2Client.setCredentials({ access_token: accessToken, refresh_token: refreshToken });
+
+      const youtube = google.youtube({ version: 'v3', auth: oauth2Client });
+      const channelRes = await youtube.channels.list({
+        part: 'snippet,contentDetails',
+        mine: true
+      });
+
+      if (channelRes.data.items?.length > 0) {
+        const item = channelRes.data.items[0];
+        canalNome = item.snippet?.title || canalNome;
+        descricaoCanal = item.snippet?.description || '';
+
+        const uploadsPlaylistId = item.contentDetails?.relatedPlaylists?.uploads;
+        if (uploadsPlaylistId) {
+          const playlistRes = await youtube.playlistItems.list({
+            part: 'snippet',
+            playlistId: uploadsPlaylistId,
+            maxResults: 10
+          });
+          if (playlistRes.data.items) {
+            titulosVideos = playlistRes.data.items.map(v => v.snippet?.title).filter(Boolean);
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('[obterDadosCanalConectado] Aviso ao buscar dados do canal:', err.message);
+  }
+
+  if (!canalNome || canalNome === 'Tomada') {
+    canalNome = 'Canal Conectado';
+  }
+
+  return { canalNome, descricaoCanal, titulosVideos };
+}
 
 // ──────────────────────────────────────────────────────────────────────────
 // GET /api/youtube/canal-sugestoes — Sugestões do canal
@@ -568,67 +631,141 @@ exports.gerarTextoIA = async (req, res) => {
 exports.obterSugestoesCanal = async (req, res) => {
   try {
     const customTheme = req.query.customTheme;
+    const customDesc = req.query.customDesc;
+    const adminId = req.user?.id || 'default_admin';
 
-    const geminiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GEMINI_KEY || process.env.GEMINI_KEY || process.env.GOOGLE_API_KEY;
+    // Obter dados dinâmicos do canal LOGADO no momento
+    const { canalNome, descricaoCanal, titulosVideos } = await obterDadosCanalConectado(adminId, req);
+
+    let geminiKey = process.env.GEMINI_API_KEY ||
+                    process.env.GOOGLE_GEMINI_KEY ||
+                    process.env.GEMINI_KEY ||
+                    process.env.GOOGLE_API_KEY;
+
     if (geminiKey) {
-      const modelos = ['gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-2.0-flash'];
+      geminiKey = geminiKey.replace(/^[:'"\s]+|[:'"\s]+$/g, '').trim();
+    }
+
+    const keysToTry = [
+      geminiKey,
+      process.env.GEMINI_API_KEY_FALLBACK
+    ].filter(k => k && k.length > 10).map(k => k.replace(/^[:'"\s]+|[:'"\s]+$/g, '').trim());
+
+    if (keysToTry.length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Chave da API do Gemini (GEMINI_API_KEY) não configurada no arquivo .env.'
+      });
+    }
+
+    const modelos = ['gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-flash-latest', 'gemini-flash-lite-latest', 'gemini-2.0-flash', 'gemini-2.0-flash-lite'];
+    let ultimoErro = null;
+
+    const contextoCanal = `
+NOME DO CANAL DO CRIADOR: "${canalNome}"
+${descricaoCanal ? `DESCRIÇÃO DO CANAL: "${descricaoCanal.substring(0, 300)}"` : ''}
+${titulosVideos.length > 0 ? `ÚLTIMOS VÍDEOS PUBLICADOS PELO CANAL:\n${titulosVideos.map(t => `- ${t}`).join('\n')}` : ''}
+`;
+
+    for (const currentKey of keysToTry) {
       for (const modelo of modelos) {
         try {
-          const prompt = `Gere 6 ideias virais de vídeos do YouTube ${customTheme ? `focados no tema: "${customTheme}"` : 'focadas no nicho gaming e gameplay'}.
-Retorne estritamente um array JSON válido no formato:
-[
-  {
-    "id": "sug_1",
-    "titulo": "TÍTULO EM CAIXA ALTA DE ALTO CTR",
-    "gancho": "Gancho inicial de 15s que prende a atenção",
-    "roteiro": "1. Apresentação\\n2. Desafio\\n3. Conclusão",
-    "formato": "Vídeo Longo (10-15 min)",
-    "viewsEst": "50k - 100k views",
-    "matchPercent": 95,
-    "motivoIA": "Relevância de público",
-    "nichoTag": "Gaming",
-    "thumb": "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600"
-  }
-]`;
-          const aiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${geminiKey.trim()}`, {
+          const prompt = `Você é o diretor de conteúdo sênior no YouTube para o canal logado do criador "${canalNome}".
+
+DADOS DO CANAL LOGADO:
+${contextoCanal}
+
+TAREFA:
+Gere uma análise estratégica com DIVERSOS TEMAS DE ALTO DESEMPENHO BASEADOS NO NICHO REAL DO CANAL "${canalNome}" e EXATAMENTE 30 IDEIAS DE VÍDEOS ALTAMENTE CRIATIVAS e VIRALIZÁVEIS ${customTheme ? `focadas no tema solicitado pelo criador: "${customTheme}" ${customDesc ? `(Instruções: ${customDesc})` : ''}` : `analisando a audiência e o formato de vídeos do canal "${canalNome}"`}.
+
+REGRAS RÍGIDAS E OBRIGATÓRIAS:
+1. GERE DE 4 A 6 TEMAS DE DESEMPENHO DISTINTOS E VARIADOS em "temas" com base no nicho do canal "${canalNome}". NÃO CRIE TEMAS GENÉRICOS OU REPETIDOS.
+2. Para "sugestoes", gere EXATAMENTE 30 ideias únicas de vídeos divididas entre esses temas.
+3. NUNCA REPITA O MESMO TÍTULO OU ESTRUTURA COM NÚMEROS DIFERENTES (PROIBIDO fazer "DESAFIO EXTREMO #1", "DESAFIO EXTREMO #2"). Cada uma das 30 ideias DEVE ter um título original de altíssimo CTR em caixa alta.
+4. Varie os formatos: Shorts, Vídeo Longo (15 min), Tutorial Completo, Desafio 100 Dias, Gameplay Épico, Reação / Collab, Storytelling, Top 10 / Ranking.
+
+Retorne ESTRITAMENTE um JSON no seguinte formato (sem blocos de código markdown):
+{
+  "temas": [
+    {
+      "titulo": "${customTheme || 'Tema Principal do Canal'}",
+      "taxaSucesso": 98,
+      "viewsMedia": "100k-500k",
+      "engajamento": "Altíssimo",
+      "cor": "#E55A2B",
+      "icone": "sparkles"
+    }
+  ],
+  "sugestoes": [
+    {
+      "id": "sug_1",
+      "titulo": "TÍTULO ÚNICO E IMPACTANTE EM CAIXA ALTA",
+      "gancho": "Descrição detalhada do gancho inicial de 15 segundos",
+      "roteiro": "1. Introdução\\n2. Desenvolvimento\\n3. Clímax\\n4. Conclusão",
+      "formato": "Vídeo Longo (15 min)",
+      "viewsEst": "50k - 150k views",
+      "matchPercent": 98,
+      "motivoIA": "Explicação do potencial viral deste vídeo para a audiência do canal ${canalNome}",
+      "nichoTag": "${customTheme || 'Tema do Canal'}",
+      "thumb": "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600"
+    }
+  ]
+}`;
+
+          const aiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${currentKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               contents: [{ parts: [{ text: prompt }] }],
-              generationConfig: { responseMimeType: 'application/json', temperature: 0.7 }
+              generationConfig: { responseMimeType: 'application/json', temperature: 0.85, maxOutputTokens: 16000 }
             })
           });
+
           if (aiRes.ok) {
             const aiData = await aiRes.json();
             const text = aiData?.candidates?.[0]?.content?.parts?.[0]?.text;
             if (text) {
-              const parsed = JSON.parse(text);
-              if (Array.isArray(parsed)) return res.json(parsed);
+              const cleanedText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+              const parsed = JSON.parse(cleanedText);
+              const sugestoes = Array.isArray(parsed) ? parsed : (parsed.sugestoes || []);
+              const temas = Array.isArray(parsed) ? [] : (parsed.temas || []);
+
+              if (sugestoes.length > 0) {
+                console.log(`[obterSugestoesCanal] ✅ Sucesso! Geradas ${sugestoes.length} sugestões via Gemini (${modelo})`);
+                return res.json({
+                  success: true,
+                  temas,
+                  sugestoes
+                });
+              }
             }
+          } else {
+            const errTxt = await aiRes.text();
+            let msgFormatada = errTxt.substring(0, 180);
+            try {
+              const errJson = JSON.parse(errTxt);
+              if (errJson.error && errJson.error.message) {
+                msgFormatada = errJson.error.message;
+              }
+            } catch (_) {}
+            ultimoErro = `HTTP ${aiRes.status} (${modelo}): ${msgFormatada}`;
+            console.warn(`[obterSugestoesCanal] ❌ ${ultimoErro}`);
           }
         } catch (e) {
-          console.warn(`[obterSugestoesCanal] Erro modelo ${modelo}:`, e.message);
+          ultimoErro = `Erro em ${modelo}: ${e.message}`;
+          console.warn(`[obterSugestoesCanal] ❌ ${ultimoErro}`);
         }
       }
     }
 
-    return res.json([
-      {
-        id: 'sug_1',
-        titulo: customTheme ? `COMO DOMINAR EM ${customTheme.toUpperCase()}` : 'SOBREVIVI 100 DIAS EM MINECRAFT HARDCORE',
-        gancho: 'Mostrar o resultado final nos primeiros 5 segundos para prender a atenção.',
-        roteiro: '1. Introdução ao desafio\n2. Escala de dificuldade\n3. Batalha final',
-        formato: 'Vídeo Longo (12-15 min)',
-        viewsEst: '45k - 90k views',
-        matchPercent: 98,
-        motivoIA: 'Alta retenção no nicho gaming',
-        nichoTag: customTheme || 'Minecraft',
-        thumb: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80'
-      }
-    ]);
+    // RETORNA ERRO REAL PARA O FRONTEND EXIBIR AO CRIADOR
+    return res.status(500).json({
+      success: false,
+      error: `Falha ao gerar sugestões com a IA Gemini: ${ultimoErro || 'Erro de conexão ou cota excedida.'}`
+    });
   } catch (err) {
     console.error('Erro em obterSugestoesCanal:', err);
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ success: false, error: err.message });
   }
 };
 
@@ -688,7 +825,7 @@ exports.gerarSEOVideo = async (req, res) => {
         tag: tag || 'Gaming'
       });
 
-      const modelos = ['gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-2.0-flash'];
+      const modelos = ['gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-flash-latest', 'gemini-flash-lite-latest', 'gemini-2.0-flash', 'gemini-2.0-flash-lite'];
       for (const currentKey of keysToTry) {
         if (resultText) break;
         for (const modelo of modelos) {
@@ -699,7 +836,7 @@ exports.gerarSEOVideo = async (req, res) => {
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 contents: [{ parts: [{ text: promptSEO }] }],
-                generationConfig: { temperature: 0.75, maxOutputTokens: 4096, thinkingConfig: { thinkingBudget: 0 } }
+                generationConfig: { temperature: 0.75, maxOutputTokens: 4096 }
               })
             });
             if (aiRes.ok) {
