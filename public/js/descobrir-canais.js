@@ -916,7 +916,7 @@ const DescubrirCanais = {
 
     try {
       const data = await API.get(`/api/youtube/search?q=${encodeURIComponent(query)}&maxResults=1000&region=${region}`, { timeout: 120000 });
-      const rawChannels = data.channels || [];
+      const rawChannels = data.channels || (Array.isArray(data) ? data : []);
 
       // Mapear contatos e categorias dinamicamente
       this.results = rawChannels.map(ch => {
