@@ -96,3 +96,123 @@
   }
 }
 
+/* ──────────────────────────────────────────────────────────────────────────
+   ✨ ULTRAPREMIUM TAB TRANSITIONS (Descobrir Canais, Buscar Parcerias & Prospecção)
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* Keyframe de Entrada Ultra Fluida com Curva Apple / HIG (Spring) & Blur Óptico */
+@keyframes premiumTabEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.978);
+    filter: blur(8px);
+  }
+  65% {
+    opacity: 0.9;
+    transform: translateY(-2px) scale(1.002);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+}
+
+/* Keyframe de Saída Suave com Deslize */
+@keyframes premiumTabExit {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.985);
+    filter: blur(6px);
+  }
+}
+
+/* Keyframe de Cascata de Cards (Entrada Ritada de Elementos) */
+@keyframes premiumCardCascade {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.965);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+}
+
+/* 🚀 Animações de Entrada e Saída nas Abas: Descobrir Canais, Buscar Parcerias e Prospecção */
+body.dc-page-active #page-container,
+body.clientes-page-active #page-container,
+.dc-wrapper,
+.parcerias-wrapper,
+.prospeccao-wrapper,
+.clientes-container,
+[data-route="descobrir-canais"] #page-container,
+[data-route="clientes"] #page-container {
+  animation: premiumTabEnter 0.44s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  will-change: transform, opacity, filter;
+}
+
+.page-exit-active {
+  animation: premiumTabExit 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  will-change: transform, opacity, filter;
+}
+
+/* 🎨 Animação escalonada em cascata para os Cards de Canais, Parcerias e Prospecção */
+.dc-left-panel > *,
+.dc-center-panel > *,
+.dc-right-panel > *,
+.dc-card,
+.dc-hero-banner,
+.dc-profile-card,
+.dc-section-card,
+.client-card,
+.parceria-card,
+.prospeccao-card,
+.m-cli-card {
+  animation: premiumCardCascade 0.46s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity, filter;
+}
+
+/* Delays escalonados para ritmo de carregamento fluido estilo iOS/macOS */
+.dc-cards-container > .dc-card:nth-child(1), .dc-card:nth-child(1) { animation-delay: 0.03s; }
+.dc-cards-container > .dc-card:nth-child(2), .dc-card:nth-child(2) { animation-delay: 0.07s; }
+.dc-cards-container > .dc-card:nth-child(3), .dc-card:nth-child(3) { animation-delay: 0.11s; }
+.dc-cards-container > .dc-card:nth-child(4), .dc-card:nth-child(4) { animation-delay: 0.15s; }
+.dc-cards-container > .dc-card:nth-child(5), .dc-card:nth-child(5) { animation-delay: 0.19s; }
+.dc-cards-container > .dc-card:nth-child(6), .dc-card:nth-child(6) { animation-delay: 0.23s; }
+
+/* Micro-interações de Elevamento & Glow de Alta Fidelidade no Hover */
+.dc-card,
+.client-card,
+.parceria-card,
+.prospeccao-card {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.dc-card:hover,
+.client-card:hover,
+.parceria-card:hover,
+.prospeccao-card:hover {
+  transform: translateY(-5px) scale(1.008) !important;
+  box-shadow: 0 16px 36px -8px rgba(229, 90, 43, 0.16), 0 4px 14px -2px rgba(15, 23, 42, 0.06) !important;
+}
+
+.dc-search-button,
+.dc-contact-btn,
+.dc-tag-pill {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease !important;
+}
+
+.dc-search-button:active,
+.dc-contact-btn:active {
+  transform: scale(0.95) !important;
+}
+
