@@ -1,5 +1,10 @@
 {
   "devDependencies": {
-    "@capacitor/cli": "^8.4.1"
+    "@capacitor/cli": "^8.4.1",
+    "electron-builder": "^26.15.3"
+  },
+  "dependencies": {
+    "pdfkit": "^0.19.1",
+    "vercel": "^58.4.4"
   }
 }
