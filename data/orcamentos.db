@@ -1,0 +1,291 @@
+[
+  {
+    "codigo": "ORC-2026-001",
+    "clienteNome": "Panificadora Alvorada",
+    "clienteId": "b70b6f40-9505-4772-a8ae-9b2cf592785d",
+    "descricao": "Painel de TV ripado e rack para sala",
+    "data": "2026-06-21",
+    "validade": "2026-07-21",
+    "valor_total": 1520,
+    "status": "Aprovado",
+    "observacoes": "Orçamento gerado pelo seed automático do sistema.",
+    "prazoEntrega": "20 dias úteis",
+    "categoria": "Cozinha",
+    "itens": [
+      {
+        "produtoId": "prod-madeira",
+        "produtoNome": "undefined",
+        "quantidade": 2,
+        "precoUnitario": 0,
+        "subtotal": 0
+      },
+      {
+        "produtoId": "prod-ferragem",
+        "produtoNome": "undefined",
+        "quantidade": 1,
+        "precoUnitario": 0,
+        "subtotal": 0
+      }
+    ],
+    "maoDeObra": 1520,
+    "id": "e9zzwxmg8mqn65f2i",
+    "_id": "e9zzwxmg8mqn65f2i",
+    "descontoPct": 0,
+    "incrementoPct": 0,
+    "marcenariaNome": "Bancada Móveis Planejados",
+    "marcenariaDocumento": "12.345.678/0001-90",
+    "marcenariaTelefone": "(11) 99876-5432",
+    "marcenariaEmail": "contato@bancadaplanejados.com.br",
+    "condicoesPagamento": "50% entrada, 50% na entrega"
+  },
+  {
+    "codigo": "ORC-2026-002",
+    "clienteNome": "Panificadora Alvorada",
+    "clienteId": "b70b6f40-9505-4772-a8ae-9b2cf592785d",
+    "descricao": "Balcão de atendimento comercial",
+    "data": "2026-06-21",
+    "validade": "2026-07-21",
+    "valor_total": 2863.9,
+    "status": "Aprovado",
+    "observacoes": "Orçamento gerado pelo seed automático do sistema.",
+    "prazoEntrega": "20 dias úteis",
+    "categoria": "Cozinha",
+    "itens": [
+      {
+        "produtoId": "00356032-8ee7-4f3b-9d27-8d9cc5c5b805",
+        "produtoNome": "Cedro Nacional – Tábua 25x150x3000mm",
+        "quantidade": 1,
+        "precoUnitario": 89,
+        "subtotal": 89
+      },
+      {
+        "produtoId": "eac210da-cc03-4ec8-89b0-c937aa31f2c4",
+        "produtoNome": "Cumaru – Prancha 25x150x3000mm",
+        "quantidade": 1,
+        "precoUnitario": 174.9,
+        "subtotal": 174.9
+      }
+    ],
+    "maoDeObra": 2600,
+    "id": "mea1arolwmqn65f2i",
+    "_id": "mea1arolwmqn65f2i",
+    "descontoPct": 0,
+    "incrementoPct": 0,
+    "marcenariaNome": "Bancada Móveis Planejados",
+    "marcenariaDocumento": "12.345.678/0001-90",
+    "marcenariaTelefone": "(11) 99876-5432",
+    "marcenariaEmail": "contato@bancadaplanejados.com.br",
+    "condicoesPagamento": "50% entrada, 50% na entrega"
+  },
+  {
+    "codigo": "ORC-2026-003",
+    "clienteNome": "Café Colonial Delícia",
+    "clienteId": "c028cd51-298d-48aa-aeef-f63de69ecd08",
+    "descricao": "Mesa de jantar rústica com 6 cadeiras",
+    "data": "2026-06-21",
+    "validade": "2026-07-21",
+    "valor_total": 4200,
+    "status": "aprovado",
+    "observacoes": "Orçamento gerado pelo seed automático do sistema.",
+    "prazoEntrega": "20 dias úteis",
+    "categoria": "Marcenaria",
+    "itens": [
+      {
+        "produtoId": "prod-madeira",
+        "quantidade": 2,
+        "subtotal": 1680,
+        "preco_unitario": 840,
+        "descricao": "Materia prima MDF"
+      },
+      {
+        "produtoId": "prod-ferragem",
+        "quantidade": 1,
+        "subtotal": 840,
+        "preco_unitario": 840,
+        "descricao": "Ferragens e Acessórios"
+      }
+    ],
+    "maoDeObra": 1680,
+    "id": "59nf7wknqmqn65f2j",
+    "_id": "59nf7wknqmqn65f2j"
+  },
+  {
+    "codigo": "ORC-2026-004",
+    "clienteNome": "Café Colonial Delícia",
+    "clienteId": "c028cd51-298d-48aa-aeef-f63de69ecd08",
+    "descricao": "Painel de TV ripado e rack para sala",
+    "data": "2026-06-21",
+    "validade": "2026-07-21",
+    "valor_total": 3800,
+    "status": "em_analise",
+    "observacoes": "Orçamento gerado pelo seed automático do sistema.",
+    "prazoEntrega": "20 dias úteis",
+    "categoria": "Marcenaria",
+    "itens": [
+      {
+        "produtoId": "prod-madeira",
+        "quantidade": 2,
+        "subtotal": 1520,
+        "preco_unitario": 760,
+        "descricao": "Materia prima MDF"
+      },
+      {
+        "produtoId": "prod-ferragem",
+        "quantidade": 1,
+        "subtotal": 760,
+        "preco_unitario": 760,
+        "descricao": "Ferragens e Acessórios"
+      }
+    ],
+    "maoDeObra": 1520,
+    "id": "ml2jmdk4umqn65f2j",
+    "_id": "ml2jmdk4umqn65f2j"
+  },
+  {
+    "codigo": "ORC-2026-005",
+    "clienteNome": "Supermercado Pão de Ouro",
+    "clienteId": "11766105-25eb-497a-9239-c380378cad8a",
+    "descricao": "Armários planejados de cozinha em MDF",
+    "data": "2026-06-21",
+    "validade": "2026-07-21",
+    "valor_total": 8500,
+    "status": "aprovado",
+    "observacoes": "Orçamento gerado pelo seed automático do sistema.",
+    "prazoEntrega": "20 dias úteis",
+    "categoria": "Marcenaria",
+    "itens": [
+      {
+        "produtoId": "prod-madeira",
+        "quantidade": 2,
+        "subtotal": 3400,
+        "preco_unitario": 1700,
+        "descricao": "Materia prima MDF"
+      },
+      {
+        "produtoId": "prod-ferragem",
+        "quantidade": 1,
+        "subtotal": 1700,
+        "preco_unitario": 1700,
+        "descricao": "Ferragens e Acessórios"
+      }
+    ],
+    "maoDeObra": 3400,
+    "id": "rfqqovq6wmqn65f2k",
+    "_id": "rfqqovq6wmqn65f2k"
+  },
+  {
+    "codigo": "ORC-2026-006",
+    "clienteNome": "Supermercado Pão de Ouro",
+    "clienteId": "11766105-25eb-497a-9239-c380378cad8a",
+    "descricao": "Painel de TV ripado e rack para sala",
+    "data": "2026-06-21",
+    "validade": "2026-07-21",
+    "valor_total": 3800,
+    "status": "rejeitado",
+    "observacoes": "Orçamento gerado pelo seed automático do sistema.",
+    "prazoEntrega": "20 dias úteis",
+    "categoria": "Marcenaria",
+    "itens": [
+      {
+        "produtoId": "prod-madeira",
+        "quantidade": 2,
+        "subtotal": 1520,
+        "preco_unitario": 760,
+        "descricao": "Materia prima MDF"
+      },
+      {
+        "produtoId": "prod-ferragem",
+        "quantidade": 1,
+        "subtotal": 760,
+        "preco_unitario": 760,
+        "descricao": "Ferragens e Acessórios"
+      }
+    ],
+    "maoDeObra": 1520,
+    "id": "j6udgv74mmqn65f2l",
+    "_id": "j6udgv74mmqn65f2l"
+  },
+  {
+    "codigo": "ORC-2026-001",
+    "clienteNome": "MaxMRM GAMEPLAY",
+    "clienteId": "6cf338d7-87b0-44c8-8d8c-48564cda5111",
+    "descricao": "Parceria comercial fechada com canal de YouTube: MaxMRM GAMEPLAY",
+    "validade": "2026-08-25",
+    "valor_total": 200,
+    "status": "Rascunho",
+    "observacoes": "",
+    "itens": [
+      {
+        "produtoNome": "Parceria de Mídia YouTube",
+        "quantidade": 1,
+        "precoUnitario": 200,
+        "subtotal": 200
+      }
+    ],
+    "maoDeObra": 0,
+    "descontoPct": 0,
+    "incrementoPct": 0,
+    "categoria": "Outros",
+    "id": "x65oconuzms25aeav",
+    "_id": "x65oconuzms25aeav",
+    "adminId": "43567642-606b-498e-8614-a3b8c76f605a"
+  },
+  {
+    "codigo": "ORC-2026-002",
+    "clienteNome": "Lice Games ",
+    "clienteId": "07bfae94-5b5a-4f15-95f5-6cabc7618f72",
+    "descricao": "Parceria comercial fechada com canal de YouTube: Lice Games ",
+    "validade": "2026-08-25",
+    "valor_total": 250,
+    "status": "Rascunho",
+    "observacoes": "",
+    "itens": [
+      {
+        "produtoNome": "Parceria de Mídia YouTube",
+        "quantidade": 1,
+        "precoUnitario": 250,
+        "subtotal": 250
+      }
+    ],
+    "maoDeObra": 0,
+    "descontoPct": 0,
+    "incrementoPct": 0,
+    "categoria": "Outros",
+    "id": "0srouodl0ms263ser",
+    "_id": "0srouodl0ms263ser",
+    "adminId": "43567642-606b-498e-8614-a3b8c76f605a"
+  },
+  {
+    "codigo": "ORC-2026-003",
+    "clienteNome": "MaxMRM GAMEPLAY",
+    "clienteId": "6cf338d7-87b0-44c8-8d8c-48564cda5111",
+    "descricao": "edi",
+    "data": "2026-07-26",
+    "validade": "2026-08-25",
+    "valor_total": 250,
+    "status": "Aprovado",
+    "observacoes": "",
+    "itens": [
+      {
+        "produtoId": "caf26ce3-c0a4-4619-b1f8-2121eee10c8f",
+        "produtoNome": "Edição de vídeo",
+        "quantidade": 1,
+        "precoUnitario": 250,
+        "subtotal": 250
+      }
+    ],
+    "maoDeObra": 0,
+    "descontoPct": 0,
+    "incrementoPct": 0,
+    "marcenariaNome": "Bancada Móveis Planejados",
+    "marcenariaDocumento": "12.345.678/0001-90",
+    "marcenariaTelefone": "(11) 99876-5432",
+    "marcenariaEmail": "contato@bancadaplanejados.com.br",
+    "condicoesPagamento": "50% entrada, 50% na entrega",
+    "prazoEntrega": "30 dias úteis",
+    "categoria": "Outros",
+    "id": "83i95107ems26i10r",
+    "_id": "83i95107ems26i10r",
+    "adminId": "43567642-606b-498e-8614-a3b8c76f605a"
+  }
+]

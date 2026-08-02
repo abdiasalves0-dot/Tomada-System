@@ -1,0 +1,119 @@
+/* login-desktop.css - Desktop layout for Bancada Login */
+
+@media (min-width: 769px) {
+  .fhr-login-page {
+    background-color: var(--bg-main);
+  }
+
+  .fhr-login-container {
+    max-width: 960px !important;
+    width: 90% !important;
+    height: 640px !important;
+    max-height: 85vh !important;
+    border-radius: 32px;
+    box-shadow: var(--shadow-lg), 0 20px 50px rgba(113, 63, 18, 0.06);
+    border: 1px solid rgba(229, 90, 43, 0.08);
+    flex-direction: row !important;
+    overflow: hidden;
+  }
+
+  /* Screens are 100% height and width of container */
+  .login-screen {
+    padding: 48px !important;
+  }
+
+  .login-screen.active {
+    display: grid !important;
+    grid-template-columns: 1.15fr 1fr;
+    column-gap: 48px;
+    row-gap: 20px;
+    height: 100%;
+    align-items: center;
+  }
+
+  /* Left column grouping (Header & Middle) */
+  .login-header-section {
+    grid-column: 1;
+    grid-row: 1;
+    margin-top: 0 !important;
+    text-align: left !important;
+    align-items: flex-start !important;
+  }
+
+  .bancada-app-icon {
+    margin-bottom: 10px !important;
+    justify-content: flex-start !important;
+    max-width: 400px !important;
+  }
+
+  .login-main-title {
+    text-align: left !important;
+    font-size: 38px !important;
+    line-height: 1.2 !important;
+  }
+
+  .login-middle-section {
+    grid-column: 1;
+    grid-row: 2;
+    margin: 0 !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    height: auto !important;
+    position: relative; /* to contain the absolute doodles */
+  }
+
+  .doodles-background {
+    position: absolute !important;
+    bottom: -20px !important;
+    right: 0 !important;
+    opacity: 0.12 !important;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .doodles-background svg {
+    width: 200px;
+    height: 120px;
+  }
+
+  .slogan-container {
+    text-align: left !important;
+  }
+
+  .slogan-text {
+    font-size: 16px !important;
+  }
+
+  /* Right column (Actions / Forms) */
+  .login-actions-stack {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    margin: 0 !important;
+    justify-content: center;
+    border-left: 1px solid var(--separator);
+    padding-left: 48px;
+    height: 100%;
+  }
+
+  .login-form-wrapper {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    border-left: 1px solid var(--separator);
+    padding-left: 48px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Role selector positioning on desktop */
+  .role-toggle-fhr {
+    margin-bottom: 20px !important;
+  }
+
+  /* Form actions styling */
+  .back-navigation-link {
+    margin-top: 16px !important;
+    text-align: left !important;
+  }
+}

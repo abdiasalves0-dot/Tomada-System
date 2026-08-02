@@ -1,0 +1,306 @@
+[
+  {
+    "codigo": "MAD-001",
+    "descricao": "MDF 15mm – Chapa 2750x1830mm",
+    "fornecedor": "Duratex",
+    "preco_unitario": 189.90,
+    "quantidade_em_estoque": 20,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "MAD-002",
+    "descricao": "MDF 18mm – Chapa 2750x1830mm",
+    "fornecedor": "Duratex",
+    "preco_unitario": 219.90,
+    "quantidade_em_estoque": 30,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "MAD-003",
+    "descricao": "MDF 6mm – Chapa 2750x1830mm",
+    "fornecedor": "Duratex",
+    "preco_unitario": 89.90,
+    "quantidade_em_estoque": 15,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "MAD-004",
+    "descricao": "Compensado Naval 15mm – Chapa 2440x1220mm",
+    "fornecedor": "Madeirite Sul",
+    "preco_unitario": 149.00,
+    "quantidade_em_estoque": 12,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "MAD-005",
+    "descricao": "OSB 15mm – Chapa 2440x1220mm",
+    "fornecedor": "LP Brasil",
+    "preco_unitario": 119.90,
+    "quantidade_em_estoque": 10,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "MAD-006",
+    "descricao": "Pinus Bruto – Tábua 25x150x3000mm",
+    "fornecedor": "Madeireira Central",
+    "preco_unitario": 34.90,
+    "quantidade_em_estoque": 50,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "MAD-007",
+    "descricao": "Eucalipto Tratado – Prancha 30x200x3000mm",
+    "fornecedor": "Madelar",
+    "preco_unitario": 59.90,
+    "quantidade_em_estoque": 25,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "MAD-008",
+    "descricao": "Cedro Nacional – Tábua 25x150x3000mm",
+    "fornecedor": "Madeireira Central",
+    "preco_unitario": 89.00,
+    "quantidade_de_estoque": 18,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "MAD-009",
+    "descricao": "Cumaru – Prancha 25x150x3000mm",
+    "fornecedor": "Madeireira Nobre",
+    "preco_unitario": 174.90,
+    "quantidade_em_estoque": 10,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "MAD-010",
+    "descricao": "Ipê – Prancha 25x150x3000mm",
+    "fornecedor": "Madeireira Nobre",
+    "preco_unitario": 199.90,
+    "quantidade_em_estoque": 8,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "FIT-001",
+    "descricao": "Dobradiça Caneco 35mm c/ Amortecedor",
+    "fornecedor": "Hafele",
+    "preco_unitario": 8.90,
+    "quantidade_em_estoque": 200,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "FIT-002",
+    "descricao": "Corrediça Telescópica 45cm – Par",
+    "fornecedor": "Grass",
+    "preco_unitario": 29.90,
+    "quantidade_em_estoque": 80,
+    "unidade_de_medida": "par"
+  },
+  {
+    "codigo": "FIT-003",
+    "descricao": "Corrediça Soft Close 50cm – Par",
+    "fornecedor": "Blum",
+    "preco_unitario": 89.90,
+    "quantidade_em_estoque": 40,
+    "unidade_de_medida": "par"
+  },
+  {
+    "codigo": "FIT-004",
+    "descricao": "Puxador Inox Escovado 128mm",
+    "fornecedor": "Papaiz",
+    "preco_unitario": 12.50,
+    "quantidade_em_estoque": 150,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "FIT-005",
+    "descricao": "Puxador Zamak Cromado 96mm",
+    "fornecedor": "Papaiz",
+    "preco_unitario": 7.90,
+    "quantidade_em_estoque": 200,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "FIT-006",
+    "descricao": "Trilho para Porta de Correr 2m – Embutido",
+    "fornecedor": "Hafele",
+    "preco_unitario": 124.90,
+    "quantidade_em_estoque": 20,
+    "unidade_de_medida": "cj"
+  },
+  {
+    "codigo": "FIT-007",
+    "descricao": "Pé de Móvel Regulável 10cm – Pacote c/4",
+    "fornecedor": "Metalpé",
+    "preco_unitario": 18.90,
+    "quantidade_em_estoque": 60,
+    "unidade_de_medida": "pct"
+  },
+  {
+    "codigo": "FIT-008",
+    "descricao": "Parafuso Confirmat 7x50mm – Caixa c/100",
+    "fornecedor": "Hafele",
+    "preco_unitario": 24.90,
+    "quantidade_em_estoque": 30,
+    "unidade_de_medida": "cx"
+  },
+  {
+    "codigo": "FIT-009",
+    "descricao": "Minifix Cavilha + Excêntrico – Caixa c/50",
+    "fornecedor": "Hettich",
+    "preco_unitario": 39.90,
+    "quantidade_em_estoque": 25,
+    "unidade_de_medida": "cx"
+  },
+  {
+    "codigo": "FIT-010",
+    "descricao": "Fechadura para Móvel c/ Chave – Cilindro 16mm",
+    "fornecedor": "Papaiz",
+    "preco_unitario": 14.90,
+    "quantidade_em_estoque": 50,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "FIT-011",
+    "descricao": "Suporte de Prateleira – Pacote c/50",
+    "fornecedor": "Metalpé",
+    "preco_unitario": 19.90,
+    "quantidade_em_estoque": 40,
+    "unidade_de_medida": "pct"
+  },
+  {
+    "codigo": "FIT-012",
+    "descricao": "Tampa para Parafuso Confirmat – Pacote c/100",
+    "fornecedor": "Hafele",
+    "preco_unitario": 9.90,
+    "quantidade_em_estoque": 50,
+    "unidade_de_medida": "pct"
+  },
+  {
+    "codigo": "ACB-001",
+    "descricao": "Fita de Borda PVC 22mm – Branco TX – Rolo 50m",
+    "fornecedor": "Rehau",
+    "preco_unitario": 34.90,
+    "quantidade_em_estoque": 30,
+    "unidade_de_medida": "rl"
+  },
+  {
+    "codigo": "ACB-002",
+    "descricao": "Fita de Borda PVC 22mm – Carvalho – Rolo 50m",
+    "fornecedor": "Rehau",
+    "preco_unitario": 39.90,
+    "quantidade_em_estoque": 20,
+    "unidade_de_medida": "rl"
+  },
+  {
+    "codigo": "ACB-003",
+    "descricao": "Fita de Borda PVC 22mm – Preto Supremo – Rolo 50m",
+    "fornecedor": "Rehau",
+    "preco_unitario": 37.90,
+    "quantidade_em_estoque": 15,
+    "unidade_de_medida": "rl"
+  },
+  {
+    "codigo": "ACB-004",
+    "descricao": "Cola para Fita de Borda – Bisnaga 250g",
+    "fornecedor": "Cascola",
+    "preco_unitario": 22.90,
+    "quantidade_em_estoque": 25,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "ACB-005",
+    "descricao": "Cola Branca PVA p/ Madeira – Galão 3,6kg",
+    "fornecedor": "Cascola",
+    "preco_unitario": 49.90,
+    "quantidade_em_estoque": 20,
+    "unidade_de_medida": "gl"
+  },
+  {
+    "codigo": "ACB-006",
+    "descricao": "Massa para Madeira Cinza – Lata 900g",
+    "fornecedor": "Sayerlack",
+    "preco_unitario": 28.90,
+    "quantidade_em_estoque": 15,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "ACB-007",
+    "descricao": "Lixa para Madeira Grão 120 – Folha 225x275mm",
+    "fornecedor": "Norton",
+    "preco_unitario": 2.50,
+    "quantidade_em_estoque": 200,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "ACB-008",
+    "descricao": "Lixa para Madeira Grão 220 – Folha 225x275mm",
+    "fornecedor": "Norton",
+    "preco_unitario": 2.50,
+    "quantidade_em_estoque": 200,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "ACB-009",
+    "descricao": "Verniz Imbuia Acetinado – Galão 3,6L",
+    "fornecedor": "Sayerlack",
+    "preco_unitario": 129.90,
+    "quantidade_em_estoque": 10,
+    "unidade_de_medida": "gl"
+  },
+  {
+    "codigo": "ACB-010",
+    "descricao": "Tinta para Madeira Branco Neve Semibrilho – 3,6L",
+    "fornecedor": "Coral",
+    "preco_unitario": 99.90,
+    "quantidade_em_estoque": 12,
+    "unidade_de_medida": "gl"
+  },
+  {
+    "codigo": "ACB-011",
+    "descricao": "Selador para Madeira – Galão 3,6L",
+    "fornecedor": "Sayerlack",
+    "preco_unitario": 89.90,
+    "quantidade_em_estoque": 8,
+    "unidade_de_medida": "gl"
+  },
+  {
+    "codigo": "ACB-012",
+    "descricao": "Cavilha de Madeira 8x40mm – Saco c/100",
+    "fornecedor": "Madeirex",
+    "preco_unitario": 14.90,
+    "quantidade_em_estoque": 40,
+    "unidade_de_medida": "sc"
+  },
+  {
+    "codigo": "VID-001",
+    "descricao": "Vidro Temperado 6mm – m²",
+    "fornecedor": "Cebrace",
+    "preco_unitario": 89.90,
+    "quantidade_em_estoque": 30,
+    "unidade_de_medida": "m²"
+  },
+  {
+    "codigo": "VID-002",
+    "descricao": "Espelho 4mm – m²",
+    "fornecedor": "Cebrace",
+    "preco_unitario": 69.90,
+    "quantidade_em_estoque": 20,
+    "unidade_de_medida": "m²"
+  },
+  {
+    "codigo": "ELE-001",
+    "descricao": "LED Perfil Embutido p/ Móvel 1m",
+    "fornecedor": "Brilia",
+    "preco_unitario": 34.90,
+    "quantidade_em_estoque": 40,
+    "unidade_de_medida": "un"
+  },
+  {
+    "codigo": "ELE-002",
+    "descricao": "Tomada Embutida Dupla USB p/ Móvel",
+    "fornecedor": "Tramontina",
+    "preco_unitario": 49.90,
+    "quantidade_em_estoque": 30,
+    "unidade_de_medida": "un"
+  }
+]

@@ -1,0 +1,2578 @@
+/* CSS do Painel Financeiro - Estética Bento Grid Premium */
+:root {
+  --financeiro-card-radius: 24px;
+  --financeiro-shadow: 0 4px 20px rgba(28, 26, 20, 0.03), 0 2px 8px rgba(28, 26, 20, 0.02);
+  --financeiro-border: 1px solid rgba(28, 26, 20, 0.05);
+}
+
+.financeiro-dashboard-wrapper {
+  padding: 24px 32px;
+  background-color: #FAF8F5;
+  /* Cor padrão de fundo do sistema */
+  min-height: calc(100vh - 80px);
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: var(--text-primary);
+  box-sizing: border-box;
+}
+
+/* Toolbar de Filtros do Topo */
+.financeiro-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.financeiro-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.breadcrumb-sep {
+  width: 14px;
+  height: 14px;
+  color: var(--text-tertiary);
+}
+
+.financeiro-breadcrumb .active {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.financeiro-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.toolbar-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #FFFFFF;
+  border: var(--financeiro-border);
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: all 0.15s ease;
+}
+
+.toolbar-btn:hover {
+  background-color: #FDFBF9;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.toolbar-btn:active {
+  transform: translateY(0);
+}
+
+.toolbar-btn i {
+  width: 14px;
+  height: 14px;
+  color: var(--text-secondary);
+}
+
+/* Bento Grid */
+.financeiro-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(180px, auto);
+  gap: 20px;
+}
+
+/* Base Bento Card */
+.bento-card {
+  background-color: #FFFFFF;
+  border-radius: var(--financeiro-card-radius);
+  border: var(--financeiro-border);
+  padding: 24px;
+  box-shadow: var(--financeiro-shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.bento-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(28, 26, 20, 0.06);
+}
+
+/* Elementos Comuns dos Cards */
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.bento-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.card-dropdown-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: transparent;
+  border: 1px solid rgba(28, 26, 20, 0.1);
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.card-dropdown-btn i {
+  width: 12px;
+  height: 12px;
+}
+
+.card-icon-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(28, 26, 20, 0.1);
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: all 0.15s ease;
+}
+
+.card-icon-btn:hover {
+  background-color: rgba(28, 26, 20, 0.05);
+}
+
+.card-icon-btn i {
+  width: 14px;
+  height: 14px;
+}
+
+.card-main-value-row {
+  display: flex;
+  align-items: baseline;
+  margin-top: 12px;
+  margin-bottom: 16px;
+}
+
+.card-currency-symbol {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-right: 4px;
+}
+
+.card-main-value {
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+/* ────────────────────────────────────────────────────────
+ * CARD 1: Expense Breakdown Specifics
+ * ──────────────────────────────────────────────────────── */
+.expense-breakdown-card {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  /* Spans 2 rows */
+  min-height: 380px;
+  justify-content: flex-start;
+  /* conteúdo compacto no topo, sem distribuir vão entre cada bloco */
+}
+
+/* Heatmap Grid */
+.heatmap-container {
+  display: flex;
+  gap: 16px;
+  margin: 20px 0 16px;
+  align-items: flex-start;
+}
+
+.heatmap-labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 98px;
+  /* Aligned to rows */
+  padding-top: 8px;
+}
+
+.heatmap-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: left;
+}
+
+.heatmap-grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.heatmap-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.heatmap-dot {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  transition: transform 0.15s ease;
+  cursor: pointer;
+}
+
+.heatmap-dot:hover {
+  transform: scale(1.15);
+}
+
+/* Cores do Heatmap adaptadas à identidade do sistema */
+.heatmap-dot.color-empty,
+.legend-dot.color-light {
+  background-color: #F0EDE8;
+}
+
+.heatmap-dot.color-medium,
+.legend-dot.color-medium {
+  background-color: #FF9A3C;
+  /* Laranja secundário */
+}
+
+.heatmap-dot.color-dark,
+.legend-dot.color-dark {
+  background-color: #E55A2B;
+  /* Laranja primário */
+}
+
+/* Striped (sem despesas) usando padrão diagonal cinza */
+.heatmap-dot.color-striped,
+.legend-dot.color-striped {
+  background: repeating-linear-gradient(45deg,
+      #1C1A14,
+      #1C1A14 3px,
+      #333026 3px,
+      #333026 6px);
+  /* Listrado escuro padrão */
+}
+
+.heatmap-days {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  padding: 0 4px;
+}
+
+.heatmap-days span {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  width: 26px;
+  text-align: center;
+}
+
+.heatmap-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  border-top: 1px solid rgba(28, 26, 20, 0.05);
+  padding-top: 16px;
+  margin-top: 20px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Container de Resumo Numérico no Heatmap */
+.heatmap-summary-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 24px;
+  border-top: 1px solid rgba(28, 26, 20, 0.05);
+  padding-top: 20px;
+}
+
+.heatmap-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #FAF8F5;
+  /* Cor padrão do sistema */
+  border: 1px solid rgba(28, 26, 20, 0.05);
+  padding: 12px;
+  border-radius: 16px;
+}
+
+.heatmap-summary-item .summary-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(28, 26, 20, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+}
+
+.heatmap-summary-item .summary-icon i {
+  width: 14px;
+  height: 14px;
+}
+
+.heatmap-summary-item .summary-icon.success {
+  background-color: rgba(52, 199, 89, 0.1);
+  border-color: rgba(52, 199, 89, 0.15);
+  color: #34C759;
+}
+
+.heatmap-summary-item .summary-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.heatmap-summary-item .summary-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.heatmap-summary-item .summary-val {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 2px;
+}
+
+/* ────────────────────────────────────────────────────────
+ * CARD 2: Class Mastery Specifics
+ * ──────────────────────────────────────────────────────── */
+.class-mastery-card {
+  grid-column: 2 / 4;
+  grid-row: 1;
+  background: #1C1A14;
+  /* Cor escura do sistema (Charcoal) */
+  border-color: rgba(255, 255, 255, 0.05);
+  color: #FFFFFF;
+}
+
+.class-mastery-title {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  margin: 0 0 12px;
+}
+
+.class-mastery-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: rgba(52, 199, 89, 0.12);
+  /* Verde de sucesso */
+  color: #34C759;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #34C759;
+}
+
+.class-mastery-action-row {
+  margin-top: 24px;
+  z-index: 2;
+}
+
+.join-class-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--primary);
+  /* Laranja padrão */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(229, 90, 43, 0.3);
+}
+
+.join-class-btn:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-arrow-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-arrow-circle i {
+  width: 10px;
+  height: 10px;
+  color: #FFFFFF;
+}
+
+.class-mastery-bg-waves {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.class-mastery-bg-waves svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ────────────────────────────────────────────────────────
+ * CARD 3: Today Received Specifics
+ * ──────────────────────────────────────────────────────── */
+.today-received-card {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.today-received-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.received-icon-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #FAF8F5;
+  border: 1px solid rgba(28, 26, 20, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.received-icon-circle i {
+  width: 14px;
+  height: 14px;
+  color: var(--text-primary);
+}
+
+.today-received-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.received-value-wrapper {
+  display: flex;
+  align-items: baseline;
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+
+.received-currency {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-right: 4px;
+}
+
+.received-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.today-received-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.growth-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.growth-indicator.positive {
+  background-color: rgba(52, 199, 89, 0.1);
+  color: #34C759;
+}
+
+.growth-indicator i {
+  width: 12px;
+  height: 12px;
+}
+
+.received-chevron-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(28, 26, 20, 0.08);
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.received-chevron-btn i {
+  width: 14px;
+  height: 14px;
+}
+
+/* ────────────────────────────────────────────────────────
+ * CARD 4: Financial Report Specifics
+ * ──────────────────────────────────────────────────────── */
+.financial-report-card {
+  grid-column: 3;
+  grid-row: 2;
+  background-color: #1C1A14;
+  border-color: rgba(255, 255, 255, 0.05);
+  color: #FFFFFF;
+}
+
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.report-close-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.report-close-btn i {
+  width: 12px;
+  height: 12px;
+}
+
+.report-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.report-action-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  border: none;
+  color: #1C1A14;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.report-action-icon.highlight {
+  background-color: var(--primary);
+  color: #FFFFFF;
+}
+
+.report-action-icon i {
+  width: 12px;
+  height: 12px;
+}
+
+.report-body {
+  margin-top: 18px;
+}
+
+.report-pill {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  background-color: rgba(255, 255, 255, 0.08);
+  padding: 4px 10px;
+  border-radius: 9999px;
+  display: inline-block;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.report-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* ────────────────────────────────────────────────────────
+ * CARD 5: Income Sources Specifics
+ * ──────────────────────────────────────────────────────── */
+.income-sources-card {
+  grid-column: 1 / 3;
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  padding: 0;
+}
+
+.income-info-block {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid rgba(28, 26, 20, 0.05);
+}
+
+.income-days-pill {
+  align-self: flex-start;
+  background-color: #1C1A14;
+  color: #FFFFFF;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 700;
+  margin-top: 14px;
+}
+
+.income-value-row {
+  display: flex;
+  align-items: baseline;
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+
+.income-currency {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-right: 4px;
+}
+
+.income-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.income-description {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin: 0 0 16px;
+}
+
+.income-legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.legend-dot.source-salary {
+  background-color: #FFD4C2;
+}
+
+.legend-dot.source-bonus {
+  background-color: #FF9A3C;
+}
+
+.legend-dot.source-freelance {
+  background-color: #E55A2B;
+}
+
+.legend-dot.source-others {
+  background-color: #1C1A14;
+}
+
+.income-chart-block {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.chart-controls {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.chart-control-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #FAF8F5;
+  border: 1px solid rgba(28, 26, 20, 0.06);
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.chart-control-btn i {
+  width: 10px;
+  height: 10px;
+}
+
+.chart-more-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(28, 26, 20, 0.06);
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.chart-more-btn i {
+  width: 12px;
+  height: 12px;
+}
+
+.growth-comparison {
+  margin-top: 10px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.growth-percentage {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.growth-text {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* Gráfico de Barras Customizado HTML/CSS */
+.custom-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: 120px;
+  position: relative;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.chart-grid-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: rgba(28, 26, 20, 0.04);
+}
+
+.chart-grid-line:nth-child(1) {
+  bottom: 25%;
+}
+
+.chart-grid-line:nth-child(2) {
+  bottom: 60%;
+}
+
+.chart-grid-line:nth-child(3) {
+  bottom: 95%;
+}
+
+.bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20%;
+  height: 100%;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes growBar {
+  from {
+    height: 0;
+  }
+}
+
+.bar-fill {
+  width: 100%;
+  border-radius: 6px;
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  animation: growBar 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.bar-fill:hover {
+  transform: scaleX(1.05);
+  filter: brightness(0.95);
+}
+
+/* Cores das Barras */
+.bar-fill.bar-striped {
+  background: repeating-linear-gradient(45deg,
+      #1C1A14,
+      #1C1A14 4px,
+      #333026 4px,
+      #333026 8px);
+}
+
+.bar-fill.bar-dark {
+  background-color: #C8461B;
+  /* Laranja Escuro */
+}
+
+.bar-fill.bar-primary {
+  background-color: var(--primary);
+  /* Laranja Padrão */
+}
+
+.bar-fill.bar-light {
+  background-color: #FFD4C2;
+  /* Laranja Suave */
+}
+
+@keyframes popPill {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.bar-label-pill {
+  position: absolute;
+  top: -18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background-color: #1C1A14;
+  color: #FFFFFF;
+  padding: 2px 6px;
+  border-radius: 9999px;
+  font-size: 8px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  animation: popPill 0.4s cubic-bezier(0.16, 1, 1, 1) both;
+}
+
+.bar-label-pill.highlight {
+  background-color: var(--primary);
+}
+
+.bar-label-pill i {
+  width: 6px;
+  height: 6px;
+}
+
+/* ────────────────────────────────────────────────────────
+ * CARD 6: Financial Balance Specifics
+ * ──────────────────────────────────────────────────────── */
+.financial-balance-card {
+  grid-column: 3;
+  grid-row: 3;
+}
+
+.balance-legend {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14px;
+  margin-bottom: 8px;
+}
+
+.legend-dot.balance-total {
+  background-color: #FFD4C2;
+}
+
+.legend-dot.balance-profit {
+  background-color: var(--primary);
+}
+
+.legend-dot.balance-week {
+  background-color: #F0EDE8;
+}
+
+.radial-gauge-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  flex: 1;
+}
+
+.radial-gauge {
+  width: 140px;
+  height: 80px;
+  position: relative;
+}
+
+.gauge-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+#gauge-mask-path {
+  transition: stroke-dashoffset 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 0.5s;
+}
+
+.gauge-overlay-center {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.gauge-percentage-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.gauge-label-text {
+  font-size: 9px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.balance-footer-pill {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FAF8F5;
+  border: 1px solid rgba(28, 26, 20, 0.05);
+  padding: 8px 12px;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-top: 8px;
+}
+
+.footer-badge-percent {
+  background-color: rgba(52, 199, 89, 0.1);
+  color: #34C759;
+  padding: 2px 6px;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 9px;
+}
+
+/* ────────────────────────────────────────────────────────
+ * RESPONSIVIDADE E AJUSTES DE TELA
+ * ──────────────────────────────────────────────────────── */
+/* Tablets e notebooks médios */
+@media (max-width: 1199px) {
+  .financeiro-bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .expense-breakdown-card {
+    grid-column: 1;
+    grid-row: span 2;
+  }
+
+  .class-mastery-card {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .today-received-card {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .financial-report-card {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .financial-balance-card {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .income-sources-card {
+    grid-column: 1 / 3;
+    grid-row: 4;
+  }
+}
+
+/* Celulares e telas pequenas */
+@media (max-width: 767px) {
+  .financeiro-dashboard-wrapper {
+    padding: 16px;
+  }
+
+  .financeiro-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .financeiro-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .toolbar-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 8px 8px;
+    font-size: 11px;
+  }
+
+  .financeiro-bento-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+
+  .bento-card {
+    grid-column: span 1 !important;
+    grid-row: auto !important;
+  }
+
+  .income-sources-card {
+    grid-template-columns: 1fr;
+  }
+
+  .income-info-block {
+    border-right: none;
+    border-bottom: 1px solid rgba(28, 26, 20, 0.05);
+    padding-bottom: 20px;
+  }
+
+  .class-mastery-title {
+    font-size: 22px;
+  }
+
+  .card-main-value {
+    font-size: 32px;
+  }
+}
+
+/* ────────────────────────────────────────────────────────
+ * SWITCHER DE ABA (ESTILO KANBAN / MENSAL) E VISÃO GERAL
+ * ──────────────────────────────────────────────────────── */
+.financeiro-tab-switcher {
+  display: flex;
+  background-color: var(--primary);
+  border-radius: 999px;
+  padding: 3px;
+  position: relative;
+  height: 36px;
+  min-width: 240px;
+  user-select: none;
+  border: none;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.financeiro-tab-switcher .fin-tab-slider {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  bottom: 3px;
+  width: calc(50% - 3px);
+  background-color: #FFFFFF;
+  border-radius: 999px;
+  transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+}
+
+.financeiro-tab-switcher .fin-tab-btn {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  z-index: 2;
+  transition: color 0.3s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  font-family: 'Inter', sans-serif;
+  height: 100%;
+}
+
+.financeiro-tab-switcher .fin-tab-btn.active {
+  color: var(--primary) !important;
+}
+
+/* Estilos de Layout para a sub-aba Visão Geral */
+.insumos-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.insumos-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.visao-geral-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+.visao-geral-table th {
+  padding: 12px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(28, 26, 20, 0.05);
+}
+
+.visao-geral-table td {
+  padding: 14px 10px;
+  font-size: 13px;
+  color: var(--text-primary);
+  border-bottom: 1px solid rgba(28, 26, 20, 0.03);
+}
+
+.visao-geral-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ────────────────────────────────────────────────────────
+ * VISÃO GERAL: MOCKUP SALESFORCE COMPONENT STYLING
+ * ──────────────────────────────────────────────────────── */
+
+/* Grid and Card Structure overrides */
+#visao-geral-grid {
+  display: flex !important;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Aproxima os cards "Resumo Financeiro" e "Receita Consolidada",
+   sobrepondo o gap de 20px definido inline no JS */
+.visao-geral-top-row {
+  gap: 10px !important;
+}
+
+.visao-summary-card,
+.visao-payout-card {
+  background-color: #FFFFFF;
+  border-radius: var(--financeiro-card-radius);
+  border: var(--financeiro-border);
+  padding: 24px;
+  box-shadow: var(--financeiro-shadow);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Summary Card KPIs */
+.summary-card-header {
+  margin-bottom: 16px;
+}
+
+.summary-card-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  border-bottom: 1px solid rgba(28, 26, 20, 0.05);
+  padding-bottom: 16px;
+}
+
+.kpi-col {
+  padding: 0 16px;
+  border-right: 1px solid rgba(28, 26, 20, 0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.kpi-col:first-child {
+  padding-left: 0;
+}
+
+.kpi-col:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.kpi-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.kpi-value-row {
+  display: flex;
+  align-items: baseline;
+}
+
+.kpi-currency {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-right: 4px;
+}
+
+.kpi-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.kpi-value-main {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.kpi-value-sub {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-left: 4px;
+}
+
+/* Timeline Components */
+.summary-card-timeline {
+  margin-top: 16px;
+}
+
+.timeline-months {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.month-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.month-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.timeline-bar {
+  height: 5px;
+  background-color: #FAF8F5;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(28, 26, 20, 0.04);
+}
+
+.timeline-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.8s ease-in-out;
+}
+
+.timeline-fill.fill-primary {
+  background-color: var(--primary);
+}
+
+.timeline-fill.fill-secondary {
+  background-color: #1C1A14;
+}
+
+.timeline-fill.fill-light {
+  background-color: #FFD4C2;
+}
+
+/* Overlapping Avatars */
+.avatar-group {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+  height: 24px;
+}
+
+.avatar-circle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: 800;
+  border: 2px solid #FFFFFF;
+  margin-left: -6px;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), z-index 0.1s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.avatar-circle:first-child {
+  margin-left: 0;
+}
+
+.avatar-circle:hover {
+  transform: scale(1.2) translateY(-2px);
+  z-index: 10;
+}
+
+.avatar-circle.av-orange {
+  background-color: var(--primary);
+  color: #FFFFFF;
+}
+
+.avatar-circle.av-charcoal {
+  background-color: #1C1A14;
+  color: #FFFFFF;
+}
+
+.avatar-circle.av-peach {
+  background-color: #FFD4C2;
+  color: #E55A2B;
+}
+
+/* Payout Card (Top Right) */
+.payout-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.payout-value-wrapper {
+  margin-bottom: 16px;
+}
+
+.payout-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.payout-value-row {
+  display: flex;
+  align-items: baseline;
+  margin-top: 4px;
+}
+
+.payout-currency {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-right: 4px;
+}
+
+.payout-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.payout-sub {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+  display: block;
+}
+
+.payout-accounts {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.account-card {
+  flex: 1;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(28, 26, 20, 0.08);
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.account-card:hover {
+  border-color: rgba(229, 90, 43, 0.3);
+  background-color: #FAF8F5;
+  transform: translateY(-1px);
+}
+
+.account-card.card-highlight {
+  background-color: rgba(229, 90, 43, 0.05);
+  border-color: var(--primary);
+}
+
+.account-card.card-highlight .acc-number {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.acc-number {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.acc-brand {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.acc-badge {
+  font-size: 8px;
+  font-weight: 700;
+  background-color: rgba(52, 199, 89, 0.1);
+  color: #34C759;
+  padding: 1px 4px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.acc-name {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+.payout-action-row {
+  margin-top: auto;
+}
+
+.btn-payout-now {
+  width: 100%;
+  padding: 10px 16px;
+  background-color: var(--primary);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(229, 90, 43, 0.15);
+}
+
+.btn-payout-now:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(229, 90, 43, 0.25);
+}
+
+/* Active Filters Bar */
+.visao-geral-filters-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 8px 4px;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+
+.filters-left {
+  display: flex;
+  align-items: center;
+}
+
+.filters-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.filter-badge {
+  background-color: rgba(229, 90, 43, 0.08);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-left: 6px;
+}
+
+.filters-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.filter-select {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(28, 26, 20, 0.08);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background-color: #FAF8F5;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.filter-select:focus {
+  border-color: var(--primary);
+}
+
+.filter-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.filter-search i {
+  position: absolute;
+  left: 12px;
+  width: 14px;
+  height: 14px;
+  color: var(--text-tertiary);
+  pointer-events: none;
+}
+
+.filter-search input {
+  padding: 8px 12px 8px 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(28, 26, 20, 0.08);
+  font-size: 12px;
+  width: 180px;
+  background-color: #FAF8F5;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.filter-search input:focus {
+  width: 220px;
+  border-color: var(--primary);
+  background-color: #FFFFFF;
+}
+
+/* Invoices Panel (Bottom Bento Grid Card) */
+.visao-invoices-panel {
+  background-color: #FFFFFF;
+  border-radius: var(--financeiro-card-radius);
+  border: var(--financeiro-border);
+  box-shadow: var(--financeiro-shadow);
+  overflow: hidden;
+}
+
+.invoices-panel-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(28, 26, 20, 0.05);
+}
+
+.panel-tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.panel-tab-btn {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+}
+
+.panel-tab-btn:hover {
+  background-color: #FAF8F5;
+  color: var(--text-primary);
+}
+
+.panel-tab-btn.active {
+  background-color: rgba(229, 90, 43, 0.08);
+  color: var(--primary);
+}
+
+.invoices-panel-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.invoices-sidebar {
+  width: 35%;
+  border-right: 1px solid rgba(28, 26, 20, 0.05);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.invoices-details-pane {
+  width: 65%;
+  background-color: #FAF8F5;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 24px;
+}
+
+/* Sidebar Budget List Items */
+.budget-list-item {
+  display: flex;
+  padding: 14px 20px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  border-radius: 12px;
+  margin: 6px 12px;
+}
+
+.budget-list-item:hover {
+  background-color: rgba(28, 26, 20, 0.02);
+}
+
+.budget-list-item.selected {
+  background-color: rgba(229, 90, 43, 0.04) !important;
+}
+
+.budget-list-item.selected::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: var(--primary);
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.client-avatar-initials {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: rgba(28, 26, 20, 0.06);
+  color: #1C1A14;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.budget-list-item.selected .client-avatar-initials {
+  background-color: var(--primary);
+  color: #FFFFFF;
+}
+
+.item-left {
+  flex-shrink: 0;
+}
+
+.item-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.item-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.budget-code {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary);
+  font-family: monospace;
+}
+
+.budget-days {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.item-client-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-status-row {
+  display: flex;
+  align-items: center;
+}
+
+.status-badge {
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  display: inline-block;
+}
+
+.status-badge-success {
+  background-color: rgba(52, 199, 89, 0.1);
+  color: #34C759;
+}
+
+.status-badge-warning {
+  background-color: rgba(255, 154, 60, 0.1);
+  color: #FF9A3C;
+}
+
+.status-badge-danger {
+  background-color: rgba(255, 59, 48, 0.1);
+  color: #FF3B30;
+}
+
+.status-badge-neutral {
+  background-color: rgba(28, 26, 20, 0.08);
+  color: var(--text-secondary);
+}
+
+.item-right {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.budget-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Selected Budget Details Pane */
+.invoice-details-header {
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(28, 26, 20, 0.05);
+}
+
+.header-main-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.details-code {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.details-meta-row {
+  display: flex;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.meta-label {
+  font-weight: 500;
+}
+
+.meta-val {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.invoice-details-customer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background-color: #FFFFFF;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: var(--financeiro-border);
+  margin-bottom: 18px;
+}
+
+.cust-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(229, 90, 43, 0.08);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cust-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cust-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.cust-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.invoice-items-grid-wrapper {
+  margin-bottom: 18px;
+}
+
+.section-title-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.invoice-items-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.invoice-detail-card {
+  background-color: #FFFFFF;
+  border: var(--financeiro-border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: all 0.2s ease;
+  min-width: 0;
+}
+
+.invoice-detail-card:hover {
+  transform: translateY(-1px);
+  border-color: rgba(229, 90, 43, 0.2);
+  box-shadow: 0 4px 10px rgba(28, 26, 20, 0.02);
+}
+
+.detail-card-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.detail-card-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.detail-card-sub {
+  font-size: 9px;
+  color: var(--text-tertiary);
+}
+
+.card-add-item {
+  border: 1px dashed rgba(28, 26, 20, 0.15);
+  background-color: transparent;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  gap: 4px;
+}
+
+.card-add-item:hover {
+  border-color: var(--primary);
+  background-color: rgba(229, 90, 43, 0.02);
+}
+
+.card-add-item .add-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--text-tertiary);
+  transition: color 0.15s ease;
+}
+
+.card-add-item .add-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  transition: color 0.15s ease;
+}
+
+.card-add-item:hover .add-icon,
+.card-add-item:hover .add-label {
+  color: var(--primary);
+}
+
+/* Detail Card Summary and Totals */
+.invoice-details-summary {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: var(--financeiro-border);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.summary-row.discount-row {
+  color: #FF3B30;
+  font-weight: 500;
+}
+
+.summary-row.total-row {
+  border-top: 1px solid rgba(28, 26, 20, 0.05);
+  padding-top: 8px;
+  margin-top: 2px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.summary-row.total-row .sum-val {
+  color: var(--primary);
+  font-size: 16px;
+}
+
+.conditions-row {
+  display: flex;
+  gap: 16px;
+  border-top: 1px solid rgba(28, 26, 20, 0.05);
+  padding-top: 10px;
+  margin-top: 2px;
+}
+
+.cond-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cond-lbl {
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cond-val {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.summary-actions {
+  margin-top: 10px;
+}
+
+.btn-invoice-pdf {
+  width: 100%;
+  padding: 10px 16px;
+  background-color: #FAF8F5;
+  color: var(--text-primary);
+  border: 1px solid rgba(28, 26, 20, 0.08);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn-invoice-pdf:hover {
+  background-color: #FFFFFF;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Responsiveness for Visão Geral elements */
+@media (max-width: 1024px) {
+  .visao-geral-top-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  .invoices-panel-body {
+    flex-direction: column;
+  }
+
+  .invoices-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(28, 26, 20, 0.05);
+    max-height: 250px;
+  }
+
+  .invoices-details-pane {
+    width: 100%;
+    max-height: none;
+  }
+
+  .invoice-items-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .visao-geral-filters-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .filters-right {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-search input {
+    width: 100%;
+  }
+
+  .filter-search input:focus {
+    width: 100%;
+  }
+
+  .summary-card-kpis {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .kpi-col {
+    padding: 0;
+    border-right: none;
+    border-bottom: 1px solid rgba(28, 26, 20, 0.05);
+    padding-bottom: 8px;
+  }
+
+  .kpi-col:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .timeline-months {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ────────────────────────────────────────────────────────
+ * DETAILED SALESFORCE DASHBOARD HIGHLIGHTS & DARK DETAILS
+ * ──────────────────────────────────────────────────────── */
+
+/* Active Selected Item (Dark Slate/Charcoal background) */
+.budget-list-item.selected {
+  background-color: #1C1A14 !important;
+  color: #FFFFFF !important;
+}
+
+.budget-list-item.selected::before {
+  background-color: var(--primary) !important;
+}
+
+.budget-list-item.selected .budget-code {
+  color: var(--primary) !important;
+}
+
+.budget-list-item.selected .budget-days {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.budget-list-item.selected .item-client-name {
+  color: #FFFFFF !important;
+}
+
+.budget-list-item.selected .budget-value {
+  color: #FFFFFF !important;
+}
+
+.budget-list-item.selected .status-badge {
+  background-color: #FFFFFF !important;
+  color: #1C1A14 !important;
+}
+
+/* Date calendar button styles in filter bar */
+.filter-date-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #FAF8F5;
+  border: 1px solid rgba(28, 26, 20, 0.08);
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-date-btn:hover {
+  background-color: #FFFFFF;
+  border-color: var(--primary);
+}
+
+.filter-date-btn i {
+  width: 14px;
+  height: 14px;
+  color: var(--text-secondary);
+}
+
+/* Panel Header Tab Customizations */
+.visao-floating-tabs-row .panel-tabs {
+  display: flex;
+  background-color: #1C1A14;
+  padding: 4px;
+  border-radius: 99px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 4px;
+}
+
+.visao-floating-tabs-row .panel-tab-btn {
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.04);
+  border: none;
+  cursor: pointer;
+  border-radius: 99px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.visao-floating-tabs-row .panel-tab-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+.visao-floating-tabs-row .panel-tab-btn.active {
+  background-color: var(--primary) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(229, 90, 43, 0.25);
+}
+
+.visao-floating-tabs-row .tab-badge-count {
+  margin-left: 6px;
+  font-size: 9px;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: inherit;
+  padding: 1px 5px;
+  border-radius: 99px;
+  font-weight: 700;
+}
+
+.visao-floating-tabs-row .panel-tab-btn.active .tab-badge-count {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Salesforce Details Box Inside Details Pane */
+.invoice-details-inner-box {
+  background-color: #1C1A14;
+  border-radius: 20px;
+  padding: 24px;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.invoice-details-inner-box .invoice-details-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 16px;
+  margin-bottom: 0;
+}
+
+.detail-company-logo {
+  width: 20px;
+  height: 20px;
+  background-color: var(--primary);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
+  color: #FFFFFF;
+}
+
+.detail-unsent-badge {
+  font-size: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  padding: 2px 8px;
+  border-radius: 99px;
+  margin-left: 8px;
+  font-weight: 600;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+/* Detail Card Styling (Salesforce Dark Card style) */
+.invoice-details-inner-box .invoice-detail-card {
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 90px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  min-width: 0;
+}
+
+.invoice-details-inner-box .invoice-detail-card:hover {
+  transform: translateY(-2px);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.invoice-details-inner-box .detail-card-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.invoice-details-inner-box .detail-card-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.invoice-details-inner-box .detail-card-sub {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.invoice-details-inner-box .card-add-item {
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  background-color: transparent;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.invoice-details-inner-box .card-add-item:hover {
+  border-color: var(--primary);
+  background-color: rgba(229, 90, 43, 0.06);
+}
+
+.invoice-details-inner-box .card-add-item i {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+}
+
+.invoice-details-inner-box .card-add-item span {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.invoice-details-inner-box .card-add-item:hover i,
+.invoice-details-inner-box .card-add-item:hover span {
+  color: var(--primary);
+}
+
+/* Detail Card Summary and Totals (Salesforce dark summary block) */
+.invoice-details-inner-box .invoice-details-summary {
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 16px 20px;
+  border-radius: 16px;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.invoice-details-inner-box .summary-kpis {
+  display: flex;
+  gap: 24px;
+}
+
+.invoice-details-inner-box .summary-kpi-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.invoice-details-inner-box .summary-kpi-lbl {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.invoice-details-inner-box .summary-kpi-val {
+  font-size: 15px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-top: 2px;
+}
+
+.invoice-details-inner-box .summary-kpi-val.highlight-orange {
+  color: var(--primary);
+}
+
+.invoice-details-inner-box .summary-actions-block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.invoice-details-inner-box .round-action-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.invoice-details-inner-box .round-action-btn:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+  color: var(--primary);
+}
+
+.invoice-details-inner-box .round-action-btn i {
+  width: 14px;
+  height: 14px;
+}
+
+.invoice-details-inner-box .btn-pay-now {
+  background-color: var(--primary);
+  color: #FFFFFF;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(229, 90, 43, 0.25);
+}
+
+.invoice-details-inner-box .btn-pay-now:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(229, 90, 43, 0.35);
+}
+
+.invoice-details-inner-box .btn-pay-now i {
+  width: 14px;
+  height: 14px;
+}
+
+body.tf-page-active .app-layout {
+  background: linear-gradient(135deg, #E55A2B 0%, #FF9A3C 100%) !important;
+}
+
+body.tf-page-active .hig-sidebar {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+body.tf-page-active .main-content {
+  background: transparent !important;
+}
+
+body.tf-page-active #page-container {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+body.tf-page-active .financeiro-dashboard-wrapper {
+  background-color: transparent !important;
+}
+
+body.tf-page-active .ios-desktop-header,
+body.tf-page-active .ios-header {
+  display: none !important;
+}
+
+/* Estilos para o bloco unificado da visão geral */
+.visao-geral-top-block {
+  overflow: visible !important;
+  z-index: 2;
+}
+
+.visao-summary-card-inner,
+.visao-payout-card-inner {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+@media (min-width: 1025px) {
+  .visao-summary-card-inner {
+    border-right: 1px solid rgba(28, 26, 20, 0.08) !important;
+    padding-right: 20px !important;
+  }
+}

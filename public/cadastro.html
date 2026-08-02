@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Criar uma Conta - Bancada Distribuidora">
+  <title>Bancada - Criar Conta</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Style Sheets -->
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/cadastro.css">
+  <link rel="stylesheet" href="/css/cadastro-desktop.css" media="(min-width: 769px)">
+  
+  <!-- Lucide Icons -->
+  <script src="/js/lucide.min.js"></script>
+
+</head>
+<body>
+
+  <!-- Toast notifications container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <div class="cadastro-page">
+    <div class="cadastro-container">
+      
+      <!-- Back Button -->
+      <button class="back-btn" onclick="window.location.href='/'" aria-label="Voltar para login">
+        <i data-lucide="arrow-left"></i>
+      </button>
+
+      <!-- Colored Curved Header -->
+      <div class="cadastro-header">
+        <h1 class="cadastro-title">Criar uma<br>conta</h1>
+      </div>
+
+      <!-- Card Body -->
+      <div class="cadastro-body">
+        
+        <!-- Google Sign-Up button -->
+        <div id="google-login-btn" class="google-btn-wrapper cascade-item" style="--index: 1; display: flex; justify-content: center; margin-bottom: 24px; min-height: 40px; width: 100%;"></div>
+
+        <div class="cadastro-divider cascade-item" style="--index: 2;">ou</div>
+
+        <!-- Form fields -->
+        <form class="cadastro-form" id="cadastro-form">
+          
+          <!-- Name & Surname Row -->
+          <div class="cadastro-row cascade-item" style="--index: 3;">
+            <div class="cadastro-input-group">
+              <input class="cadastro-input" type="text" id="cadastro-nome" placeholder="Nome" required autocomplete="given-name">
+            </div>
+            <div class="cadastro-input-group">
+              <input class="cadastro-input" type="text" id="cadastro-sobrenome" placeholder="Sobrenome" required autocomplete="family-name">
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="cadastro-input-group cascade-item" style="--index: 4;">
+            <input class="cadastro-input" type="email" id="cadastro-email" placeholder="E-mail" required autocomplete="email">
+          </div>
+
+          <!-- Password Row with Separate Eyeball visibility button -->
+          <div class="password-row cascade-item" style="--index: 5;">
+            <input class="cadastro-input" type="password" id="cadastro-senha" placeholder="Senha" required autocomplete="new-password">
+            <button type="button" class="eye-btn" onclick="togglePasswordVisibility()">
+              <i data-lucide="eye" id="eye-icon"></i>
+            </button>
+          </div>
+
+          <!-- Error Alert inside form -->
+          <div class="cadastro-error" id="cadastro-error"></div>
+
+          <!-- Black Submit Button -->
+          <button class="cadastro-submit-btn cascade-item" style="--index: 6;" id="cadastro-submit-btn" type="submit">
+            Criar conta
+          </button>
+
+        </form>
+
+        <!-- Terms notice -->
+        <p class="cadastro-terms cascade-item" style="--index: 7;">
+          Ao cadastrar-se no Bancada, você concorda com a nossa <a href="#">Política de Privacidade</a> e nossos <a href="#">Termos de Serviço</a>.
+        </p>
+
+        <!-- Footer link back to login -->
+        <div class="cadastro-footer cascade-item" style="--index: 8;">
+          Já possui uma conta? <a href="/">Entre aqui</a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Dependencies -->
+  <script src="/js/components.js"></script>
+  <script src="/js/cadastro.js?v=9.0"></script>
+</body>
+</html>

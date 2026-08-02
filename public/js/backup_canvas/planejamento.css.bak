@@ -1,0 +1,671 @@
+/**
+ * Tomada Sistema - CSS do Módulo de Planejamento (Redesign v3 - Fiel à Referência & Imagem 3)
+ * Paleta Tomada (#E55A2B) + Design dos Cards de Imagem 3 + Sem Sidebar Esquerda
+ */
+
+/* ============================================
+   OVERRIDE CRÍTICO: Neutralizar padding do page-container
+   para que o módulo de planejamento ocupe edge-to-edge
+   ============================================ */
+#page-container:has(.ref-dashboard-wrapper) {
+  padding: 0 !important;
+  overflow-y: auto !important;
+  display: block !important;
+  background: #F5F3EF;
+}
+
+:root {
+  --ref-bg: #F5F3EF;
+  --ref-card-bg: #FFFFFF;
+  --ref-border: #E8E4DD;
+  --ref-text: #1C1A14;
+  --ref-text-sub: #7C786D;
+  --ref-primary: #E55A2B;
+  --ref-primary-hover: #C8461B;
+  --ref-primary-light: rgba(229, 90, 43, 0.1);
+  --ref-radius-lg: 24px;
+  --ref-radius-md: 16px;
+  --ref-radius-pill: 30px;
+  --ref-shadow: 0 12px 36px rgba(0, 0, 0, 0.05);
+}
+
+/* Container Wrapper Sem Sidebar Esquerda - Contempla toda a área segura */
+.ref-dashboard-wrapper {
+  background: var(--ref-bg);
+  border: none;
+  overflow: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--ref-text);
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 130px);
+}
+
+/* 1. Search Bar (agora integrada ao section header) */
+.ref-search-bar {
+  position: relative;
+  flex: 0 1 280px;
+  min-width: 180px;
+}
+
+.ref-search-input {
+  width: 100%;
+  background: #F8F6F1;
+  border: 1px solid var(--ref-border);
+  border-radius: var(--ref-radius-pill);
+  padding: 10px 16px 10px 40px;
+  font-size: 13px;
+  color: var(--ref-text);
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.ref-search-input:focus {
+  background: #FFFFFF;
+  border-color: var(--ref-primary);
+  box-shadow: 0 0 0 3px var(--ref-primary-light);
+}
+
+.ref-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ref-text-sub);
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+/* 2. Layout sem Sidebar (Main Grid 2fr | 1fr) */
+.ref-body-layout-nosidebar {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  min-height: calc(100vh - 130px);
+  background: #FAF8F5;
+}
+
+@media (max-width: 1080px) {
+  .ref-body-layout-nosidebar {
+    grid-template-columns: 1fr;
+  }
+  .ref-right-panel {
+    display: none;
+  }
+}
+
+.ref-main-content-nosidebar {
+  padding: 28px 32px;
+  overflow-y: auto;
+}
+
+.ref-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.ref-section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  margin: 0;
+  color: var(--ref-text);
+  letter-spacing: -0.5px;
+}
+
+.ref-section-sub {
+  font-size: 12px;
+  color: var(--ref-text-sub);
+  margin-top: 2px;
+}
+
+/* 3. Hero Cards de Caixas (Bento Boxes Fechadas/Abertas) */
+.ref-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 22px;
+  margin-bottom: 36px;
+}
+
+.ref-hero-card {
+  border-radius: var(--ref-radius-lg);
+  padding: 24px;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 160px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.ref-hero-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.14);
+}
+
+.ref-hero-card.active-open {
+  border-color: #FFFFFF;
+  box-shadow: 0 0 0 4px rgba(229, 90, 43, 0.3), 0 18px 36px rgba(0, 0, 0, 0.16);
+}
+
+.ref-hero-card.theme-orange { background: linear-gradient(135deg, #E55A2B 0%, #C8461B 100%); }
+.ref-hero-card.theme-dark   { background: linear-gradient(135deg, #1C1A14 0%, #343026 100%); }
+.ref-hero-card.theme-purple { background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%); }
+.ref-hero-card.theme-green  { background: linear-gradient(135deg, #10B981 0%, #047857 100%); }
+
+.ref-hero-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.ref-hero-card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 19px;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.3;
+  color: #FFFFFF !important;
+}
+
+.ref-hero-card-dots {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: #FFFFFF !important;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ref-hero-card-dots:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.ref-hero-progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.95;
+  margin-bottom: 6px;
+  color: #FFFFFF !important;
+}
+
+.ref-hero-progress-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.ref-hero-progress-fill {
+  height: 100%;
+  background: #FFFFFF;
+  border-radius: 3px;
+  transition: width 0.35s ease;
+}
+
+.ref-hero-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.ref-date-pill {
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.22);
+  padding: 5px 12px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #FFFFFF !important;
+}
+
+/* 4. RE-ENQUADRAMENTO DA SEÇÃO INFERIOR (ESTILO IMAGEM 3 - ULTRA PREMIUM CARDS) */
+.ref-bottom-re-enquadrado {
+  background: #FFFFFF;
+  border-radius: var(--ref-radius-lg);
+  border: 1px solid var(--ref-border);
+  padding: 28px;
+  box-shadow: var(--ref-shadow);
+}
+
+.ref-bottom-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ref-border);
+}
+
+.ref-bottom-caixa-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ref-text);
+}
+
+/* CARDS DE CONTEÚDO 100% INSPIRADOS NA IMAGEM 3 - TAMANHO REDUZIDO (MENORES E MAIS COMPACTOS) */
+.img3-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.img3-card {
+  background: #FFFFFF;
+  border: 1px solid var(--ref-border);
+  border-radius: 20px;
+  padding: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.img3-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  border-color: var(--ref-primary);
+}
+
+/* Top Cover Banner Image (Thumb) da Imagem 3 - Reduzida */
+.img3-banner {
+  position: relative;
+  height: 120px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--ref-bg);
+  margin-bottom: 12px;
+}
+
+.img3-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Avatar Badge Sobreposto no Canto Inferior Esquerdo da Cover - Reduzido */
+.img3-avatar-badge {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+  background: var(--ref-primary);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+/* Glassmorphism Tag Badge no Canto Inferior Direito da Cover - Reduzido */
+.img3-glass-badge {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Informações do Card Imagem 3 */
+.img3-body {
+  padding: 0 4px 6px 4px;
+}
+
+.img3-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.img3-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ref-text);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.img3-bookmark-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #F4F2EC;
+  border: none;
+  color: var(--ref-text-sub);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.img3-bookmark-btn:hover {
+  background: var(--ref-primary-light);
+  color: var(--ref-primary);
+}
+
+.img3-subtitle {
+  font-size: 11px;
+  color: var(--ref-text-sub);
+  margin: 0 0 10px 0;
+  line-height: 1.4;
+}
+
+/* Três Ícones de Status da Imagem 3 (Rating | Hours | Month / Checklist) */
+.img3-stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 0 2px;
+}
+
+.img3-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.img3-stat-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.img3-stat-val {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--ref-text);
+}
+
+.img3-stat-lbl {
+  font-size: 9px;
+  color: var(--ref-text-sub);
+  display: block;
+}
+
+/* Barra de Progresso Premium dos Checklists */
+.img3-premium-progress-container {
+  background: #F8F6F1;
+  border-radius: 10px;
+  padding: 8px 10px;
+  margin-bottom: 12px;
+  border: 1px solid var(--ref-border);
+}
+
+.img3-premium-progress-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--ref-text-sub);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.img3-premium-progress-track {
+  width: 100%;
+  height: 6px;
+  background: #EBE5DF;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.img3-premium-progress-fill {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--tag-color, var(--ref-primary)) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    var(--tag-color, var(--ref-primary)) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: 3px;
+  /* Transição elástica premium estilo spring */
+  transition: width 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: shimmerProgress 3s infinite linear;
+}
+
+@keyframes shimmerProgress {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Botão Pílula Preto / Destaque "Get In Touch" da Imagem 3 */
+.img3-pill-btn {
+  width: 100%;
+  background: #1C1A14;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 30px;
+  padding: 13px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.img3-pill-btn:hover {
+  background: var(--ref-primary);
+  transform: translateY(-1px);
+}
+
+/* Painel Direito (Today's Task) */
+.ref-right-panel {
+  background: #FFFFFF;
+  border-left: 1px solid var(--ref-border);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ref-panel-tabs {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ref-border);
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+}
+
+.ref-panel-tab {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ref-text-sub);
+  cursor: pointer;
+  padding-bottom: 6px;
+}
+
+.ref-panel-tab.active {
+  color: var(--ref-text);
+  font-weight: 800;
+  border-bottom: 2px solid var(--ref-primary);
+}
+
+.ref-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.ref-panel-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 19px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.ref-filters-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+}
+
+.ref-filter-pill {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: #F4F2EC;
+  color: var(--ref-text-sub);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ref-filter-pill.active {
+  background: var(--ref-primary);
+  color: #FFFFFF;
+}
+
+.ref-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+  max-height: 560px;
+}
+
+.ref-task-card {
+  background: #FFFFFF;
+  border: 1px solid var(--ref-border);
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.ref-task-card:hover {
+  border-color: var(--ref-primary);
+  box-shadow: 0 6px 18px rgba(229, 90, 43, 0.08);
+}
+
+.ref-task-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--ref-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.ref-task-check.checked {
+  background: var(--ref-primary);
+  border-color: var(--ref-primary);
+  color: #FFFFFF;
+}
+
+.btn-ref-add {
+  background: var(--ref-primary);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--ref-radius-pill);
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s ease;
+  box-shadow: 0 4px 12px rgba(229, 90, 43, 0.25);
+}
+
+.btn-ref-add:hover {
+  background: var(--ref-primary-hover);
+}
+
+/* Dropzone de Thumbnail Premium */
+.card-thumb-dropzone {
+  border-radius: 14px; 
+  overflow: hidden; 
+  height: 120px; 
+  border: 2px dashed var(--ref-border, #E8E4DD); 
+  background: #F8F6F1; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+}
+
+.card-thumb-dropzone:hover {
+  border-color: var(--ref-primary, #E55A2B);
+  background: rgba(229, 90, 43, 0.03);
+}

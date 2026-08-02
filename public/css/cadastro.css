@@ -1,0 +1,483 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-main);
+}
+
+.cadastro-page {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-main); /* #FAF8F5 */
+  font-family: var(--font-main);
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.cadastro-container {
+  width: 100%;
+  height: 100vh; /* Full bleed on mobile */
+  background: var(--bg-card); /* #FFFFFF */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Floating Glassmorphic Back Button */
+.back-btn {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.back-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.back-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.25;
+}
+
+@media (min-width: 601px) {
+  .cadastro-page {
+    padding: 24px;
+  }
+  
+  .cadastro-container {
+    height: 840px;
+    max-height: 95vh;
+    border-radius: 32px;
+    box-shadow: var(--shadow-lg), 0 20px 45px rgba(113, 63, 18, 0.08);
+    border: 1px solid rgba(229, 90, 43, 0.08);
+  }
+}
+
+/* Rounded Header with Colorful Circles matching the mockup */
+.cadastro-header {
+  background: var(--primary); /* primary system orange #E55A2B */
+  position: relative;
+  padding: 68px 24px 52px 24px;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Golden/yellow circle on top-left */
+.cadastro-header::before {
+  content: '';
+  position: absolute;
+  top: -24px;
+  left: -48px;
+  width: 140px;
+  height: 140px;
+  background: #D4B478; /* system gold tint */
+  border-radius: 50%;
+  opacity: 0.95;
+  z-index: 1;
+}
+
+/* Green circle on bottom-right */
+.cadastro-header::after {
+  content: '';
+  position: absolute;
+  bottom: -32px;
+  right: -24px;
+  width: 130px;
+  height: 130px;
+  background: var(--success); /* green success #10B981 */
+  border-radius: 50%;
+  opacity: 0.95;
+  z-index: 1;
+}
+
+.cadastro-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+  color: #FFFFFF;
+  letter-spacing: -0.8px;
+  line-height: 1.2;
+}
+
+.cadastro-body {
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  box-sizing: border-box;
+  background: var(--bg-card);
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
+  margin-top: -24px;
+  position: relative;
+  z-index: 5;
+}
+
+/* Google Button */
+.google-signup-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  height: 52px;
+  border-radius: 9999px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--separator);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-sm);
+}
+
+.google-signup-btn:hover {
+  background-color: var(--bg-main);
+  border-color: var(--text-muted);
+}
+
+.google-icon-svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Divider (or / ou) */
+.cadastro-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 24px 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: lowercase;
+}
+
+.cadastro-divider::before,
+.cadastro-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--separator);
+}
+
+.cadastro-divider:not(:empty)::before {
+  margin-right: 1em;
+}
+
+.cadastro-divider:not(:empty)::after {
+  margin-left: 1em;
+}
+
+/* Form Styles */
+.cadastro-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cadastro-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.cadastro-row > div {
+  flex: 1;
+}
+
+.cadastro-input {
+  width: 100%;
+  height: 52px;
+  background-color: var(--bg-main); /* System light background */
+  border: 1px solid var(--separator);
+  border-radius: 14px;
+  padding: 0 16px;
+  font-size: 15px;
+  color: var(--text-main);
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
+  outline: none;
+}
+
+.cadastro-input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+
+.cadastro-input:focus {
+  background-color: var(--bg-card);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Password eye row */
+.password-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.password-row .cadastro-input {
+  flex: 1;
+}
+
+.eye-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background-color: var(--bg-main);
+  border: 1px solid var(--separator);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+
+.eye-btn:hover {
+  background-color: var(--bg-card-hover);
+  color: var(--text-main);
+}
+
+.eye-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Submit Button (System Orange) */
+.cadastro-submit-btn {
+  width: 100%;
+  height: 52px;
+  border-radius: 9999px;
+  background-color: var(--primary);
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 10px;
+}
+
+.cadastro-submit-btn:hover {
+  background-color: var(--primary-dark);
+  box-shadow: 0 4px 12px var(--primary-light);
+}
+
+.cadastro-submit-btn:active {
+  transform: scale(0.98);
+}
+
+/* Terms & Notice */
+.cadastro-terms {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.5;
+  margin-top: 20px;
+  margin-bottom: 24px;
+}
+
+.cadastro-terms a {
+  color: var(--text-main);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* Footer link to Log in */
+.cadastro-footer {
+  text-align: center;
+  font-size: 15px;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.cadastro-footer a {
+  color: var(--primary);
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.cadastro-footer a:hover {
+  color: var(--primary-dark);
+}
+
+/* Error message styling */
+.cadastro-error {
+  background-color: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  color: #EF4444;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  text-align: center;
+  display: none;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.cadastro-error.active {
+  display: block;
+}
+
+/* Modais do Sistema (Bancada) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  padding: 16px;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background-color: var(--bg-card);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 480px;
+  max-height: 90vh;
+  box-shadow: var(--shadow-lg), 0 10px 30px rgba(0, 0, 0, 0.08);
+  transform: scale(0.95);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1);
+}
+
+.modal-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--separator);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--separator);
+  background-color: var(--bg-main);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Custom modal pill buttons matching system palette */
+.pill-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 52px;
+  border-radius: 9999px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  font-family: var(--font-main);
+}
+
+.pill-btn:active {
+  transform: scale(0.98);
+}
+
+.btn-light-orange {
+  background-color: #FBEBE4;
+  color: var(--primary);
+}
+
+.btn-light-orange:hover {
+  background-color: #F7DCD0;
+}
+
+.btn-orange {
+  background-color: var(--primary);
+  color: #FFFFFF;
+}
+
+.btn-orange:hover {
+  background-color: var(--primary-dark);
+  box-shadow: 0 4px 12px rgba(229, 90, 43, 0.2);
+}
+
+.btn-icon {
+  width: 20px;
+  height: 20px;
+}

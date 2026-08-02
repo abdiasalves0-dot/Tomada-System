@@ -1,0 +1,272 @@
+[
+  {
+    "codigo": "CTR-2026-001",
+    "orcamentoId": "e9zzwxmg8mqn65f2i",
+    "orcamentoCodigo": "ORC-2026-001",
+    "clienteNome": "Panificadora Alvorada",
+    "clienteId": "b70b6f40-9505-4772-a8ae-9b2cf592785d",
+    "clienteEmail": "eita@bancada.com",
+    "responsavelNome": "Bancada Móveis Planejados",
+    "responsavelEmail": "contato@bancadaplanejados.com.br",
+    "projeto": "Painel de TV ripado e rack para sala",
+    "valor": 1520,
+    "prazo": "2026-07-21",
+    "dadosAdicionais": {
+      "formaPagamento": "40% na assinatura do contrato, 40% na entrega dos materiais na obra e 20% na conclusão da instalação dos móveis.",
+      "prazoEntrega": "2026-07-21",
+      "multaAtraso": "Em caso de atraso injustificado na entrega ou na execução de qualquer etapa por responsabilidade de qualquer uma das partes, incidirá multa de 2% (dois por cento) sobre o valor total do projeto, acrescido de juros moratórios de 1% (um por cento) ao mês.",
+      "garantia": "A CONTRATADA oferece garantia de 90 (noventa) dias contra defeitos de fabricação, montagem ou instalação dos móveis planejados, contados a partir da data de entrega do projeto concluído, não cobrindo desgaste natural ou mau uso.",
+      "clausulaRescisao": "Em caso de cancelamento imotivado da execução do projeto por parte do CONTRATANTE, haverá a retenção do valor integral correspondente aos materiais já adquiridos para o projeto e 20% (vinte por cento) do saldo restante a título de encargos administrativos e mão de obra de projeto.",
+      "danosInstalacao": "A CONTRATADA responsabiliza-se civilmente por quaisquer danos e avarias causados diretamente ao imóvel do CONTRATANTE decorrentes de negligência ou imperícia na montagem dos móveis planejados por seus colaboradores.",
+      "propriedadeMateriais": "Todos os móveis, ferragens e insumos fabricados e entregues pela CONTRATADA permanecerão sob sua exclusiva propriedade legal até que ocorra a quitação total de todas as parcelas e valores estipulados na cláusula de preço deste instrumento.",
+      "foro": "São Paulo/SP"
+    },
+    "zapsignDocUuid": "f08aa242-357c-4476-8191-4028bc1221eb",
+    "signers": [
+      {
+        "uuid": "f978b635-9b33-4334-9ae0-bd5d3fdcbf8e",
+        "name": "Panificadora Alvorada",
+        "email": "eita@bancada.com",
+        "sign_url": "https://app.zapsign.com.br/verificar/f978b635-9b33-4334-9ae0-bd5d3fdcbf8e",
+        "status": "pending"
+      },
+      {
+        "uuid": "6846ae8f-912a-464a-b825-4bd532d344e0",
+        "name": "Bancada Móveis Planejados",
+        "email": "contato@bancadaplanejados.com.br",
+        "sign_url": "https://app.zapsign.com.br/verificar/6846ae8f-912a-464a-b825-4bd532d344e0",
+        "status": "pending"
+      }
+    ],
+    "status": "Enviado para assinatura",
+    "pdfPath": "/storage/contratos/CTR-2026-001.pdf",
+    "criadoEm": "2026-06-21T03:48:13.870Z",
+    "id": "los3d1xzkmqn8xy9a",
+    "_id": "los3d1xzkmqn8xy9a"
+  },
+  {
+    "codigo": "CTR-2026-002",
+    "orcamentoId": "mea1arolwmqn65f2i",
+    "orcamentoCodigo": "ORC-2026-002",
+    "clienteNome": "Panificadora Alvorada",
+    "clienteId": "b70b6f40-9505-4772-a8ae-9b2cf592785d",
+    "clienteEmail": "eita@bancada.com",
+    "responsavelNome": "Bancada Móveis Planejados",
+    "responsavelEmail": "contato@bancadaplanejados.com.br",
+    "projeto": "Balcão de atendimento comercial",
+    "valor": 2863.9,
+    "prazo": "2026-07-21",
+    "dadosAdicionais": {
+      "formaPagamento": "40% na assinatura do contrato, 40% na entrega dos materiais na obra e 20% na conclusão da instalação dos móveis.",
+      "prazoEntrega": "2026-07-21",
+      "multaAtraso": "Em caso de atraso injustificado na entrega ou na execução de qualquer etapa por responsabilidade de qualquer uma das partes, incidirá multa de 2% (dois por cento) sobre o valor total do projeto, acrescido de juros moratórios de 1% (um por cento) ao mês.",
+      "garantia": "A CONTRATADA oferece garantia de 90 (noventa) dias contra defeitos de fabricação, montagem ou instalação dos móveis planejados, contados a partir da data de entrega do projeto concluído, não cobrindo desgaste natural ou mau uso.",
+      "clausulaRescisao": "Em caso de cancelamento imotivado da execução do projeto por parte do CONTRATANTE, haverá a retenção do valor integral correspondente aos materiais já adquiridos para o projeto e 20% (vinte por cento) do saldo restante a título de encargos administrativos e mão de obra de projeto.",
+      "danosInstalacao": "A CONTRATADA responsabiliza-se civilmente por quaisquer danos e avarias causados diretamente ao imóvel do CONTRATANTE decorrentes de negligência ou imperícia na montagem dos móveis planejados por seus colaboradores.",
+      "propriedadeMateriais": "Todos os móveis, ferragens e insumos fabricados e entregues pela CONTRATADA permanecerão sob sua exclusiva propriedade legal até que ocorra a quitação total de todas as parcelas e valores estipulados na cláusula de preço deste instrumento.",
+      "foro": "São Paulo/SP"
+    },
+    "zapsignDocUuid": "7b027c5c-2fda-44f0-bd79-95069a28a45d",
+    "signers": [
+      {
+        "uuid": "65117552-33b5-4b19-a898-d8793ec92987",
+        "name": "Panificadora Alvorada",
+        "email": "eita@bancada.com",
+        "sign_url": "https://app.zapsign.com.br/verificar/65117552-33b5-4b19-a898-d8793ec92987",
+        "status": "pending"
+      },
+      {
+        "uuid": "83e818ee-2070-4fb3-83b1-321719c4d393",
+        "name": "Bancada Móveis Planejados",
+        "email": "contato@bancadaplanejados.com.br",
+        "sign_url": "https://app.zapsign.com.br/verificar/83e818ee-2070-4fb3-83b1-321719c4d393",
+        "status": "pending"
+      }
+    ],
+    "status": "Enviado para assinatura",
+    "pdfPath": "/storage/contratos/CTR-2026-002.pdf",
+    "criadoEm": "2026-06-21T03:49:22.032Z",
+    "id": "nl23tmhfumqn8zeuo",
+    "_id": "nl23tmhfumqn8zeuo"
+  },
+  {
+    "codigo": "CTR-COL-2026-001",
+    "tipo": "colaborador",
+    "padeiroId": "moitru63l953spbhy",
+    "padeiroNome": "ALAOR FLAVIO NUNES DE FREITAS",
+    "padeiroCpf": "58388451120",
+    "padeiroEmail": "alaor.NexusGestorpad8@gmail.com",
+    "padeiroTelefone": "(61) 99609-5309",
+    "tipoServico": "Marcenaria",
+    "formaPagamento": "projeto",
+    "valor": 1200,
+    "dataInicio": "2026-06-21",
+    "vigencia": "indeterminado",
+    "zapsignDocUuid": "mock-uuid-12345",
+    "signers": [
+      {
+        "uuid": "mock-signer-1",
+        "name": "ALAOR FLAVIO NUNES DE FREITAS",
+        "email": "alaor.NexusGestorpad8@gmail.com",
+        "sign_url": "https://app.zapsign.com.br/verificar/mock-signer-1",
+        "status": "pending"
+      },
+      {
+        "uuid": "mock-signer-2",
+        "name": "Bancada Móveis Planejados",
+        "email": "administrativo@bancadamarcenaria.com.br",
+        "sign_url": "https://app.zapsign.com.br/verificar/mock-signer-2",
+        "status": "pending"
+      }
+    ],
+    "status": "Enviado para assinatura",
+    "pdfPath": "/storage/contratos/CTR-COL-2026-001.pdf",
+    "criadoEm": "2026-06-21T10:00:00.000Z",
+    "id": "mockcontratocolab1",
+    "_id": "mockcontratocolab1"
+  },
+  {
+    "codigo": "CTR-COL-2026-002",
+    "tipo": "colaborador",
+    "padeiroId": "8fc09e32-b2d8-41a9-bf85-3c01d6623b86",
+    "padeiroNome": "Carlos Silva",
+    "padeiroCpf": "111.111.111-11",
+    "padeiroEmail": "carlos@bancada.com",
+    "padeiroTelefone": "—",
+    "tipoServico": "Marcenaria",
+    "formaPagamento": "projeto",
+    "valor": 5,
+    "dataInicio": "2026-06-21",
+    "vigencia": "indeterminado",
+    "zapsignDocUuid": "84c0222c-43f2-428f-819e-25bd070090c8",
+    "signers": [
+      {
+        "uuid": "e76e7347-a089-40d2-afce-b5949438df3a",
+        "name": "Carlos Silva",
+        "email": "carlos@bancada.com",
+        "sign_url": "https://app.zapsign.com.br/verificar/e76e7347-a089-40d2-afce-b5949438df3a",
+        "status": "pending"
+      },
+      {
+        "uuid": "d5a9aa2e-330c-4742-9e66-fba406071ff5",
+        "name": "Administrador Nexus",
+        "email": "admin@nexus.com",
+        "sign_url": "https://app.zapsign.com.br/verificar/d5a9aa2e-330c-4742-9e66-fba406071ff5",
+        "status": "pending"
+      }
+    ],
+    "status": "Cancelado",
+    "pdfPath": "/storage/contratos/CTR-COL-2026-002.pdf",
+    "criadoEm": "2026-06-21T14:32:30.200Z",
+    "id": "a5tfe9fqnmqnvyho8",
+    "_id": "a5tfe9fqnmqnvyho8"
+  },
+  {
+    "codigo": "CTR-COL-2026-003",
+    "tipo": "colaborador",
+    "padeiroId": "8ff2be33-d3d3-468d-a546-87e9c835b020",
+    "padeiroNome": "João Santos",
+    "padeiroCpf": "222.222.222-22",
+    "padeiroEmail": "joao@bancada.com",
+    "padeiroTelefone": "—",
+    "tipoServico": "Marcenaria",
+    "formaPagamento": "projeto",
+    "valor": 9,
+    "dataInicio": "2026-06-21",
+    "vigencia": "indeterminado",
+    "zapsignDocUuid": "aaeb356b-9aa8-498d-9433-c9528f394e2f",
+    "signers": [
+      {
+        "uuid": "d6503bd4-cd90-43c7-8e9c-712c2ab565a2",
+        "name": "João Santos",
+        "email": "joao@bancada.com",
+        "sign_url": "https://app.zapsign.com.br/verificar/d6503bd4-cd90-43c7-8e9c-712c2ab565a2",
+        "status": "pending"
+      },
+      {
+        "uuid": "8a98e845-dcba-4728-9310-e4f02cca82c2",
+        "name": "Administrador Nexus",
+        "email": "admin@nexus.com",
+        "sign_url": "https://app.zapsign.com.br/verificar/8a98e845-dcba-4728-9310-e4f02cca82c2",
+        "status": "pending"
+      }
+    ],
+    "status": "Cancelado",
+    "pdfPath": "/storage/contratos/CTR-COL-2026-003.pdf",
+    "criadoEm": "2026-06-21T14:36:38.223Z",
+    "id": "en5wfdhqamqnw3t1r",
+    "_id": "en5wfdhqamqnw3t1r"
+  },
+  {
+    "codigo": "CTR-COL-2026-004",
+    "tipo": "colaborador",
+    "padeiroId": "2d7e9a50-48e3-4f41-a41e-f28cffca0a8e",
+    "padeiroNome": "José Oliveira",
+    "padeiroCpf": "333.333.333-33",
+    "padeiroEmail": "jose@bancada.com",
+    "padeiroTelefone": "—",
+    "tipoServico": "Marcenaria",
+    "formaPagamento": "projeto",
+    "valor": 9,
+    "dataInicio": "2026-06-21",
+    "vigencia": "indeterminado",
+    "zapsignDocUuid": "ae26bfe0-68a0-48c9-b147-c6370f781a47",
+    "signers": [
+      {
+        "uuid": "7cdec420-0968-405f-843b-a7ac4844d111",
+        "name": "José Oliveira",
+        "email": "jose@bancada.com",
+        "sign_url": "https://app.zapsign.com.br/verificar/7cdec420-0968-405f-843b-a7ac4844d111",
+        "status": "pending"
+      },
+      {
+        "uuid": "61578726-dae5-49d5-badf-365908e1bf85",
+        "name": "Administrador Nexus",
+        "email": "admin@nexus.com",
+        "sign_url": "https://app.zapsign.com.br/verificar/61578726-dae5-49d5-badf-365908e1bf85",
+        "status": "pending"
+      }
+    ],
+    "status": "Enviado para assinatura",
+    "pdfPath": "/storage/contratos/CTR-COL-2026-004.pdf",
+    "criadoEm": "2026-06-21T14:37:03.262Z",
+    "id": "xaj1pthjvmqnw4cda",
+    "_id": "xaj1pthjvmqnw4cda"
+  },
+  {
+    "codigo": "CTR-COL-2026-005",
+    "tipo": "colaborador",
+    "padeiroId": "ce6129d2-bdaa-4af3-a681-687606187fdb",
+    "padeiroNome": "eitao",
+    "padeiroCpf": "546.546.546-45",
+    "padeiroEmail": "TESTEE@BANCADA.COM",
+    "padeiroTelefone": "61939379349",
+    "tipoServico": "Marcenaria",
+    "formaPagamento": "projeto",
+    "valor": 1,
+    "dataInicio": "2026-06-21",
+    "vigencia": "indeterminado",
+    "zapsignDocUuid": "8e05e0ae-2cb9-41f3-bd87-8fe6ba890130",
+    "signers": [
+      {
+        "uuid": "b2bcd72a-4c4e-4ccf-a283-bbd45bc39ba5",
+        "name": "eitao",
+        "email": "TESTEE@BANCADA.COM",
+        "sign_url": "https://app.zapsign.com.br/verificar/b2bcd72a-4c4e-4ccf-a283-bbd45bc39ba5",
+        "status": "pending"
+      },
+      {
+        "uuid": "bfa29398-31d2-48ad-9f6b-e87326b85a99",
+        "name": "Administrador Nexus",
+        "email": "admin@nexus.com",
+        "sign_url": "https://app.zapsign.com.br/verificar/bfa29398-31d2-48ad-9f6b-e87326b85a99",
+        "status": "pending"
+      }
+    ],
+    "status": "Enviado para assinatura",
+    "pdfPath": "/storage/contratos/CTR-COL-2026-005.pdf",
+    "criadoEm": "2026-06-21T14:40:40.747Z",
+    "id": "h1d13juaqmqnw906j",
+    "_id": "h1d13juaqmqnw906j"
+  }
+]

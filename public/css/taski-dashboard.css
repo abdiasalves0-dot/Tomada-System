@@ -1,0 +1,1053 @@
+/* ==========================================================================
+   Taski / Tomada Modern Dashboard Stylesheet
+   Full-Width Edge-to-Edge Layout & Official System Color Palette
+   ========================================================================== */
+
+/* Main Container & Edge-to-Edge Reset */
+.taski-dash-wrapper {
+  font-family: var(--font-main, 'Inter', 'Outfit', system-ui, -apple-system, sans-serif);
+  color: var(--text-main, #1C1A14);
+  background-color: var(--bg-main, #FAF8F5);
+  padding: 24px 32px 80px 32px;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.taski-dash-wrapper * {
+  box-sizing: border-box;
+}
+
+/* Ensure outer page containers do not add unwanted side margins */
+#page-container:has(.taski-dash-wrapper),
+.page-content:has(.taski-dash-wrapper) {
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  background-color: var(--bg-main, #FAF8F5) !important;
+}
+
+/* --------------------------------------------------------------------------
+   1. TOP HERO HEADER & NAVIGATION BAR
+   -------------------------------------------------------------------------- */
+.taski-hero-card {
+  background: linear-gradient(135deg, #1C1A14 0%, #2D2721 60%, #1C1A14 100%);
+  border-radius: 24px;
+  padding: 28px 36px 36px 36px;
+  color: #FFFFFF;
+  margin-bottom: 24px;
+  box-shadow: 0 20px 40px -15px rgba(28, 26, 20, 0.3);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Top Navbar inside Hero Card */
+.taski-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.taski-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #FFFFFF;
+}
+
+.taski-brand-logo {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #E55A2B 0%, #FF9A3C 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(229, 90, 43, 0.4);
+}
+
+.taski-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 5px 6px;
+  border-radius: 99px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.taski-nav-item {
+  padding: 8px 16px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.taski-nav-item:hover {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.taski-nav-item.active {
+  background: linear-gradient(135deg, #E55A2B 0%, #C8461B 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(229, 90, 43, 0.35);
+}
+
+.taski-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.taski-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.taski-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.taski-icon-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  background: #E55A2B;
+  border-radius: 50%;
+  border: 2px solid #1C1A14;
+}
+
+.taski-btn-primary {
+  background: linear-gradient(135deg, #E55A2B 0%, #C8461B 100%);
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(229, 90, 43, 0.4);
+  transition: all 0.2s ease;
+}
+
+.taski-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(229, 90, 43, 0.5);
+  background: linear-gradient(135deg, #C8461B 0%, #A8350F 100%);
+}
+
+.taski-user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.taski-user-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid rgba(229, 90, 43, 0.5);
+  object-fit: cover;
+  background: linear-gradient(135deg, #E55A2B 0%, #FF9A3C 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #FFFFFF;
+  font-size: 15px;
+}
+
+.taski-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.taski-user-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.taski-user-role {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Hero Content Area */
+.taski-hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.taski-hero-text {
+  max-width: 540px;
+}
+
+.taski-hero-title {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 0 0 12px 0;
+  line-height: 1.15;
+  background: linear-gradient(135deg, #FFFFFF 0%, rgba(255, 255, 255, 0.88) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.taski-hero-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Hero Floating Glass Showcase (3D Interactive Stack) - ENLARGED & PERFECTLY ALIGNED */
+.taski-hero-showcase {
+  position: relative;
+  width: 440px;
+  height: 155px;
+  flex-shrink: 0;
+  perspective: 1000px;
+  user-select: none;
+  cursor: grab;
+  touch-action: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 12px;
+}
+
+.taski-hero-showcase:active {
+  cursor: grabbing;
+}
+
+.taski-glass-card {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  width: 380px;
+  border-radius: 22px;
+  padding: 20px 26px;
+  box-sizing: border-box;
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease, box-shadow 0.3s ease;
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+}
+
+/* Glass Colors with 3D Layering */
+.taski-glass-card-top {
+  z-index: 3;
+  background: linear-gradient(135deg, rgba(229, 90, 43, 0.88) 0%, rgba(200, 70, 27, 0.78) 100%);
+  transform: translate3d(0, 0, 35px) rotate(0deg);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.55), 0 12px 30px rgba(229, 90, 43, 0.4);
+}
+
+.taski-glass-card-mid {
+  z-index: 2;
+  background: linear-gradient(135deg, rgba(255, 154, 60, 0.78) 0%, rgba(229, 90, 43, 0.68) 100%);
+  transform: translate3d(-24px, -18px, 18px) rotate(-3.5deg);
+  border-color: rgba(255, 255, 255, 0.35);
+  opacity: 0.95;
+}
+
+.taski-glass-card-back {
+  z-index: 1;
+  background: linear-gradient(135deg, rgba(45, 39, 33, 0.78) 0%, rgba(28, 26, 20, 0.68) 100%);
+  transform: translate3d(-46px, -34px, 0px) rotate(-7deg);
+  border-color: rgba(255, 255, 255, 0.22);
+  opacity: 0.82;
+}
+
+.taski-glass-label {
+  font-size: 15px;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 6px;
+  line-height: 1.3;
+  letter-spacing: -0.2px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.taski-glass-time {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   2. BENTO DASHBOARD MAIN GRID (3 COLUMNS)
+   -------------------------------------------------------------------------- */
+.taski-bento-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr 340px;
+  gap: 24px;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+/* --- Left Column: Metric Cards --- */
+.taski-metrics-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.taski-metric-card {
+  background: var(--bg-card, #FFFFFF);
+  border-radius: 20px;
+  padding: 20px 22px;
+  border: 1px solid var(--separator, #EBE5DF);
+  box-shadow: var(--shadow-md, 0 4px 12px rgba(113, 63, 18, 0.04));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.taski-metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(113, 63, 18, 0.08);
+  border-color: #DFD9C8;
+}
+
+.taski-metric-header {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main, #1C1A14);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.taski-metric-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.taski-metric-spark {
+  width: 90px;
+  height: 45px;
+}
+
+.taski-metric-data {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.taski-metric-badge-pill {
+  background: #1C1A14;
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 99px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-bottom: 4px;
+}
+
+.taski-metric-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-main, #1C1A14);
+  letter-spacing: -1px;
+  line-height: 1.1;
+}
+
+.taski-metric-sub {
+  font-size: 11px;
+  color: var(--text-secondary, #7A7567);
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+/* --- Middle Column: Main Productivity Chart Card --- */
+.taski-chart-card {
+  background: var(--bg-card, #FFFFFF);
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid var(--separator, #EBE5DF);
+  box-shadow: var(--shadow-md, 0 4px 12px rgba(113, 63, 18, 0.04));
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+}
+
+.taski-chart-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.taski-select-filter {
+  background: var(--bg-main, #FAF8F5);
+  border: 1px solid var(--separator, #EBE5DF);
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main, #1C1A14);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.taski-select-filter:hover {
+  background: #EBE8DA;
+  border-color: #DFD9C8;
+}
+
+.taski-chart-legend {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary, #7A7567);
+}
+
+.taski-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.taski-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.taski-dot-blue { background: #E55A2B; }
+.taski-dot-gold { background: #FF9A3C; }
+
+.taski-chart-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.taski-chart-main-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main, #1C1A14);
+  margin: 0 0 20px 0;
+  letter-spacing: -0.3px;
+}
+
+.taski-chart-canvas-box {
+  position: relative;
+  height: 260px;
+  width: 100%;
+}
+
+/* Floating Glass Tooltip Card on Main Chart */
+.taski-chart-floating-tooltip {
+  position: absolute;
+  top: 40px;
+  left: 45%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--separator, #EBE5DF);
+  box-shadow: 0 12px 30px rgba(113, 63, 18, 0.12);
+  border-radius: 16px;
+  padding: 14px 18px;
+  z-index: 10;
+  min-width: 180px;
+  pointer-events: none;
+  animation: floatTooltip 3s ease-in-out infinite alternate;
+}
+
+@keyframes floatTooltip {
+  0% { transform: translateX(-50%) translateY(0px); }
+  100% { transform: translateX(-50%) translateY(-6px); }
+}
+
+.taski-tooltip-val {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-main, #1C1A14);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.taski-tooltip-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #10B981;
+  background: rgba(16, 185, 129, 0.12);
+  padding: 2px 6px;
+  border-radius: 99px;
+}
+
+.taski-tooltip-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary, #7A7567);
+  margin-bottom: 8px;
+}
+
+.taski-tooltip-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-main, #1C1A14);
+}
+
+/* --- Right Column: Schedule Timeline & AI Assistant --- */
+.taski-sidebar-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Schedule Timeline Card */
+.taski-schedule-card {
+  background: var(--bg-card, #FFFFFF);
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid var(--separator, #EBE5DF);
+  box-shadow: var(--shadow-md, 0 4px 12px rgba(113, 63, 18, 0.04));
+  width: 100%;
+}
+
+.taski-card-header-sm {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.taski-card-title-sm {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-main, #1C1A14);
+  margin: 0;
+}
+
+.taski-add-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-main, #FAF8F5);
+  border: 1px solid var(--separator, #EBE5DF);
+  color: var(--text-main, #1C1A14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.taski-add-btn:hover {
+  background: #EBE8DA;
+}
+
+.taski-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.taski-timeline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.taski-time-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted, #918B7A);
+  width: 36px;
+  padding-top: 6px;
+}
+
+.taski-timeline-block {
+  flex: 1;
+  border-radius: 14px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.taski-block-purple {
+  background: linear-gradient(135deg, rgba(229, 90, 43, 0.12) 0%, rgba(255, 154, 60, 0.12) 100%);
+  border: 1px solid rgba(229, 90, 43, 0.25);
+}
+
+.taski-block-blue {
+  background: linear-gradient(135deg, rgba(255, 154, 60, 0.12) 0%, rgba(28, 26, 20, 0.08) 100%);
+  border: 1px solid rgba(255, 154, 60, 0.25);
+}
+
+.taski-block-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main, #1C1A14);
+}
+
+.taski-avatar-stack {
+  display: flex;
+  align-items: center;
+}
+
+.taski-stack-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #FFFFFF;
+  margin-left: -6px;
+  object-fit: cover;
+  background: #E55A2B;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.taski-stack-more {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #1C1A14;
+  color: #FFFFFF;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -6px;
+  border: 2px solid #FFFFFF;
+}
+
+/* AI Assistant Card - Warm System Accent */
+.taski-ai-card {
+  background: linear-gradient(135deg, #E55A2B 0%, #FF9A3C 100%);
+  border-radius: 20px;
+  padding: 24px;
+  color: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(229, 90, 43, 0.35);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 240px;
+  width: 100%;
+}
+
+.taski-ai-card::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 140px;
+  height: 140px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  filter: blur(20px);
+}
+
+.taski-ai-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.taski-ai-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.taski-ai-action-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.taski-ai-action-circle:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.05);
+}
+
+.taski-ai-date {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 14px;
+  font-weight: 500;
+}
+
+.taski-ai-prompt {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.4px;
+  margin: 6px 0 16px 0;
+}
+
+.taski-ai-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.taski-ai-chip {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 99px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.taski-ai-chip:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------------------------------
+   3. BOTTOM ROW: PROJECT PROGRESS TABLE CARD
+   -------------------------------------------------------------------------- */
+.taski-table-card {
+  background: var(--bg-card, #FFFFFF);
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid var(--separator, #EBE5DF);
+  box-shadow: var(--shadow-md, 0 4px 12px rgba(113, 63, 18, 0.04));
+  width: 100%;
+}
+
+.taski-table-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.taski-table-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main, #1C1A14);
+  margin: 0;
+}
+
+.taski-table-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.taski-search-box {
+  background: var(--bg-main, #FAF8F5);
+  border: 1px solid var(--separator, #EBE5DF);
+  border-radius: 12px;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 220px;
+}
+
+.taski-search-input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13px;
+  color: var(--text-main, #1C1A14);
+  width: 100%;
+}
+
+.taski-filter-btn {
+  background: var(--bg-main, #FAF8F5);
+  border: 1px solid var(--separator, #EBE5DF);
+  border-radius: 12px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary, #7A7567);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.taski-filter-btn:hover {
+  background: #EBE8DA;
+}
+
+.taski-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.taski-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.taski-table th {
+  padding: 12px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary, #7A7567);
+  border-bottom: 1px solid var(--separator, #EBE5DF);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.taski-table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--separator, #EBE5DF);
+  color: var(--text-main, #1C1A14);
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.taski-table tr:hover td {
+  background: var(--bg-main, #FAF8F5);
+}
+
+.taski-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Table Item Components */
+.taski-drag-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.taski-drag-icon {
+  color: var(--text-muted, #918B7A);
+  cursor: grab;
+}
+
+.taski-checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  border: 2px solid var(--separator, #EBE5DF);
+  accent-color: #E55A2B;
+  cursor: pointer;
+}
+
+.taski-project-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  color: var(--text-main, #1C1A14);
+}
+
+.taski-project-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(229, 90, 43, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #E55A2B;
+}
+
+.taski-badge-doc {
+  background: var(--bg-main, #FAF8F5);
+  color: var(--text-secondary, #7A7567);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--separator, #EBE5DF);
+}
+
+.taski-progress-bar-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.taski-progress-track {
+  flex: 1;
+  height: 8px;
+  background: var(--separator, #EBE5DF);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.taski-progress-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #E55A2B 0%, #FF9A3C 100%);
+}
+
+.taski-progress-val {
+  font-weight: 700;
+  color: var(--text-main, #1C1A14);
+  font-size: 12px;
+  width: 36px;
+}
+
+.taski-status-pill {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 99px;
+  display: inline-block;
+  text-align: center;
+}
+
+.taski-status-executing {
+  background: rgba(229, 90, 43, 0.12);
+  color: #E55A2B;
+}
+
+.taski-status-review {
+  background: rgba(255, 154, 60, 0.15);
+  color: #C8461B;
+}
+
+.taski-status-done {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+}
+
+/* --------------------------------------------------------------------------
+   4. RESPONSIVE BREAKPOINTS
+   -------------------------------------------------------------------------- */
+@media (max-width: 1280px) {
+  .taski-bento-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .taski-sidebar-col {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .taski-dash-wrapper {
+    padding: 16px 16px 80px 16px;
+  }
+  .taski-hero-card {
+    padding: 20px;
+  }
+  .taski-navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .taski-nav-links {
+    width: 100%;
+    overflow-x: auto;
+  }
+  .taski-hero-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .taski-hero-showcase {
+    display: none;
+  }
+  .taski-bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .taski-sidebar-col {
+    grid-column: span 1;
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,41 @@
+[33mcommit 32aa364c4db6f2307cba06cab1da7f53cb08bea2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: jobimlaves-beep <jobimlaves@gmail.com>
+Date:   Tue Jun 16 18:41:53 2026 -0300
+
+    Sua mensagem descrevendo o que você fez
+
+[33mcommit 650fe0fad275c2abc67c966f5846c3fab14b83c8[m
+Author: jobimlaves-beep <jobimlaves@gmail.com>
+Date:   Tue Jun 16 16:59:32 2026 -0300
+
+    feat(cronograma/produtos): ajustar tipos do Prisma, adicionar campo de estoque e atualizar UI/UX do kanban
+
+[33mcommit f835d5f84e8343382f6f66dcb37c2fe994567705[m
+Author: jobimlaves-beep <jobimlaves@gmail.com>
+Date:   Sun Jun 14 19:43:04 2026 -0300
+
+    fix(cronograma): align kanban HTML with new CSS and fix mensal tab CSS collision
+
+[33mcommit 58bce3c0f224f1c71cd36a15e8081b86885fb2a2[m
+Author: jobimlaves-beep <jobimlaves@gmail.com>
+Date:   Sun Jun 14 18:49:41 2026 -0300
+
+    UI: Layout Kanban Premium igual trello com fundos arrumados
+
+[33mcommit a56b73063dade1b6110c0a54c7496d09a5f40981[m
+Author: jobimlaves-beep <jobimlaves@gmail.com>
+Date:   Sun Jun 14 18:44:23 2026 -0300
+
+    Corrige bug progressPercent no Cronograma
+
+[33mcommit c29d339fa31a32c130e4557748cd34b86898ebf9[m
+Author: jobimlaves-beep <jobimlaves@gmail.com>
+Date:   Sun Jun 14 18:39:52 2026 -0300
+
+    Adiciona funcionalidade de listas customizadas estilo Trello no Cronograma
+
+[33mcommit 130cd4db9e6ccdc8d5dda7db237a657adfaf808a[m
+Author: jobimlaves-beep <jobimlaves@gmail.com>
+Date:   Sun Jun 14 18:17:58 2026 -0300
+
+    Initial commit for Bancada

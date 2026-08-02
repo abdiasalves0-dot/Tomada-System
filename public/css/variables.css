@@ -1,0 +1,38 @@
+:root {
+  /* Bancada Design System - Premium Light Palette */
+  --primary: #E55A2B; /* Bancada Orange Action */
+  --primary-dark: #C8461B;
+  --primary-light: rgba(229, 90, 43, 0.08);
+  --accent: #E55A2B; /* Accent */
+  
+  --bg-main: #FAF8F5; /* Fundo principal */
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #EBE8DA;
+  --bg-input: #DFD9C8;
+  --separator: #EBE5DF;
+  
+  --text-main: #1C1A14; /* Texto primário */
+  --text-secondary: #7A7567; /* Texto secundário */
+  --text-muted: #918B7A;
+  
+  --success: #10B981;
+  --error: #EF4444;
+  --warning: #F59E0B;
+  --info: #E55A2B;
+  
+  --glass: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(229, 90, 43, 0.05);
+  --glass-glow: rgba(229, 90, 43, 0.1);
+  
+  --shadow-sm: 0 1px 2px rgba(113, 63, 18, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(113, 63, 18, 0.08), 0 2px 4px -1px rgba(113, 63, 18, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(113, 63, 18, 0.08), 0 4px 6px -2px rgba(113, 63, 18, 0.04);
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  
+  --font-main: 'Inter', 'Outfit', sans-serif;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}

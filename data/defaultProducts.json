@@ -1,0 +1,652 @@
+[
+  {
+    "descricao": "Serra circular 7.1/4\"",
+    "codigo": "FER-1",
+    "fornecedor": "Makita / Bosch",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 950,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Serra circular de trilho",
+    "codigo": "FER-2",
+    "fornecedor": "Maksiwa",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 2200,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Serra tico-tico",
+    "codigo": "FER-3",
+    "fornecedor": "Bosch / Makita",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 380,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Serra de bancada",
+    "codigo": "FER-4",
+    "fornecedor": "Maksiwa / Makita",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 3000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Serra de fita",
+    "codigo": "FER-5",
+    "fornecedor": "Maksiwa",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 4000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Serra meia-esquadria",
+    "codigo": "FER-6",
+    "fornecedor": "Makita / DeWalt",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 2200,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Tupia (router) manual",
+    "codigo": "FER-7",
+    "fornecedor": "Makita",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 650,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Tupia de bancada / fresadora",
+    "codigo": "FER-8",
+    "fornecedor": "Maksiwa",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 5000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Plaina eletrica",
+    "codigo": "FER-9",
+    "fornecedor": "Makita",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 700,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Lixadeira orbital",
+    "codigo": "FER-10",
+    "fornecedor": "Makita / Bosch",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 350,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Lixadeira de cinta",
+    "codigo": "FER-11",
+    "fornecedor": "Bosch / Makita",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 900,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Lixadeira oscilante",
+    "codigo": "FER-12",
+    "fornecedor": "Vonder / Bosch",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 300,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Furadeira/parafusadeira de impacto",
+    "codigo": "FER-13",
+    "fornecedor": "Makita",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 600,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Parafusadeira a bateria",
+    "codigo": "FER-14",
+    "fornecedor": "DeWalt / Bosch",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 600,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Furadeira de bancada/coluna",
+    "codigo": "FER-15",
+    "fornecedor": "Bosch / Vonder",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 1500,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Martelete perfurador",
+    "codigo": "FER-16",
+    "fornecedor": "Bosch / Makita",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 800,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Esmerilhadeira angular",
+    "codigo": "FER-17",
+    "fornecedor": "Bosch / Makita",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 300,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Grampeador/pinador pneumatico",
+    "codigo": "FER-18",
+    "fornecedor": "Tramontina / Vonder",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 500,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Compressor de ar",
+    "codigo": "FER-19",
+    "fornecedor": "Schulz / Motomil",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 2200,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Aspirador de po industrial",
+    "codigo": "FER-20",
+    "fornecedor": "Wap / Vonder",
+    "categoria": "Ferramentas Eletricas",
+    "preco": 1100,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Martelo de carpinteiro",
+    "codigo": "FER-21",
+    "fornecedor": "Tramontina / Vonder",
+    "categoria": "Ferramentas Manuais",
+    "preco": 70,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Jogo de formoes",
+    "codigo": "FER-22",
+    "fornecedor": "Tramontina",
+    "categoria": "Ferramentas Manuais",
+    "preco": 180,
+    "unidade": "jogo",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Serrote",
+    "codigo": "FER-23",
+    "fornecedor": "Tramontina / Lee Tools",
+    "categoria": "Ferramentas Manuais",
+    "preco": 90,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Esquadro de aco",
+    "codigo": "FER-24",
+    "fornecedor": "Tramontina",
+    "categoria": "Ferramentas Manuais",
+    "preco": 65,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Esquadro de precisao",
+    "codigo": "FER-25",
+    "fornecedor": "Starrett",
+    "categoria": "Ferramentas Manuais",
+    "preco": 180,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Trena 5m",
+    "codigo": "FER-26",
+    "fornecedor": "Tramontina / Vonder",
+    "categoria": "Ferramentas Manuais",
+    "preco": 35,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Nivel de bolha",
+    "codigo": "FER-27",
+    "fornecedor": "Vonder / Tramontina",
+    "categoria": "Ferramentas Manuais",
+    "preco": 80,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Plaina manual",
+    "codigo": "FER-28",
+    "fornecedor": "Tramontina",
+    "categoria": "Ferramentas Manuais",
+    "preco": 200,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Sargento/grampo de fixacao",
+    "codigo": "FER-29",
+    "fornecedor": "Vonder / Bessey",
+    "categoria": "Ferramentas Manuais",
+    "preco": 70,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Jogo de limas",
+    "codigo": "FER-30",
+    "fornecedor": "Tramontina",
+    "categoria": "Ferramentas Manuais",
+    "preco": 30,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Martelo de borracha/maco",
+    "codigo": "FER-31",
+    "fornecedor": "Vonder",
+    "categoria": "Ferramentas Manuais",
+    "preco": 50,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Estilete/faca de marcenaria",
+    "codigo": "FER-32",
+    "fornecedor": "Tramontina",
+    "categoria": "Ferramentas Manuais",
+    "preco": 35,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Lapis/marcador de carpinteiro",
+    "codigo": "FER-33",
+    "fornecedor": "Vonder",
+    "categoria": "Ferramentas Manuais",
+    "preco": 8,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Paquimetro",
+    "codigo": "FER-34",
+    "fornecedor": "Mitutoyo / Vonder",
+    "categoria": "Medicao e Marcacao",
+    "preco": 120,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Trena a laser",
+    "codigo": "FER-35",
+    "fornecedor": "Bosch",
+    "categoria": "Medicao e Marcacao",
+    "preco": 300,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Riscador/tracador de madeira",
+    "codigo": "FER-36",
+    "fornecedor": "Vonder",
+    "categoria": "Medicao e Marcacao",
+    "preco": 35,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Gabarito de furacao para dobradicas",
+    "codigo": "FER-37",
+    "fornecedor": "Vonder / Maksiwa",
+    "categoria": "Medicao e Marcacao",
+    "preco": 100,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Protetor auricular",
+    "codigo": "FER-38",
+    "fornecedor": "3M / Vonder",
+    "categoria": "Seguranca (EPI)",
+    "preco": 30,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Mascara respiratoria PFF2",
+    "codigo": "FER-39",
+    "fornecedor": "3M",
+    "categoria": "Seguranca (EPI)",
+    "preco": 12,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Mascara respiratoria reutilizavel",
+    "codigo": "FER-40",
+    "fornecedor": "3M",
+    "categoria": "Seguranca (EPI)",
+    "preco": 90,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Oculos de protecao",
+    "codigo": "FER-41",
+    "fornecedor": "3M / Vonder",
+    "categoria": "Seguranca (EPI)",
+    "preco": 30,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Luvas de protecao",
+    "codigo": "FER-42",
+    "fornecedor": "Vonder",
+    "categoria": "Seguranca (EPI)",
+    "preco": 30,
+    "unidade": "par",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Avental de couro",
+    "codigo": "FER-43",
+    "fornecedor": "Vonder",
+    "categoria": "Seguranca (EPI)",
+    "preco": 130,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Bancada de trabalho com morsa",
+    "codigo": "FER-44",
+    "fornecedor": "Vonder",
+    "categoria": "Bancada e Oficina",
+    "preco": 1200,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Morsa/torno de bancada",
+    "codigo": "FER-45",
+    "fornecedor": "Vonder / Tramontina",
+    "categoria": "Bancada e Oficina",
+    "preco": 300,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Mesa de corte/guia para serra circular",
+    "codigo": "FER-46",
+    "fornecedor": "Maksiwa",
+    "categoria": "Bancada e Oficina",
+    "preco": 600,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Estante/cavalete para madeira",
+    "codigo": "FER-47",
+    "fornecedor": "Vonder",
+    "categoria": "Bancada e Oficina",
+    "preco": 800,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Serra de trilho (track saw) TS 55",
+    "codigo": "FER-48",
+    "fornecedor": "Festool",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 4500,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Serra meia-esquadria Kapex KS 120",
+    "codigo": "FER-49",
+    "fornecedor": "Festool",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 19000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Maquina de encaixe Domino DF 500",
+    "codigo": "FER-50",
+    "fornecedor": "Festool",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 8500,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Maquina de encaixe Domino XL DF 700",
+    "codigo": "FER-51",
+    "fornecedor": "Festool",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 12000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Lixadeira excentrica ETS/RO",
+    "codigo": "FER-52",
+    "fornecedor": "Festool",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 2700,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Sistema extrator de po CT",
+    "codigo": "FER-53",
+    "fornecedor": "Festool",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 4000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Serra circular de imersao MT55",
+    "codigo": "FER-54",
+    "fornecedor": "Mafell",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 5200,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Maquina de cavilhas Zeta P2",
+    "codigo": "FER-55",
+    "fornecedor": "Lamello",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 19000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Plaina desempenadeira combinada",
+    "codigo": "FER-56",
+    "fornecedor": "Felder / Hammer",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 90000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Serra de bancada com carro deslizante (sliding table saw)",
+    "codigo": "FER-57",
+    "fornecedor": "Altendorf / Felder",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 100000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Coladeira de borda (edge bander)",
+    "codigo": "FER-58",
+    "fornecedor": "Felder / SCM",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 35000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Furadeira multipla horizontal (linha 32mm)",
+    "codigo": "FER-59",
+    "fornecedor": "SCM / Maksiwa",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 35000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Roteadora CNC para marcenaria",
+    "codigo": "FER-60",
+    "fornecedor": "Biesse / SCM",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 150000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Prensa de vacuo para laminacao",
+    "codigo": "FER-61",
+    "fornecedor": "Vakuumat / generica",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 13000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Lixadeira de cinta larga (wide belt sander)",
+    "codigo": "FER-62",
+    "fornecedor": "SCM / Powermatic",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 55000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Torno de madeira profissional",
+    "codigo": "FER-63",
+    "fornecedor": "Laguna / Powermatic",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 15000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Serra de fita profissional",
+    "codigo": "FER-64",
+    "fornecedor": "Laguna / Felder",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 20000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  },
+  {
+    "descricao": "Tupia de bancada profissional (shaper)",
+    "codigo": "FER-65",
+    "fornecedor": "Felder / SCM",
+    "categoria": "Maquinas Premium / Profissionais",
+    "preco": 28000,
+    "unidade": "unidade",
+    "ativo": true,
+    "estoque": 10
+  }
+]

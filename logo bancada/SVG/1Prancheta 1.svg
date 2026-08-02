@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Camada_1" data-name="Camada 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        stroke: #f5f2e6;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        fill: none;
+        stroke-miterlimit: 3.5;
+        stroke-width: 3.5px;
+      }
+
+      .cls-1, .cls-3 {
+        stroke-linecap: round;
+      }
+
+      .cls-4 {
+        fill: #e55b2c;
+      }
+
+      .cls-4, .cls-5, .cls-6 {
+        font-family: Arial-BoldMT, Arial;
+        font-size: 119.22px;
+        font-weight: 700;
+      }
+
+      .cls-4, .cls-6, .cls-7 {
+        isolation: isolate;
+      }
+
+      .cls-8 {
+        fill: #f5f2e6;
+      }
+
+      .cls-5, .cls-6 {
+        fill: #f5f2e8;
+      }
+
+      .cls-9 {
+        letter-spacing: 0em;
+      }
+
+      .cls-10 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-11 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-12 {
+        letter-spacing: -.01em;
+      }
+
+      .cls-13 {
+        letter-spacing: 0em;
+      }
+
+      .cls-7 {
+        fill: #9b9487;
+        font-family: Montserrat-Regular, Montserrat;
+        font-size: 29.81px;
+      }
+
+      .cls-3 {
+        stroke: rgba(245, 242, 230, 0);
+      }
+    </style>
+  </defs>
+  <g>
+    <text class="cls-6" transform="translate(153.57 438.03)"><tspan x="0" y="0">banc</tspan></text>
+    <text class="cls-4" transform="translate(431.83 438.03)"><tspan x="0" y="0">a</tspan></text>
+    <text class="cls-5" transform="translate(498.13 438.03)"><tspan x="0" y="0">da</tspan></text>
+  </g>
+  <text class="cls-7" transform="translate(168.6 488.48)"><tspan x="0" y="0">GE</tspan><tspan class="cls-12" x="42.98" y="0">S</tspan><tspan class="cls-10" x="61.01" y="0">T</tspan><tspan class="cls-13" x="77.08" y="0">Ã</tspan><tspan x="98.15" y="0">O </tspan><tspan class="cls-11" x="130.96" y="0">P</tspan><tspan class="cls-9" x="151.02" y="0">ARA MARCENEIROS</tspan></text>
+  <g>
+    <circle class="cls-2" cx="696.53" cy="411.75" r="29.81"/>
+    <line class="cls-1" x1="717.17" y1="432.38" x2="735.51" y2="450.72"/>
+  </g>
+  <g>
+    <line class="cls-1" x1="66.78" y1="371.13" x2="121.81" y2="316.1"/>
+    <line class="cls-3" x1="66.78" y1="316.1" x2="121.81" y2="371.13"/>
+    <path class="cls-8" d="M72.51,361.96h43.56c4.43,0,8.02,3.59,8.02,8.02h0c0,4.43-3.59,8.02-8.02,8.02h-43.56c-4.43,0-8.02-3.59-8.02-8.02h0c0-4.43,3.59-8.02,8.02-8.02Z"/>
+    <rect class="cls-8" x="73.66" y="311.52" width="16.05" height="45.85" rx="1.75" ry="1.75"/>
+  </g>
+</svg>

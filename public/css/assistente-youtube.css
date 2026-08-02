@@ -1,0 +1,523 @@
+/* ──────────────────────────────────────────────────────────────
+   ESTILOS DA JANELA FLUTUANTE DO ASSISTENTE YOUTUBE (COPILOT IA)
+   ────────────────────────────────────────────────────────────── */
+
+/* 1. Botão Flutuante (FAB) */
+#youtube-assistant-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #E55A2B 0%, #FF2E00 50%, #B91C1C 100%);
+  color: #FFFFFF;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 10px 30px rgba(229, 90, 43, 0.45), 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  user-select: none;
+  outline: none;
+  touch-action: none;
+}
+
+#youtube-assistant-fab:hover {
+  transform: scale(1.08) translateY(-3px);
+  box-shadow: 0 16px 40px rgba(229, 90, 43, 0.6), 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+#youtube-assistant-fab:active {
+  transform: scale(0.95);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   ANIMAÇÃO DE 3 ATOS ULTRA FLUIDA PARA O BOTÃO FLUTUANTE (FAB)
+   ────────────────────────────────────────────────────────────── */
+
+/* ATO 1: Clicar e Segurar (Lift & Glow) */
+#youtube-assistant-fab.is-dragging-fab {
+  cursor: grabbing !important;
+  transform: scale(1.18) rotate(6deg) !important;
+  box-shadow: 0 22px 50px rgba(229, 90, 43, 0.7), 0 0 0 6px rgba(229, 90, 43, 0.25) !important;
+  border-color: #FFFFFF !important;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              box-shadow 0.2s ease !important;
+}
+
+/* ATO 2: Arrastar em movimento (Tilt dinâmico) */
+#youtube-assistant-fab.is-dragging-left {
+  transform: scale(1.18) rotate(-8deg) !important;
+}
+
+#youtube-assistant-fab.is-dragging-right {
+  transform: scale(1.18) rotate(8deg) !important;
+}
+
+/* ATO 3: Soltar (Release & Bounce Elastic Snap) */
+@keyframes fab-drop-bounce {
+  0% { transform: scale(1.22) rotate(6deg); }
+  45% { transform: scale(0.92) rotate(-3deg); }
+  75% { transform: scale(1.06); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+#youtube-assistant-fab.fab-dropped-bounce {
+  animation: fab-drop-bounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+}
+
+/* Badge de Sinalização Online */
+#youtube-assistant-fab .fab-status-dot {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #10B981;
+  border: 2.5px solid #FFFFFF;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+  animation: fabPulse 2s infinite;
+}
+
+@keyframes fabPulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* 2. Janela Flutuante Principal */
+#youtube-assistant-window {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  width: 410px;
+  height: 620px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 120px);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(229, 90, 43, 0.3);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 99999;
+  transform-origin: bottom right;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease, width 0.3s ease, height 0.3s ease;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+#youtube-assistant-window.is-hidden {
+  transform: translateY(30px) scale(0.75);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#youtube-assistant-window.is-maximized {
+  width: 640px;
+  height: 760px;
+}
+
+/* Modo Dark */
+.courseconnect-dark-mode #youtube-assistant-window {
+  background: rgba(18, 20, 29, 0.97);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #F3F4F6;
+  box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.7);
+}
+
+/* 3. Header do Assistente (Arrastável) */
+.yt-assistant-header {
+  padding: 14px 18px;
+  background: linear-gradient(135deg, rgba(229, 90, 43, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  cursor: grab;
+  touch-action: none;
+}
+
+.yt-assistant-header:active {
+  cursor: grabbing;
+}
+
+.courseconnect-dark-mode .yt-assistant-header {
+  background: linear-gradient(135deg, rgba(229, 90, 43, 0.15) 0%, rgba(0, 0, 0, 0) 100%);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   ANIMAÇÃO DE 3 ATOS ULTRA FLUIDA PARA JANELA ARRASTÁVEL
+   ────────────────────────────────────────────────────────────── */
+
+/* ATO 1: Clicar e Segurar (Press & Grab) */
+#youtube-assistant-window.is-dragging-window {
+  cursor: grabbing !important;
+  transform: scale(1.02) rotate(1deg) !important;
+  box-shadow: 0 35px 80px -15px rgba(229, 90, 43, 0.45), 0 15px 35px rgba(0, 0, 0, 0.25) !important;
+  border-color: rgba(229, 90, 43, 0.7) !important;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              box-shadow 0.2s ease, 
+              border-color 0.2s ease !important;
+}
+
+/* ATO 2: Arrastar em movimento (Tilt dinâmico dependendo da direção) */
+#youtube-assistant-window.is-dragging-left {
+  transform: scale(1.02) rotate(-1.8deg) !important;
+}
+
+#youtube-assistant-window.is-dragging-right {
+  transform: scale(1.02) rotate(1.8deg) !important;
+}
+
+/* ATO 3: Soltar (Release & Bounce Elastic Snap) */
+@keyframes window-drop-snap {
+  0% { transform: scale(1.03) rotate(1deg); }
+  40% { transform: scale(0.97) rotate(-0.5deg); }
+  75% { transform: scale(1.01); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+#youtube-assistant-window.window-dropped-snap {
+  animation: window-drop-snap 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+}
+
+.yt-assistant-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.yt-assistant-avatar-wrapper {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #E55A2B 0%, #FF2E00 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(229, 90, 43, 0.35);
+}
+
+.yt-assistant-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.yt-assistant-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ref-text, #1C1A14);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.courseconnect-dark-mode .yt-assistant-title {
+  color: #F9FAFB;
+}
+
+.yt-assistant-subtitle {
+  font-size: 11px;
+  color: #10B981;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.yt-assistant-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.yt-assistant-btn-icon {
+  background: transparent;
+  border: none;
+  color: var(--ref-text-sub, #64748B);
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.yt-assistant-btn-icon:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--ref-primary, #E55A2B);
+}
+
+.courseconnect-dark-mode .yt-assistant-btn-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FF7A52;
+}
+
+/* 4. Chips de Atalho de Conhecimento */
+.yt-assistant-chips-container {
+  padding: 10px 14px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.yt-assistant-chips-container::-webkit-scrollbar {
+  display: none;
+}
+
+.courseconnect-dark-mode .yt-assistant-chips-container {
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+.yt-assistant-chip {
+  background: #FFFFFF;
+  border: 1px solid var(--ref-border, #E8E4DD);
+  color: var(--ref-text, #1C1A14);
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.yt-assistant-chip:hover {
+  background: var(--ref-primary, #E55A2B);
+  color: #FFFFFF;
+  border-color: var(--ref-primary, #E55A2B);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(229, 90, 43, 0.25);
+}
+
+.courseconnect-dark-mode .yt-assistant-chip {
+  background: #1F2430;
+  border-color: #2D3342;
+  color: #E5E7EB;
+}
+
+/* 5. Área de Mensagens */
+.yt-assistant-body {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  scrollbar-width: thin;
+}
+
+.yt-msg {
+  display: flex;
+  flex-direction: column;
+  max-width: 85%;
+  animation: msgFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes msgFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.yt-msg-user {
+  align-self: flex-end;
+}
+
+.yt-msg-user .yt-msg-bubble {
+  background: linear-gradient(135deg, #E55A2B 0%, #D14517 100%);
+  color: #FFFFFF;
+  border-radius: 18px 18px 4px 18px;
+  padding: 12px 16px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  box-shadow: 0 4px 14px rgba(229, 90, 43, 0.25);
+}
+
+.yt-msg-assistant {
+  align-self: flex-start;
+}
+
+.yt-msg-assistant .yt-msg-bubble {
+  background: #FFFFFF;
+  color: #1F2937;
+  border: 1px solid #EBE5DF;
+  border-radius: 18px 18px 18px 4px;
+  padding: 14px 16px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.courseconnect-dark-mode .yt-msg-assistant .yt-msg-bubble {
+  background: #1E222D;
+  color: #F3F4F6;
+  border-color: #2E3444;
+}
+
+.yt-msg-time {
+  font-size: 10px;
+  color: #9CA3AF;
+  margin-top: 4px;
+  align-self: flex-end;
+}
+
+.yt-msg-assistant .yt-msg-time {
+  align-self: flex-start;
+}
+
+/* Formatação do Texto e Código dentro das Bolhas */
+.yt-msg-bubble p {
+  margin: 0 0 8px 0;
+}
+
+.yt-msg-bubble p:last-child {
+  margin-bottom: 0;
+}
+
+.yt-msg-bubble ul, .yt-msg-bubble ol {
+  margin: 6px 0;
+  padding-left: 18px;
+}
+
+.yt-msg-bubble li {
+  margin-bottom: 4px;
+}
+
+.yt-msg-bubble code {
+  background: rgba(0, 0, 0, 0.06);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.courseconnect-dark-mode .yt-msg-bubble code {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Indicador de Digitação (Typing) */
+.yt-typing-dots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 4px;
+}
+
+.yt-typing-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ref-primary, #E55A2B);
+  animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+.yt-typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.yt-typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+/* 6. Footer e Caixa de Input */
+.yt-assistant-footer {
+  padding: 12px 16px;
+  background: #FFFFFF;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.courseconnect-dark-mode .yt-assistant-footer {
+  background: #161822;
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.yt-assistant-input-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.yt-assistant-textarea {
+  width: 100%;
+  max-height: 100px;
+  min-height: 42px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1.5px solid var(--ref-border, #E8E4DD);
+  background: #FAF8F5;
+  color: var(--ref-text, #1C1A14);
+  font-size: 13px;
+  font-family: inherit;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.yt-assistant-textarea:focus {
+  border-color: var(--ref-primary, #E55A2B);
+  box-shadow: 0 0 0 3px rgba(229, 90, 43, 0.15);
+  background: #FFFFFF;
+}
+
+.courseconnect-dark-mode .yt-assistant-textarea {
+  background: #1F2430;
+  border-color: #2D3342;
+  color: #F3F4F6;
+}
+
+.courseconnect-dark-mode .yt-assistant-textarea:focus {
+  background: #1A1D27;
+  border-color: #FF7A52;
+}
+
+.yt-assistant-send-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #E55A2B 0%, #FF2E00 100%);
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(229, 90, 43, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  flex-shrink: 0;
+}
+
+.yt-assistant-send-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(229, 90, 43, 0.5);
+}
+
+.yt-assistant-send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}

@@ -1,0 +1,94 @@
+[
+  {
+    "id": "1",
+    "_id": "1",
+    "nome": "Bancada Brasília",
+    "cidade": "Brasília",
+    "estado": "DF",
+    "endereco": "SCS Quadra 4, Bloco A, Centro",
+    "telefone": "(61) 98765-4321",
+    "responsavel": "Carlos Silva",
+    "status": "ativo"
+  },
+  {
+    "id": "2",
+    "_id": "2",
+    "nome": "Bancada Goiania",
+    "cidade": "Goiânia",
+    "estado": "GO",
+    "endereco": "Av. T-9, 1200, Setor Bueno",
+    "telefone": "(62) 98765-4322",
+    "responsavel": "João Santos",
+    "status": "ativo"
+  },
+  {
+    "id": "3",
+    "_id": "3",
+    "nome": "Bancada Palmas",
+    "cidade": "Palmas",
+    "estado": "TO",
+    "endereco": "Av. JK, 150, Centro",
+    "telefone": "(63) 98765-4323",
+    "responsavel": "José Oliveira",
+    "status": "ativo"
+  },
+  {
+    "id": "4",
+    "_id": "4",
+    "nome": "Bancada Campo Grande",
+    "cidade": "Campo Grande",
+    "estado": "MS",
+    "endereco": "Rua 14 de Julho, 2500, Centro",
+    "telefone": "(67) 98765-4324",
+    "responsavel": "Marcos Alves",
+    "status": "ativo"
+  },
+  {
+    "id": "f1_43567642-606b-498e-8614-a3b8c76f605a",
+    "_id": "f1_43567642-606b-498e-8614-a3b8c76f605a",
+    "nome": "Bancada Brasília",
+    "cidade": "Brasília",
+    "estado": "DF",
+    "endereco": "SCS Quadra 4, Bloco A, Centro",
+    "telefone": "(61) 98765-4321",
+    "responsavel": "Carlos Silva",
+    "status": "ativo",
+    "adminId": "43567642-606b-498e-8614-a3b8c76f605a"
+  },
+  {
+    "id": "f2_43567642-606b-498e-8614-a3b8c76f605a",
+    "_id": "f2_43567642-606b-498e-8614-a3b8c76f605a",
+    "nome": "Bancada Goiania",
+    "cidade": "Goiânia",
+    "estado": "GO",
+    "endereco": "Av. T-9, 1200, Setor Bueno",
+    "telefone": "(62) 98765-4322",
+    "responsavel": "João Santos",
+    "status": "ativo",
+    "adminId": "43567642-606b-498e-8614-a3b8c76f605a"
+  },
+  {
+    "id": "f3_43567642-606b-498e-8614-a3b8c76f605a",
+    "_id": "f3_43567642-606b-498e-8614-a3b8c76f605a",
+    "nome": "Bancada Palmas",
+    "cidade": "Palmas",
+    "estado": "TO",
+    "endereco": "Av. JK, 150, Centro",
+    "telefone": "(63) 98765-4323",
+    "responsavel": "José Oliveira",
+    "status": "ativo",
+    "adminId": "43567642-606b-498e-8614-a3b8c76f605a"
+  },
+  {
+    "id": "f4_43567642-606b-498e-8614-a3b8c76f605a",
+    "_id": "f4_43567642-606b-498e-8614-a3b8c76f605a",
+    "nome": "Bancada Campo Grande",
+    "cidade": "Campo Grande",
+    "estado": "MS",
+    "endereco": "Rua 14 de Julho, 2500, Centro",
+    "telefone": "(67) 98765-4324",
+    "responsavel": "Marcos Alves",
+    "status": "ativo",
+    "adminId": "43567642-606b-498e-8614-a3b8c76f605a"
+  }
+]

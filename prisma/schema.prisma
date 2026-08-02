@@ -1,0 +1,364 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Admin {
+  id       String @id @default(uuid())
+  nome     String
+  email    String @unique
+  senha    String
+  role     String @default("gestor") // gestor ou admin
+  criadoEm DateTime @default(now())
+
+  webauthnCredentials WebAuthnCredential[]
+}
+
+model WebAuthnCredential {
+  id                 String   @id @default(uuid())
+  adminId            String
+  credentialId       String   @unique
+  publicKey          String   // Base64-encoded
+  counter            BigInt   @default(0)
+  transports         String[] // ["internal", "usb", "ble", "nfc"]
+  deviceName         String?  // Nome amigável do dispositivo
+  createdAt          DateTime @default(now())
+
+  admin              Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+}
+
+
+model Padeiro {
+  id              String   @id @default(uuid())
+  nome            String
+  cpf             String   @unique
+  telefone        String?
+  senha           String   @default("123")
+  role            String   @default("padeiro")
+  status          String   @default("ativo")
+  fotoPerfil      String?
+  filial          String[]
+  foto            String?
+  assinatura      String?
+  ativo           Boolean  @default(true)
+  deletado        Boolean  @default(false)
+  dataContratacao DateTime @default(now())
+  criadoEm        DateTime @default(now())
+  atualizadoEm    DateTime @updatedAt
+  cor             String?  @default("#1976D2")
+  cargo           String?  @default("Padeiro")
+  codTec          String?  @unique
+  rg              String?
+  email           String?
+  dataNascimento  String?
+  passwordHash    String?
+  firstAccessToken String?
+  adminId         String?
+  metas           PadeiroMeta[]
+  historico       HistoricoMetas[]
+  atividades      Atividade[]
+  cronogramas     Cronograma[]
+  localizacoes    Localizacao[]
+  pushSubs        PushSubscription[]
+  avaliacoes      Avaliacao[]
+  projetos        Projeto[]
+}
+
+model PadeiroMeta {
+  id             String   @id @default(uuid())
+  padeiroId      String?
+  tipo           String   @default("faturamento") // "faturamento" ou "equipamento"
+  nome           String?  // Nome do equipamento
+  metaKg         Float    @default(0) // Valor alvo (faturamento ou preço)
+  realizado      Float    @default(0) // Aportado/Realizado
+  periodo        String?  // Mês alvo
+  observacao     String?
+  criadoPor      String?
+  criadoEm       DateTime @default(now())
+  adminId        String?
+  atualizadoEm   DateTime @updatedAt
+
+  padeiro        Padeiro? @relation(fields: [padeiroId], references: [id], onDelete: Cascade)
+}
+
+model HistoricoMetas {
+  id             String   @id @default(uuid())
+  padeiroId      String
+  mes            String   // formato YYYY-MM
+  metaPaoSal     Int      @default(0)
+  metaPaoDoce    Int      @default(0)
+  metaPaoForma   Int      @default(0)
+  metaRosca      Int      @default(0)
+  metaSalgado    Int      @default(0)
+  metaPaoQueijo  Int      @default(0)
+  metaIntegral   Int      @default(0)
+
+  padeiro        Padeiro  @relation(fields: [padeiroId], references: [id], onDelete: Cascade)
+
+  @@unique([padeiroId, mes])
+}
+
+model Atividade {
+  id             String   @id @default(uuid())
+  padeiroId      String
+  padeiroNome    String?
+  cronogramaId   String?
+  clienteId      String?
+  clienteNome    String?
+  data           String   // formato YYYY-MM-DD
+  mes            String   // formato YYYY-MM
+  semana         String   // ex: 2024-W12
+  status         String   @default("pendente")
+  nota           Float?   @default(0)
+  
+  prodPaoSal     Int      @default(0)
+  prodPaoDoce    Int      @default(0)
+  prodPaoForma   Int      @default(0)
+  prodRosca      Int      @default(0)
+  prodSalgado    Int      @default(0)
+  prodPaoQueijo  Int      @default(0)
+  prodIntegral   Int      @default(0)
+
+  // Desperdício
+  perdaPaoSal    Int      @default(0)
+  perdaPaoDoce   Int      @default(0)
+  perdaPaoForma  Int      @default(0)
+  perdaRosca     Int      @default(0)
+  perdaSalgado   Int      @default(0)
+  perdaPaoQueijo Int      @default(0)
+  perdaIntegral  Int      @default(0)
+
+  fotoComprovante String?
+  criadoEm       DateTime @default(now())
+
+  // Campos adicionais usados pelo sistema
+  hora                String?
+  inicioEm            String?
+  terminadoEm         String?
+  fimEm               String?
+  tempoMinimoMinutos  Int?
+  fotos               Json?
+  assinatura          String?
+  localizacao         String?
+  latitude            Float?
+  longitude           Float?
+  observacao          String?
+  observacaoCliente   String?
+  notaCliente         Float?
+  notaPadeiroCliente  Float?
+  kgTotal             Float?
+  lTotal              Float?
+  kgItens             Json?
+  atualizadoEm        String?
+  lastStep            Int?
+  timeline            Json?
+  adminId             String?
+
+  padeiro        Padeiro  @relation(fields: [padeiroId], references: [id], onDelete: Cascade)
+}
+
+model Cronograma {
+  id                  String   @id @default(uuid())
+  padeiroId           String?
+  padeiroNome         String?
+  codTec              String?
+  clienteId           String?
+  clienteNome         String?
+  data                String   // YYYY-MM-DD
+  horario             String?
+  turno               String?  @default("Manhã") // Manhã, Tarde, Noite
+  tarefas             String?
+  status              String   @default("pendente") // pendente, concluido, em_andamento
+  tempoMinimoMinutos  Int?
+  posicao             Int?
+  observacao          String?
+  criadoPor           String?
+  criadoEm            DateTime @default(now())
+  atualizadoEm        DateTime @updatedAt
+
+  tags                String[]
+  progresso           Int      @default(0)
+  checklist           Json?
+  kanbanListId        String?
+  orcamento           Json?
+  adminId             String?
+
+  padeiro             Padeiro?  @relation(fields: [padeiroId], references: [id], onDelete: SetNull)
+  kanbanList          KanbanList? @relation(fields: [kanbanListId], references: [id], onDelete: SetNull)
+}
+
+model Localizacao {
+  id             String   @id @default(uuid())
+  padeiroId      String
+  lat            Float
+  lng            Float
+  precisao       Float?
+  timestamp      DateTime @default(now())
+  adminId        String?
+
+  padeiro        Padeiro  @relation(fields: [padeiroId], references: [id], onDelete: Cascade)
+}
+
+model PushSubscription {
+  id             String   @id @default(uuid())
+  padeiroId      String
+  endpoint       String   @unique
+  keys_p256dh    String
+  keys_auth      String
+  adminId        String?
+
+  padeiro        Padeiro  @relation(fields: [padeiroId], references: [id], onDelete: Cascade)
+}
+
+model Configuracao {
+  id             String   @id @default(uuid())
+  chave          String
+  valor          String
+  adminId        String?
+
+  @@unique([chave, adminId])
+}
+
+model Produto {
+  id              String   @id @default(uuid())
+  descricao       String
+  descricaoLonga  String?
+  codigo          String?
+  fornecedor      String?
+  categoria       String?
+  preco           Float?
+  unidade         String?
+  ativo           Boolean  @default(true)
+  estoque         Int      @default(0)
+  adminId         String?
+}
+
+model Cliente {
+  id                String   @id @default(uuid())
+  codigo            String?
+  nome              String
+  razaoSocial       String?
+  nomeFantasia      String?
+  cnpj              String?
+  inscricaoEstadual String?
+  email             String?
+  telefone          String?
+  celular           String?
+  cep               String?
+  endereco          String?
+  numero            String?
+  bairro            String?
+  cidade            String?
+  estado            String?
+  ativo             Boolean  @default(true)
+  receita           Float?   @default(0)
+  custoInsumos      Float?   @default(0)
+  adminId           String?
+}
+
+model Criterio {
+  id     String @id @default(uuid())
+  texto  String
+  tipo   String
+}
+
+model Avaliacao {
+  id              String   @id @default(uuid())
+  padeiroId       String?
+  padeiroNome     String?
+  clienteId       String?
+  clienteNome     String?
+  atividadeId     String?
+  tipo            String?
+  respostas       Json?
+  nota            Float?   @default(0)
+  observacao      String?
+  avaliadoPor     String?
+  avaliadoPorNome String?
+  criadoEm        DateTime @default(now())
+  adminId         String?
+
+  padeiro         Padeiro? @relation(fields: [padeiroId], references: [id], onDelete: Cascade)
+}
+
+model KanbanList {
+  id       String   @id @default(uuid())
+  titulo   String
+  posicao  Int      @default(0)
+  cor      String   @default("#E5E7EB")
+  criadoEm DateTime @default(now())
+
+  cronogramas Cronograma[]
+}
+
+model Categoria {
+  id          Int          @id @default(autoincrement())
+  nome        String       @unique
+  ferramentas Ferramenta[]
+
+  @@map("categorias")
+}
+
+model Ferramenta {
+  id          Int        @id @default(autoincrement())
+  categoriaId Int        @map("categoria_id")
+  nome        String
+  marca       String?
+  tier        String
+  precoMin    Decimal?   @map("preco_min") @db.Decimal(12, 2)
+  precoMedio  Decimal?   @map("preco_medio") @db.Decimal(12, 2)
+  precoMax    Decimal?   @map("preco_max") @db.Decimal(12, 2)
+  unidade     String     @default("unidade")
+  observacao  String?
+  criadoEm    DateTime   @default(now()) @map("criado_em")
+
+  categoria   Categoria  @relation(fields: [categoriaId], references: [id], onDelete: Cascade)
+
+  @@map("ferramentas")
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  evento    String
+  usuario   String
+  ip        String
+  detalhes  String?
+  data      DateTime @default(now())
+  adminId   String?
+}
+
+model Criador {
+  id              String    @id @default(uuid())
+  nome            String
+  email           String    @unique
+  senha           String
+  role            String    @default("criador")
+  fotoPerfil      String?
+  canalYoutube    String?
+  criadoEm        DateTime  @default(now())
+  atualizadoEm    DateTime  @updatedAt
+
+  projetos        Projeto[]
+}
+
+model Projeto {
+  id              String    @id @default(uuid())
+  titulo          String
+  descricao       String?
+  status          String    @default("aberto") // aberto, em_producao, revisao, concluido
+  tipo            String    // video, thumb, ambos
+  criadorId       String
+  criador         Criador   @relation(fields: [criadorId], references: [id], onDelete: Cascade)
+  profissionalId  String?
+  profissional    Padeiro?  @relation(fields: [profissionalId], references: [id], onDelete: SetNull)
+  arquivos        Json?     // links de entrega, briefings, etc.
+  dataLimite      DateTime?
+  criadoEm        DateTime  @default(now())
+  atualizadoEm    DateTime  @updatedAt
+}

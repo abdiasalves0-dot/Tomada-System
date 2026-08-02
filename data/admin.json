@@ -1,0 +1,10 @@
+[
+  {
+    "id": "admin-tomada-001",
+    "nome": "Tomada",
+    "email": "admin@tomada.com",
+    "passwordHash": "$2a$10$leD5lGK90k1urtwqAGuEAu88KjbbPpTrfiN0jocIq5AfOPh36jl8a",
+    "role": "admin",
+    "ativo": true
+  }
+]

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tomada - Visualizador de Mídia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+    body { background: #0b0c10; color: #f5f5f7; display: flex; flex-direction: column; min-height: 100vh; align-items: center; justify-content: flex-start; padding: 24px 16px; }
+    .container { max-width: 920px; width: 100%; background: #16181d; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 60px rgba(0,0,0,0.6); overflow: hidden; display: flex; flex-direction: column; }
+    .header { padding: 20px 28px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; }
+    .title-box { display: flex; align-items: center; gap: 12px; }
+    .icon { width: 36px; height: 36px; background: rgba(255,0,0,0.15); border-radius: 10px; color: #ff3b30; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+    .title { font-size: 18px; font-weight: 700; color: #ffffff; }
+    .author { font-size: 13px; color: #a1a1a6; }
+    .media-player-box { width: 100%; position: relative; padding-top: 56.25%; background: #000; }
+    .media-player-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    .actions-panel { padding: 24px 28px; display: flex; flex-direction: column; gap: 16px; background: #1a1c23; }
+    .actions-title { font-size: 14px; font-weight: 600; color: #e5e5ea; }
+    .btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .dl-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 20px; border-radius: 14px; text-decoration: none; font-size: 14px; font-weight: 700; transition: all 0.2s ease; cursor: pointer; border: none; }
+    .dl-btn-video { background: linear-gradient(135deg, #FF0000 0%, #CC0000 100%); color: #fff; box-shadow: 0 4px 15px rgba(255,0,0,0.3); }
+    .dl-btn-video:hover { background: linear-gradient(135deg, #FF1A1A 0%, #DD0000 100%); transform: translateY(-2px); }
+    .dl-btn-audio { background: linear-gradient(135deg, #34C759 0%, #28A745 100%); color: #fff; box-shadow: 0 4px 15px rgba(52,199,89,0.3); }
+    .dl-btn-audio:hover { background: linear-gradient(135deg, #30D158 0%, #208E3B 100%); transform: translateY(-2px); }
+    .dl-btn-alt { background: linear-gradient(135deg, #FF9500 0%, #D67D00 100%); color: #fff; box-shadow: 0 4px 15px rgba(255,149,0,0.3); }
+    .dl-btn-alt:hover { background: linear-gradient(135deg, #FFA01A 0%, #E68700 100%); transform: translateY(-2px); }
+    .back-link { color: #0a84ff; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title-box">
+        <div class="icon">▶</div>
+        <div>
+          <div class="title" id="video-title">Carregando Mídia...</div>
+          <div class="author" id="video-author">Tomada System Media Player</div>
+        </div>
+      </div>
+      <a href="/" class="back-link">← Voltar ao Sistema</a>
+    </div>
+
+    <!-- Player de Vídeo Nativo Limpo -->
+    <div class="media-player-box" id="player-box"></div>
+
+    <div class="actions-panel">
+      <div class="actions-title">⚡ Opções de Download Directo:</div>
+
+      <div class="btn-grid">
+        <a id="btn-dl-video" href="#" target="_blank" class="dl-btn dl-btn-video">
+          <span>🎬 Baixar Vídeo (MP4 HD)</span>
+        </a>
+        <a id="btn-dl-audio" href="#" target="_blank" class="dl-btn dl-btn-audio">
+          <span>🎵 Baixar Áudio (MP3 320k)</span>
+        </a>
+        <a id="btn-dl-wav" href="#" target="_blank" class="dl-btn dl-btn-wav" style="background: linear-gradient(135deg, #007AFF 0%, #0056b3 100%); color: #fff;">
+          <span>💿 Baixar Áudio (WAV Lossless)</span>
+        </a>
+        <a id="btn-dl-alt" href="#" target="_blank" class="dl-btn dl-btn-alt">
+          <span>⚡ Baixar Vídeo (MP4 480p)</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (async function() {
+      const params = new URLSearchParams(window.location.search);
+      const videoId = params.get('v');
+      
+      if (!videoId) {
+        document.getElementById('video-title').innerText = 'Vídeo não especificado';
+        return;
+      }
+
+      const targetUrl = `https://www.youtube.com/watch?v=${videoId}`;
+
+      // Embed do Player de Vídeo do YouTube
+      document.getElementById('player-box').innerHTML = `
+        <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen></iframe>
+      `;
+
+      // Links de Ação Direta Nativa via Servidor Local
+      const dlVideo = document.getElementById('btn-dl-video');
+      const dlAudio = document.getElementById('btn-dl-audio');
+      const dlWav = document.getElementById('btn-dl-wav');
+      const dlAlt = document.getElementById('btn-dl-alt');
+
+      dlVideo.href = `/api/youtube/stream-download?v=${videoId}&type=video&quality=max`;
+      dlVideo.onclick = (e) => downloadNative(e, dlVideo, '🎬 Baixar Vídeo (MP4 HD)');
+
+      dlAudio.href = `/api/youtube/stream-download?v=${videoId}&type=audio`;
+      dlAudio.onclick = (e) => downloadNative(e, dlAudio, '🎵 Baixar Áudio (MP3 320k)');
+
+      dlWav.href = `/api/youtube/stream-download?v=${videoId}&type=wav`;
+      dlWav.onclick = (e) => downloadNative(e, dlWav, '💿 Baixar Áudio (WAV Lossless)');
+
+      dlAlt.href = `/api/youtube/stream-download?v=${videoId}&type=video&quality=480`;
+      dlAlt.onclick = (e) => downloadNative(e, dlAlt, '⚡ Baixar Vídeo (MP4 480p)');
+
+      // Metadados
+      try {
+        const resp = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(targetUrl)}&format=json`);
+        if (resp.ok) {
+          const data = await resp.json();
+          const title = data.title || '';
+          document.getElementById('video-title').innerText = title || 'Vídeo do YouTube';
+          document.getElementById('video-author').innerText = '👤 ' + (data.author_name || 'YouTube');
+          document.title = (title || 'Vídeo') + ' - Tomada Media Player';
+
+          if (title) {
+            dlVideo.href += `&title=${encodeURIComponent(title)}`;
+            dlAudio.href += `&title=${encodeURIComponent(title)}`;
+            dlWav.href += `&title=${encodeURIComponent(title)}`;
+            dlAlt.href += `&title=${encodeURIComponent(title)}`;
+          }
+        }
+      } catch (e) {
+        console.warn('Erro ao carregar detalhes:', e);
+      }
+    })();
+
+    function downloadNative(e, btn, originalLabel) {
+      e.preventDefault();
+      const url = btn.href;
+      
+      // Disable all buttons during download
+      document.querySelectorAll('.dl-btn').forEach(b => {
+        b.style.pointerEvents = 'none';
+        b.style.opacity = '0.5';
+      });
+      btn.style.opacity = '1';
+      btn.style.border = '2px solid #34C759';
+
+      btn.textContent = '⏳ Baixando...';
+
+      fetch(url)
+        .then(response => {
+          if (!response.ok) throw new Error('Erro no servidor: ' + response.status);
+          const contentLength = response.headers.get('content-length');
+          const total = contentLength ? parseInt(contentLength) : 0;
+          let loaded = 0;
+          const reader = response.body.getReader();
+          const chunks = [];
+
+          function pump() {
+            return reader.read().then(({ done, value }) => {
+              if (done) return new Blob(chunks);
+              chunks.push(value);
+              loaded += value.length;
+              if (total) {
+                const pct = Math.round((loaded / total) * 100);
+                const mb = (loaded / 1024 / 1024).toFixed(1);
+                btn.textContent = `⬇️ Baixando... ${pct}% (${mb} MB)`;
+              }
+              return pump();
+            });
+          }
+
+          return pump();
+        })
+        .then(blob => {
+          const urlObj = new URL(url, window.location.origin);
+          const type = urlObj.searchParams.get('type') || 'video';
+          const videoId = urlObj.searchParams.get('v') || 'video';
+          const title = urlObj.searchParams.get('title') || `youtube_${videoId}`;
+          const ext = type === 'wav' ? 'wav' : (type === 'audio' ? 'mp3' : 'mp4');
+
+          const cleanTitle = decodeURIComponent(title)
+            .replace(/[\\\/\?\:\*\"\<\|\>]/g, '_')
+            .replace(/\s+/g, ' ')
+            .trim();
+          const filename = `${cleanTitle}.${ext}`;
+
+          const blobUrl = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = blobUrl;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(blobUrl);
+
+          btn.textContent = '✅ Concluído!';
+        })
+        .catch(err => {
+          console.error('Download error:', err);
+          btn.textContent = '❌ Erro no download';
+          btn.style.border = '2px solid #FF3B30';
+        })
+        .finally(() => {
+          setTimeout(() => {
+            document.querySelectorAll('.dl-btn').forEach(b => {
+              b.style.pointerEvents = '';
+              b.style.opacity = '1';
+              b.style.border = '';
+            });
+            btn.textContent = originalLabel;
+          }, 4000);
+        });
+    }
+  </script>
+</body>
+</html>

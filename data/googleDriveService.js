@@ -1,0 +1,419 @@
+/**
+ * Google Drive Storage Service - Bancada Sistema Padeiro
+ * 
+ * Este módulo gerencia o upload de fotos de produção e assinaturas diretamente
+ * no Google Drive usando uma Conta de Serviço (Service Account).
+ * 
+ * Possui fallback automático para armazenamento local caso as credenciais não estejam configuradas.
+ */
+
+const fs = require('fs');
+const path = require('path');
+const { Readable } = require('stream');
+let googleapis;
+
+try {
+  googleapis = require('googleapis');
+} catch (err) {
+  // O módulo pode não ter sido instalado ainda, o fallback será usado
+  console.warn('⚠️  googleapis não está disponível. Armazenamento local será usado.');
+}
+
+const SCOPES = ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive'];
+
+let driveClient = null;
+let isConfigured = false;
+
+function loadDriveConfig() {
+  // 1. Tentar carregar do arquivo de configuração (viaja junto com o git)
+  const configPath = path.join(__dirname, '..', 'config', 'google-drive-config.json');
+  if (fs.existsSync(configPath)) {
+    try {
+      const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+      if (config.clientId && config.clientSecret && config.refreshToken) {
+        return {
+          folderId: config.folderId || process.env.GOOGLE_DRIVE_FOLDER_ID,
+          clientId: config.clientId,
+          clientSecret: config.clientSecret,
+          refreshToken: config.refreshToken
+        };
+      }
+    } catch (e) {
+      console.warn('⚠️  Erro ao ler google-drive-config.json:', e.message);
+    }
+  }
+
+  // 2. Fallback: ler das variáveis de ambiente (.env)
+  return {
+    folderId: process.env.GOOGLE_DRIVE_FOLDER_ID,
+    clientId: process.env.GOOGLE_DRIVE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_DRIVE_CLIENT_SECRET,
+    refreshToken: process.env.GOOGLE_DRIVE_REFRES_TOKEN || process.env.GOOGLE_DRIVE_REFRESH_TOKEN
+  };
+}
+
+function initDrive() {
+  if (driveClient) return driveClient;
+  if (!googleapis) return null;
+
+  const config = loadDriveConfig();
+
+  if (!config.folderId) {
+    console.warn('⚠️  GOOGLE_DRIVE_FOLDER_ID não está definido. Usando armazenamento em disco local.');
+    return null;
+  }
+
+  try {
+    let auth;
+    if (config.clientId && config.clientSecret && config.refreshToken) {
+      // Configurar usando OAuth2 com Refresh Token
+      auth = new googleapis.google.auth.OAuth2(config.clientId, config.clientSecret);
+      auth.setCredentials({ refresh_token: config.refreshToken });
+      
+      driveClient = googleapis.google.drive({ version: 'v3', auth });
+      isConfigured = true;
+      // Guardar folderId para uso nos uploads
+      process.env.GOOGLE_DRIVE_FOLDER_ID = config.folderId;
+      console.log('✅ Google Drive API configurada com sucesso usando OAuth2 (Client ID & Refresh Token).');
+      return driveClient;
+    }
+
+    // Fallback para Service Account
+    const envJson = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
+    const keyPath = process.env.GOOGLE_SERVICE_ACCOUNT_JSON_PATH || 'google-service-account.json';
+    const resolvedPath = path.isAbsolute(keyPath) ? keyPath : path.join(__dirname, '..', keyPath);
+
+    if (envJson || fs.existsSync(resolvedPath)) {
+      if (envJson) {
+        const credentials = JSON.parse(envJson);
+        auth = new googleapis.google.auth.GoogleAuth({
+          credentials,
+          scopes: SCOPES,
+        });
+      } else {
+        auth = new googleapis.google.auth.GoogleAuth({
+          keyFile: resolvedPath,
+          scopes: SCOPES,
+        });
+      }
+      driveClient = googleapis.google.drive({ version: 'v3', auth });
+      isConfigured = true;
+      console.log('✅ Google Drive API configurada com sucesso usando Service Account.');
+      return driveClient;
+    }
+
+    console.warn('⚠️  Nenhuma credencial do Google Drive encontrada (OAuth2 ou Service Account). Usando armazenamento em disco local.');
+    return null;
+  } catch (error) {
+    console.error('❌ Erro ao inicializar cliente Google Drive:', error.message);
+    return null;
+  }
+}
+
+// Inicializa no carregamento do módulo
+initDrive();
+
+const googleDriveService = {
+  /**
+   * Verifica se o Google Drive está ativo
+   */
+  isEnabled() {
+    // Tenta re-inicializar caso tenha sido configurado após o boot
+    if (!driveClient) initDrive();
+    return isConfigured && driveClient !== null;
+  },
+
+  /**
+   * Converte base64 para Stream legível
+   */
+  base64ToStream(base64Str) {
+    const stream = new Readable();
+    stream.push(Buffer.from(base64Str, 'base64'));
+    stream.push(null);
+    return stream;
+  },
+
+  /**
+   * Upload de Stream legível para o Google Drive (ou fallback local)
+   */
+  async uploadStream(fileStream, filename, mimeType, type = 'producao') {
+    const drive = initDrive();
+
+    if (!drive) {
+      // Fallback: Salvar em disco local
+      const dir = path.join(__dirname, '..', 'uploads', type);
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      
+      const localPath = path.join(dir, filename);
+      const writeStream = fs.createWriteStream(localPath);
+      
+      return new Promise((resolve, reject) => {
+        fileStream.pipe(writeStream)
+          .on('finish', () => {
+            console.log(`[STORAGE Fallback] Arquivo salvo localmente em uploads/${type}/${filename}`);
+            resolve({
+              success: true,
+              path: `/uploads/${type}/${filename}`,
+              filename,
+              isDrive: false
+            });
+          })
+          .on('error', (err) => {
+            console.error('[STORAGE Fallback] Erro ao salvar localmente:', err.message);
+            reject(err);
+          });
+      });
+    }
+
+    try {
+      const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
+      const fileMetadata = {
+        name: filename,
+        parents: [folderId]
+      };
+      const media = {
+        mimeType,
+        body: fileStream
+      };
+
+      const response = await drive.files.create({
+        requestBody: fileMetadata,
+        media: media,
+        fields: 'id'
+      }, {
+        timeout: 15000 // 15 segundos de timeout
+      });
+
+      const fileId = response.data.id;
+      console.log(`[STORAGE GoogleDrive] Upload finalizado com ID: ${fileId}`);
+      return {
+        success: true,
+        path: `/api/upload/file/${fileId}`,
+        fileId,
+        filename,
+        isDrive: true
+      };
+    } catch (error) {
+      console.error('❌ Erro no upload para o Google Drive:', error.message);
+      throw error;
+    }
+  },
+
+  /**
+   * Upload de arquivo local (já salvo pelo Multer no disco temporário)
+   */
+  async uploadLocalFile(localFilePath, filename, mimeType, type = 'producao') {
+    const fileStream = fs.createReadStream(localFilePath);
+    try {
+      const result = await this.uploadStream(fileStream, filename, mimeType, type);
+      
+      // Se subiu pro drive com sucesso, limpa o arquivo temporário do disco local
+      if (result.isDrive) {
+        fs.unlink(localFilePath, (err) => {
+          if (err) console.error(`⚠️  Erro ao remover arquivo temporário ${localFilePath}:`, err.message);
+          else console.log(`🧹 Arquivo temporário removido: ${localFilePath}`);
+        });
+      }
+      return result;
+    } catch (error) {
+      console.error('❌ Erro ao processar upload de arquivo local:', error.message);
+      // Retorna fallback local em caso de erro para não quebrar o fluxo de registro
+      console.warn('⚠️ Tentando fallback local permanente devido a falha no Drive...');
+      return {
+        success: true,
+        path: `/uploads/${type}/${filename}`,
+        filename,
+        isDrive: false
+      };
+    }
+  },
+
+  /**
+   * Upload de imagem em Base64 (assinaturas)
+   */
+  async uploadBase64(base64Data, filename, mimeType = 'image/png', type = 'assinaturas') {
+    const cleanBase64 = base64Data.replace(/^data:image\/\w+;base64,/, '');
+    const stream = this.base64ToStream(cleanBase64);
+    
+    const drive = initDrive();
+    if (!drive) {
+      // Fallback: Salvar em disco local
+      const dir = path.join(__dirname, '..', 'uploads', type);
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      
+      const localPath = path.join(dir, filename);
+      fs.writeFileSync(localPath, cleanBase64, 'base64');
+      console.log(`[STORAGE Fallback] Assinatura base64 salva localmente em uploads/${type}/${filename}`);
+      return {
+        success: true,
+        path: `/uploads/${type}/${filename}`,
+        filename,
+        isDrive: false
+      };
+    }
+
+    try {
+      return await this.uploadStream(stream, filename, mimeType, type);
+    } catch (error) {
+      console.error('❌ Erro no upload de Base64 para o Google Drive:', error.message);
+      // Fallback local caso dê erro no envio ao drive
+      const dir = path.join(__dirname, '..', 'uploads', type);
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      
+      const localPath = path.join(dir, filename);
+      fs.writeFileSync(localPath, cleanBase64, 'base64');
+      return {
+        success: true,
+        path: `/uploads/${type}/${filename}`,
+        filename,
+        isDrive: false
+      };
+    }
+  },
+
+  /**
+   * Busca o Stream binário do arquivo do Google Drive para servir no proxy
+   */
+  async getFileStream(fileId) {
+    const drive = initDrive();
+    if (!drive) {
+      throw new Error('Serviço do Google Drive não inicializado');
+    }
+
+    try {
+      const response = await drive.files.get(
+        { fileId, alt: 'media' },
+        { 
+          responseType: 'stream',
+          timeout: 15000 // 15 segundos de timeout
+        }
+      );
+      
+      return {
+        stream: response.data,
+        contentType: response.headers['content-type'] || 'image/png',
+        contentLength: response.headers['content-length']
+      };
+    } catch (error) {
+      console.error(`❌ Erro ao baixar arquivo ${fileId} do Google Drive:`, error.message);
+      throw error;
+    }
+  },
+
+  /**
+   * Procura um arquivo no Google Drive pelo nome e retorna o ID, caso exista
+   */
+  async findFileByName(filename) {
+    const drive = initDrive();
+    if (!drive) return null;
+
+    try {
+      const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
+      const query = `name='${filename}' and trashed=false${folderId ? ` and '${folderId}' in parents` : ''}`;
+      
+      const response = await drive.files.list({
+        q: query,
+        fields: 'files(id, name)',
+        spaces: 'drive'
+      });
+
+      if (response.data.files && response.data.files.length > 0) {
+        return response.data.files[0].id;
+      }
+      return null;
+    } catch (error) {
+      console.error(`❌ Erro ao procurar arquivo ${filename} no Google Drive:`, error.message);
+      return null;
+    }
+  },
+
+  /**
+   * Busca o APK com a versão mais recente na pasta do Google Drive
+   */
+  async getLatestApkFromDrive() {
+    const drive = initDrive();
+    if (!drive) return null;
+
+    try {
+      const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
+      // Listar arquivos que terminam com .apk e não estão na lixeira
+      const query = `name contains '.apk' and trashed=false${folderId ? ` and '${folderId}' in parents` : ''}`;
+      
+      const response = await drive.files.list({
+        q: query,
+        fields: 'files(id, name, mimeType, createdTime)',
+        spaces: 'drive',
+        pageSize: 100
+      });
+
+      const files = response.data.files || [];
+      if (files.length === 0) return null;
+
+      const compareVersions = (v1, v2) => {
+        const parts1 = v1.split('.').map(Number);
+        const parts2 = v2.split('.').map(Number);
+        const maxLen = Math.max(parts1.length, parts2.length);
+        for (let i = 0; i < maxLen; i++) {
+          const num1 = parts1[i] || 0;
+          const num2 = parts2[i] || 0;
+          if (num1 > num2) return 1;
+          if (num1 < num2) return -1;
+        }
+        return 0;
+      };
+
+      let latestFile = null;
+      let latestVersion = '0.0.0';
+
+      for (const file of files) {
+        const nameLower = file.name.toLowerCase();
+        const isApk = nameLower.endsWith('.apk');
+        const nameMatch = nameLower.includes('bancada') || nameLower.includes('smartgestor');
+        if (!isApk || !nameMatch) continue;
+
+        // Expressão regular para capturar versões (Ex: V1.2.3, V1.0, 1.2)
+        const versionMatch = file.name.match(/(?:bancada|smartgestor)[-_\s]*v?(\d+(?:\.\d+)+)/i);
+        let version = '1.0.0';
+        if (versionMatch) {
+          version = versionMatch[1];
+        } else {
+          const fallbackMatch = file.name.match(/v?(\d+(?:\.\d+)+)/i);
+          if (fallbackMatch) {
+            version = fallbackMatch[1];
+          }
+        }
+
+        if (compareVersions(version, latestVersion) > 0) {
+          latestVersion = version;
+          latestFile = file;
+        }
+      }
+
+      if (latestFile) {
+        return {
+          fileId: latestFile.id,
+          name: latestFile.name,
+          version: latestVersion
+        };
+      }
+
+      // Se existir algum .apk genérico no Drive como "SmartGestor.apk", retorna ele como v1.0.0
+      const genericApk = files.find(f => f.name.toLowerCase().endsWith('.apk'));
+      if (genericApk) {
+        return {
+          fileId: genericApk.id,
+          name: genericApk.name,
+          version: '1.0.0'
+        };
+      }
+
+      return null;
+    } catch (error) {
+      console.error('❌ Erro ao buscar APK mais recente no Google Drive:', error.message);
+      return null;
+    }
+  }
+};
+
+
+module.exports = googleDriveService;

@@ -1,0 +1,1302 @@
+/**
+ * Tomada Sistema - CSS do Módulo de Planejamento (Redesign v3 - Fiel à Referência & Imagem 3)
+ * Paleta Tomada (#E55A2B) + Design dos Cards de Imagem 3 + Sem Sidebar Esquerda
+ */
+
+/* ============================================
+   OVERRIDE CRÍTICO: Neutralizar padding do page-container
+   para que o módulo de planejamento ocupe edge-to-edge
+   ============================================ */
+#page-container:has(.ref-dashboard-wrapper) {
+  padding: 0 !important;
+  overflow-y: auto !important;
+  display: block !important;
+  background: #F5F3EF;
+}
+
+:root {
+  --ref-bg: #F5F3EF;
+  --ref-card-bg: #FFFFFF;
+  --ref-border: #E8E4DD;
+  --ref-text: #1C1A14;
+  --ref-text-sub: #7C786D;
+  --ref-primary: #E55A2B;
+  --ref-primary-hover: #C8461B;
+  --ref-primary-light: rgba(229, 90, 43, 0.1);
+  --ref-radius-lg: 24px;
+  --ref-radius-md: 16px;
+  --ref-radius-pill: 30px;
+  --ref-shadow: 0 12px 36px rgba(0, 0, 0, 0.05);
+}
+
+/* Container Wrapper Sem Sidebar Esquerda - Contempla toda a área segura */
+.ref-dashboard-wrapper {
+  background: var(--ref-bg);
+  border: none;
+  overflow: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--ref-text);
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 130px);
+}
+
+/* 1. Search Bar (agora integrada ao section header) */
+.ref-search-bar {
+  position: relative;
+  flex: 0 1 280px;
+  min-width: 180px;
+}
+
+.ref-search-input {
+  width: 100%;
+  background: #F8F6F1;
+  border: 1px solid var(--ref-border);
+  border-radius: var(--ref-radius-pill);
+  padding: 10px 16px 10px 40px;
+  font-size: 13px;
+  color: var(--ref-text);
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.ref-search-input:focus {
+  background: #FFFFFF;
+  border-color: var(--ref-primary);
+  box-shadow: 0 0 0 3px var(--ref-primary-light);
+}
+
+.ref-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ref-text-sub);
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+/* 2. Layout sem Sidebar (Main Grid 2fr | 1fr) */
+.ref-body-layout-nosidebar {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  min-height: calc(100vh - 130px);
+  background: #FAF8F5;
+}
+
+@media (max-width: 1080px) {
+  .ref-body-layout-nosidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .ref-right-panel {
+    display: none;
+  }
+}
+
+.ref-main-content-nosidebar {
+  padding: 28px 32px;
+  overflow-y: auto;
+}
+
+.ref-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.ref-section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  margin: 0;
+  color: var(--ref-text);
+  letter-spacing: -0.5px;
+}
+
+.ref-section-sub {
+  font-size: 12px;
+  color: var(--ref-text-sub);
+  margin-top: 2px;
+}
+
+/* 3. Hero Cards de Caixas (Bento Boxes Fechadas/Abertas) */
+.ref-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 22px;
+  margin-bottom: 36px;
+}
+
+.ref-hero-card {
+  border-radius: var(--ref-radius-lg);
+  padding: 24px;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 160px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.ref-hero-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.14);
+}
+
+.ref-hero-card.active-open {
+  border-color: #FFFFFF;
+  box-shadow: 0 0 0 4px rgba(229, 90, 43, 0.3), 0 18px 36px rgba(0, 0, 0, 0.16);
+}
+
+.ref-hero-card.theme-orange {
+  background: linear-gradient(135deg, #E55A2B 0%, #C8461B 100%);
+}
+
+.ref-hero-card.theme-dark {
+  background: linear-gradient(135deg, #1C1A14 0%, #343026 100%);
+}
+
+.ref-hero-card.theme-purple {
+  background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+}
+
+.ref-hero-card.theme-green {
+  background: linear-gradient(135deg, #10B981 0%, #047857 100%);
+}
+
+.ref-hero-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.ref-hero-card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 19px;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.3;
+  color: #FFFFFF !important;
+}
+
+.ref-hero-card-dots {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: #FFFFFF !important;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ref-hero-card-dots:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.ref-hero-progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.95;
+  margin-bottom: 6px;
+  color: #FFFFFF !important;
+}
+
+.ref-hero-progress-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.ref-hero-progress-fill {
+  height: 100%;
+  background: #FFFFFF;
+  border-radius: 3px;
+  transition: width 0.35s ease;
+}
+
+.ref-hero-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.ref-date-pill {
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.22);
+  padding: 5px 12px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #FFFFFF !important;
+}
+
+/* 4. RE-ENQUADRAMENTO DA SEÇÃO INFERIOR (ESTILO IMAGEM 3 - ULTRA PREMIUM CARDS) */
+.ref-bottom-re-enquadrado {
+  background: #FFFFFF;
+  border-radius: var(--ref-radius-lg);
+  border: 1px solid var(--ref-border);
+  padding: 28px;
+  box-shadow: var(--ref-shadow);
+}
+
+.ref-bottom-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ref-border);
+}
+
+.ref-bottom-caixa-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ref-text);
+}
+
+/* CARDS DE CONTEÚDO 100% INSPIRADOS NA IMAGEM 3 - TAMANHO REDUZIDO (MENORES E MAIS COMPACTOS) */
+.img3-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.img3-card {
+  background: #FFFFFF;
+  border: 1px solid var(--ref-border);
+  border-radius: 20px;
+  padding: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.img3-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  border-color: var(--ref-primary);
+}
+
+/* Top Cover Banner Image (Thumb) da Imagem 3 - Reduzida */
+.img3-banner {
+  position: relative;
+  height: 120px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--ref-bg);
+  margin-bottom: 12px;
+}
+
+.img3-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Avatar Badge Sobreposto no Canto Inferior Esquerdo da Cover - Reduzido */
+.img3-avatar-badge {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+  background: var(--ref-primary);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+/* Glassmorphism Tag Badge no Canto Inferior Direito da Cover - Reduzido */
+.img3-glass-badge {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Informações do Card Imagem 3 */
+.img3-body {
+  padding: 0 4px 6px 4px;
+}
+
+.img3-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.img3-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ref-text);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.img3-bookmark-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #F4F2EC;
+  border: none;
+  color: var(--ref-text-sub);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.img3-bookmark-btn:hover {
+  background: var(--ref-primary-light);
+  color: var(--ref-primary);
+}
+
+.img3-subtitle {
+  font-size: 11px;
+  color: var(--ref-text-sub);
+  margin: 0 0 10px 0;
+  line-height: 1.4;
+}
+
+/* Três Ícones de Status da Imagem 3 (Rating | Hours | Month / Checklist) */
+.img3-stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 0 2px;
+}
+
+.img3-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.img3-stat-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.img3-stat-val {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--ref-text);
+}
+
+.img3-stat-lbl {
+  font-size: 9px;
+  color: var(--ref-text-sub);
+  display: block;
+}
+
+/* Barra de Progresso Premium dos Checklists */
+.img3-premium-progress-container {
+  background: #F8F6F1;
+  border-radius: 10px;
+  padding: 8px 10px;
+  margin-bottom: 12px;
+  border: 1px solid var(--ref-border);
+}
+
+.img3-premium-progress-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--ref-text-sub);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.img3-premium-progress-track {
+  width: 100%;
+  height: 6px;
+  background: #EBE5DF;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.img3-premium-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg,
+      var(--tag-color, var(--ref-primary)) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      var(--tag-color, var(--ref-primary)) 100%);
+  background-size: 200% 100%;
+  border-radius: 3px;
+  /* Transição elástica premium estilo spring */
+  transition: width 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: shimmerProgress 3s infinite linear;
+}
+
+@keyframes shimmerProgress {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Botão Pílula Preto / Destaque "Get In Touch" da Imagem 3 */
+.img3-pill-btn {
+  width: 100%;
+  background: #1C1A14;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 30px;
+  padding: 13px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.img3-pill-btn:hover {
+  background: var(--ref-primary);
+  transform: translateY(-1px);
+}
+
+/* Painel Direito (Today's Task) */
+.ref-right-panel {
+  background: #FFFFFF;
+  border-left: 1px solid var(--ref-border);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ref-panel-tabs {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ref-border);
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+}
+
+.ref-panel-tab {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ref-text-sub);
+  cursor: pointer;
+  padding-bottom: 6px;
+}
+
+.ref-panel-tab.active {
+  color: var(--ref-text);
+  font-weight: 800;
+  border-bottom: 2px solid var(--ref-primary);
+}
+
+.ref-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.ref-panel-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 19px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.ref-filters-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+}
+
+.ref-filter-pill {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: #F4F2EC;
+  color: var(--ref-text-sub);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ref-filter-pill.active {
+  background: var(--ref-primary);
+  color: #FFFFFF;
+}
+
+.ref-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+  max-height: 560px;
+}
+
+.ref-task-card {
+  background: #FFFFFF;
+  border: 1px solid var(--ref-border);
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.ref-task-card:hover {
+  border-color: var(--ref-primary);
+  box-shadow: 0 6px 18px rgba(229, 90, 43, 0.08);
+}
+
+.ref-task-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--ref-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.ref-task-check.checked {
+  background: var(--ref-primary);
+  border-color: var(--ref-primary);
+  color: #FFFFFF;
+}
+
+.btn-ref-add {
+  background: var(--ref-primary);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--ref-radius-pill);
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s ease;
+  box-shadow: 0 4px 12px rgba(229, 90, 43, 0.25);
+}
+
+.btn-ref-add:hover {
+  background: var(--ref-primary-hover);
+}
+
+/* Dropzone de Thumbnail Premium */
+.card-thumb-dropzone {
+  border-radius: 14px;
+  overflow: hidden;
+  height: 120px;
+  border: 2px dashed var(--ref-border, #E8E4DD);
+  background: #F8F6F1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+}
+
+.card-thumb-dropzone:hover {
+  border-color: var(--ref-primary, #E55A2B);
+  background: rgba(229, 90, 43, 0.03);
+}
+
+/* ==========================================================================
+   CANVAS / WHITEBOARD INFINITO (SUB-ABA CANVAS DE PLANEJAMENTO)
+   --------------------------------------------------------------------------
+   ARQUITETURA: viewport (tamanho fixo, overflow hidden) > world layer
+   (transform: translate + scale, sem largura/altura fixas) > nós em
+   coordenadas de mundo (left/top livres, sem limite).
+
+   CONTRATO COM O JS (obrigatório implementar assim):
+   1) O JS mantém 3 estados: panX, panY, zoom.
+   2) A cada frame de pan/zoom, o JS aplica em `.canvas-transform-layer`:
+        transform: translate(panX, panY) scale(zoom);
+   3) A cada frame de pan/zoom, o JS também atualiza as CSS vars no
+      `.canvas-viewport` (ou no `.canvas-container`) para mover o grid
+      de fundo junto, SEM depender de nenhum elemento de tamanho fixo:
+        --grid-offset-x: `${panX % (24 * zoom)}px`
+        --grid-offset-y: `${panY % (24 * zoom)}px`
+        --grid-size: `${24 * zoom}px`
+      (o valor 24 é o tamanho base do tile do grid, mesmo usado antes)
+   4) Os nós (`.canvas-node`) são posicionados via `left`/`top` em
+      coordenadas de mundo (não coordenadas de tela) — o transform do
+      pai já cuida de converter para tela.
+   5) A camada SVG de conexões (`.canvas-svg-layer`) fica DENTRO da
+      `.canvas-transform-layer`, herdando o mesmo transform — não tem
+      `viewBox` fixo nem tamanho hardcoded. Os `<path>` usam as mesmas
+      coordenadas de mundo dos nós, e `overflow: visible` permite
+      desenhar fora dos limites do próprio elemento SVG.
+   ========================================================================== */
+
+/* Switcher de Sub-abas de Planejamento (Mesmo estilo de Cronograma) */
+.planejamento-view-switcher {
+  background: #EBE8DF;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 9999px;
+  padding: 4px;
+  display: inline-flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.planejamento-view-switcher .switcher-btn {
+  border: none;
+  background: transparent;
+  color: #7A7567;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 18px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.planejamento-view-switcher .switcher-btn.active {
+  background: #FFFFFF;
+  color: #1C1A14;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  font-weight: 800;
+}
+/* Forçar edge-to-edge absoluto na aba planejamento retirando o padding padrão do container de página */
+#page-container:has(.ref-dashboard-wrapper) {
+  padding: 0 !important;
+}
+
+/* Header do Canvas Flutuante — o switcher flutua sobre o canvas sem ocupar altura do layout */
+.planejamento-canvas-header-floating {
+  position: absolute;
+  top: 16px;
+  left: 24px;
+  z-index: 1000;
+  pointer-events: auto;
+}
+
+/* Viewport do Canvas — preenche 100% da área útil do topo ao rodapé */
+.canvas-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  background-color: #FAF8F5;
+  border-radius: 0;
+  border: none;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.02);
+  user-select: none;
+  margin: 0;
+}
+
+/* Camada que recebe o grid de fundo e os eventos de pan/zoom.
+   O grid é 100% CSS var-driven pelo JS — infinito de verdade,
+   sem nenhum elemento de tamanho fixo por trás. */
+.canvas-viewport {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: grab;
+  background-image: radial-gradient(#D3CDC4 1.5px, transparent 1.5px);
+  background-size: var(--grid-size, 24px) var(--grid-size, 24px);
+  background-position: var(--grid-offset-x, 0px) var(--grid-offset-y, 0px);
+}
+
+.canvas-viewport:active {
+  cursor: grabbing;
+}
+
+/* Camada "mundo" — transformada via translate+scale pelo JS.
+   Sem width/height fixos: os filhos (nós e svg) se posicionam
+   livremente via left/top em coordenadas de mundo. */
+.canvas-transform-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  overflow: visible;
+  transform-origin: 0 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.canvas-transform-layer>* {
+  pointer-events: auto;
+}
+
+/* Camada SVG de Conexões/Setas — vive DENTRO da transform-layer,
+   herda o mesmo transform automaticamente. Sem tamanho hardcoded:
+   overflow: visible permite desenhar paths em qualquer coordenada
+   de mundo, positiva ou negativa. */
+.canvas-svg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.canvas-svg-layer path {
+  fill: none;
+  stroke-width: 2.5px;
+  transition: stroke 0.15s ease, stroke-width 0.15s ease;
+  pointer-events: stroke;
+  cursor: pointer;
+}
+
+.canvas-svg-layer path:hover,
+.canvas-svg-layer path.selected {
+  stroke-width: 4px !important;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
+}
+
+/* Cards / Nós do Canvas — posicionados via left/top em coordenadas
+   de mundo, definidas pelo JS (não coordenadas de tela). */
+.canvas-node {
+  position: absolute;
+  background: #FFFFFF;
+  border-radius: 18px;
+  border: 1px solid var(--ref-border, #EBE5DF);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+  padding: 14px 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.canvas-node:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.09);
+}
+
+.canvas-node.selected {
+  border-color: var(--ref-primary, #E55A2B) !important;
+  box-shadow: 0 0 0 3px rgba(229, 90, 43, 0.25), 0 8px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Divisória sutil no card */
+.canvas-node-divider {
+  height: 1px;
+  background: #F0ECE8;
+  margin: 8px 0;
+  width: 100%;
+}
+
+/* Nós de Grupo (Frames) */
+.canvas-node-group {
+  background: rgba(248, 246, 241, 0.6);
+  border: 2px dashed rgba(200, 192, 180, 0.8);
+  box-shadow: none;
+  z-index: 1;
+}
+
+.canvas-node-group.selected {
+  border: 2px dashed var(--ref-primary, #E55A2B) !important;
+  background: rgba(229, 90, 43, 0.03);
+}
+
+.canvas-node-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: move;
+}
+
+.canvas-node-title-input {
+  border: none;
+  background: transparent;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ref-text, #1C1A14);
+  outline: none;
+  flex: 1;
+}
+
+/* Ancoragens de Conexão (Top, Right, Bottom, Left) */
+.canvas-anchor {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #FFFFFF;
+  border: 2px solid var(--ref-primary, #E55A2B);
+  border-radius: 50%;
+  cursor: crosshair;
+  opacity: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.canvas-node:hover .canvas-anchor,
+.canvas-node.selected .canvas-anchor {
+  opacity: 1;
+}
+
+.canvas-anchor:hover {
+  transform: scale(1.35);
+  background: var(--ref-primary, #E55A2B);
+}
+
+.canvas-anchor.top {
+  top: -8px;
+  left: calc(50% - 8px);
+}
+
+.canvas-anchor.right {
+  top: calc(50% - 8px);
+  right: -8px;
+}
+
+.canvas-anchor.bottom {
+  bottom: -8px;
+  left: calc(50% - 8px);
+}
+
+.canvas-anchor.left {
+  top: calc(50% - 8px);
+  left: -8px;
+}
+
+/* Redimensionamento dos Nós */
+.canvas-resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  cursor: nwse-resize;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 10;
+}
+
+.canvas-resize-handle::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--ref-text-sub, #7A7567);
+  border-bottom: 2px solid var(--ref-text-sub, #7A7567);
+}
+
+.canvas-node:hover .canvas-resize-handle {
+  opacity: 1;
+}
+
+/* Toolbar Flutuante de Ferramentas (Estilo Navbar / Floating Dock do Sistema) */
+.canvas-toolbar {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(235, 232, 223, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 9999px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.04);
+  z-index: 100;
+}
+
+.canvas-toolbar-btn {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  color: var(--ref-text, #1C1A14);
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.canvas-toolbar-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  color: var(--ref-primary, #E55A2B);
+}
+
+.canvas-toolbar-btn.btn-danger {
+  color: #E11D48;
+}
+
+.canvas-toolbar-btn.btn-danger:hover {
+  background: #FFE4E6;
+  color: #BE123C;
+}
+
+.canvas-toolbar-divider {
+  width: 1px;
+  height: 22px;
+  background: rgba(0, 0, 0, 0.08);
+  margin: 0 4px;
+}
+
+/* Controles de Zoom Flutuantes (Canto Inferior Esquerdo - Estilo Floating Pill) */
+.canvas-controls-zoom {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(235, 232, 223, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 9999px;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  z-index: 100;
+}
+
+.canvas-zoom-btn {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--ref-text, #1C1A14);
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.canvas-zoom-btn:hover {
+  transform: scale(1.1);
+  color: var(--ref-primary, #E55A2B);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.canvas-zoom-indicator {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ref-text, #1C1A14);
+  padding: 0 8px;
+  min-width: 44px;
+  text-align: center;
+}
+
+/* Área de Seleção por Caixa (Marquee Selection Box) */
+.canvas-selection-box {
+  position: absolute;
+  border: 1px dashed var(--ref-primary, #E55A2B);
+  background: rgba(229, 90, 43, 0.08);
+  pointer-events: none;
+  z-index: 99;
+}
+
+/* Animações de Entrada e Saída em Cascata (Stagger / Cascade) */
+@keyframes refFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Animação do Wrapper do Módulo Planejamento */
+.ref-dashboard-wrapper {
+  animation: refFadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Cascata (Delay progressivo) para os Hero Cards de Caixas */
+.ref-hero-card {
+  animation: refFadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.ref-hero-card:nth-child(1) { animation-delay: 0.04s; }
+.ref-hero-card:nth-child(2) { animation-delay: 0.08s; }
+.ref-hero-card:nth-child(3) { animation-delay: 0.12s; }
+.ref-hero-card:nth-child(4) { animation-delay: 0.16s; }
+.ref-hero-card:nth-child(5) { animation-delay: 0.2s; }
+.ref-hero-card:nth-child(n+6) { animation-delay: 0.24s; }
+
+/* Cascata para os cards dentro da caixa ativa (Estilo Imagem 3) */
+.img3-card {
+  animation: refFadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.img3-card:nth-child(1) { animation-delay: 0.06s; }
+.img3-card:nth-child(2) { animation-delay: 0.12s; }
+.img3-card:nth-child(3) { animation-delay: 0.18s; }
+.img3-card:nth-child(4) { animation-delay: 0.24s; }
+.img3-card:nth-child(5) { animation-delay: 0.3s; }
+.img3-card:nth-child(n+6) { animation-delay: 0.36s; }
+
+/* Cascata para os nós do Canvas */
+.canvas-node {
+  animation: refFadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.canvas-node:nth-child(1) { animation-delay: 0.03s; }
+.canvas-node:nth-child(2) { animation-delay: 0.06s; }
+.canvas-node:nth-child(3) { animation-delay: 0.09s; }
+.canvas-node:nth-child(4) { animation-delay: 0.12s; }
+.canvas-node:nth-child(n+5) { animation-delay: 0.15s; }
+
+/* Cascata e Estilização para os Cards de Recomendação (Layout CourseConnect) */
+.ref-rec-card, .cc-dark-card {
+  animation: refFadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+}
+.cc-dark-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.5) !important;
+  border-color: rgba(79, 70, 229, 0.5) !important;
+}
+.ref-rec-card:nth-child(1), .cc-dark-card:nth-child(1) { animation-delay: 0.05s; }
+.ref-rec-card:nth-child(2), .cc-dark-card:nth-child(2) { animation-delay: 0.1s; }
+.ref-rec-card:nth-child(3), .cc-dark-card:nth-child(3) { animation-delay: 0.15s; }
+.ref-rec-card:nth-child(4), .cc-dark-card:nth-child(4) { animation-delay: 0.2s; }
+.ref-rec-card:nth-child(n+5), .cc-dark-card:nth-child(n+5) { animation-delay: 0.25s; }
+
+/* Switcher no modo CourseConnect Dark */
+.courseconnect-dark-mode .planejamento-view-switcher {
+  background: #17181E !important;
+  border-color: #262834 !important;
+}
+.courseconnect-dark-mode .switcher-btn {
+  color: #9CA3AF !important;
+}
+.courseconnect-dark-mode .switcher-btn.active {
+  background: #252733 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+}
+
+/* Ícone de rotação spin */
+.spin-icon {
+  animation: refSpin 1s linear infinite;
+}
+@keyframes refSpin {
+  100% { transform: rotate(360deg); }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   ANIMAÇÃO DE 3 ATOS ULTRA FLUIDA PREMIUM — DRAG & DROP CARDS (CAIXA)
+   ────────────────────────────────────────────────────────────── */
+
+/* ATO 1: CLICAR E SEGURAR (Press & Grab) */
+.img3-card {
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              box-shadow 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              border-color 0.2s ease, 
+              opacity 0.2s ease;
+}
+
+.img3-card:active {
+  cursor: grabbing;
+}
+
+/* Estado do card enquanto está sendo arrastado */
+.img3-card.card-dragging {
+  opacity: 0.35 !important;
+  transform: scale(0.95) rotate(-2.5deg) !important;
+  border: 2px dashed var(--ref-primary, #E55A2B) !important;
+  box-shadow: 0 20px 45px -10px rgba(229, 90, 43, 0.35), 0 0 0 4px rgba(229, 90, 43, 0.15) !important;
+  filter: grayscale(0.2) blur(0.5px);
+  cursor: grabbing !important;
+}
+
+/* Indicador visual de zonas de soltura ativas (Todas as Caixas Hero quando o drag inicia) */
+.ref-hero-card.dropzone-active {
+  animation: dropzone-breathe 1.8s ease-in-out infinite alternate;
+  border: 2px dashed rgba(255, 255, 255, 0.65) !important;
+}
+
+@keyframes dropzone-breathe {
+  0% {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 0 0 0 rgba(229, 90, 43, 0.2);
+  }
+  100% {
+    box-shadow: 0 14px 32px rgba(229, 90, 43, 0.35), 0 0 0 6px rgba(229, 90, 43, 0.2);
+  }
+}
+
+/* ATO 2: ARRASTAR (Dragging sobre a caixa destino) */
+.ref-hero-card {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              border-color 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ref-hero-card.drop-target-hover {
+  transform: translateY(-8px) scale(1.04) !important;
+  box-shadow: 0 22px 50px rgba(229, 90, 43, 0.45), 0 0 0 4px rgba(255, 255, 255, 0.9) !important;
+  border-color: #FFFFFF !important;
+  animation: target-magnet-pulse 0.8s ease-in-out infinite alternate !important;
+  z-index: 10;
+}
+
+.ref-hero-card.drop-target-hover::after {
+  content: '✨ Solte para mover aqui';
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #FFFFFF;
+  color: var(--ref-primary, #E55A2B);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 20px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  animation: bounce-drop-badge 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) infinite alternate;
+  pointer-events: none;
+  z-index: 20;
+}
+
+@keyframes target-magnet-pulse {
+  0% { transform: translateY(-8px) scale(1.04); }
+  100% { transform: translateY(-11px) scale(1.06); }
+}
+
+@keyframes bounce-drop-badge {
+  0% { transform: translateY(0) scale(0.95); }
+  100% { transform: translateY(-4px) scale(1.05); }
+}
+
+/* ATO 3: SOLTAR (Release & Snap Drop) */
+@keyframes drop-success-snap {
+  0% { transform: scale(1.08) rotate(1deg); }
+  45% { transform: scale(0.94) rotate(-1deg); }
+  75% { transform: scale(1.03); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+.ref-hero-card.drop-success-snap {
+  animation: drop-success-snap 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+}
+
+/* Efeito Ripple de Onda expansiva no momento do Drop */
+.drop-ripple-wave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.65);
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+  animation: ripple-expand 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  z-index: 15;
+}
+
+@keyframes ripple-expand {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0.85; }
+  100% { transform: translate(-50%, -50%) scale(25); opacity: 0; }
+}

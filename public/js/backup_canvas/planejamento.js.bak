@@ -1,0 +1,1421 @@
+/**
+ * Tomada Sistema - Módulo de Planejamento de Conteúdo
+ * v5 - Layout Edge-to-Edge sem margens/bordas externas (área segura total)
+ * Cards compactados e reduzidos com barra de progresso do checklist premium (Imagem 3)
+ * Modais de criação/edição no estilo premium Bento do sistema (Nova Tarefa do Cronograma)
+ */
+
+const Planejamento = window.Planejamento = {
+  activeCaixaId: null, // Caixa selecionada no momento para visualização expandida
+  caixas: [],
+  cards: [],
+  searchQuery: '',
+  clockTimer: null,
+  draggedCardId: null,
+  activeTabRight: 'cards',
+  activeFilterRight: 'todos',
+  mensagens: [],
+  atividades: [],
+
+  tagColors: [
+    { name: 'Laranja Tomada', hex: '#E55A2B' },
+    { name: 'Roxo Criador', hex: '#8B5CF6' },
+    { name: 'Azul Shorts', hex: '#3B82F6' },
+    { name: 'Verde Podcast', hex: '#10B981' },
+    { name: 'Rosa Reels', hex: '#EC4899' },
+    { name: 'Amarelo Alerta', hex: '#F59E0B' },
+    { name: 'Cinza Neutro', hex: '#64748B' }
+  ],
+
+  escurecerCor(hex, percent = 20) {
+    let num = parseInt(hex.replace("#",""), 16),
+    amt = Math.round(2.55 * percent),
+    R = (num >> 16) - amt,
+    G = (num >> 8 & 0x00FF) - amt,
+    B = (num & 0x0000FF) - amt;
+    return "#" + (0x1000000 + (R<0?0:R>255?255:R)*0x10000 + (G<0?0:G>255?255:G)*0x100 + (B<0?0:B>255?255:B)).toString(16).slice(1);
+  },
+
+  handleThumbFileSelect(event) {
+    const file = event.target.files[0];
+    if (file) {
+      this.processarThumbFile(file);
+    }
+  },
+
+  processarThumbFile(file) {
+    if (!file.type.startsWith('image/')) {
+      if (typeof Components !== 'undefined') Components.toast('Selecione uma imagem válida.', 'error');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const base64Url = e.target.result;
+      const inputUrl = document.getElementById('card-thumb');
+      if (inputUrl) {
+        inputUrl.value = base64Url;
+      }
+      this.atualizarPreviewThumb(base64Url);
+    };
+    reader.readAsDataURL(file);
+  },
+
+  handleThumbDragOver(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    const zone = document.getElementById('card-thumb-dropzone');
+    if (zone) {
+      zone.style.borderColor = 'var(--ref-primary)';
+      zone.style.background = 'rgba(229, 90, 43, 0.05)';
+    }
+  },
+
+  handleThumbDragLeave(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    const zone = document.getElementById('card-thumb-dropzone');
+    if (zone) {
+      zone.style.borderColor = 'var(--ref-border)';
+      zone.style.background = '#F8F6F1';
+    }
+  },
+
+  handleThumbDrop(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    const zone = document.getElementById('card-thumb-dropzone');
+    if (zone) {
+      zone.style.borderColor = 'var(--ref-border)';
+      zone.style.background = '#F8F6F1';
+    }
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      this.processarThumbFile(file);
+    }
+  },
+
+  init() {
+    this.carregarDados();
+    this.render();
+  },
+
+  changeRightTab(tab) {
+    this.activeTabRight = tab;
+    this.render();
+  },
+
+  changeRightFilter(filter) {
+    this.activeFilterRight = filter;
+    this.render();
+  },
+
+  enviarMensagem(texto) {
+    if (!texto || !texto.trim()) return;
+    const novaMsg = {
+      autor: 'Você (Criador)',
+      texto: texto.trim(),
+      hora: 'agora mesmo'
+    };
+    this.mensagens.push(novaMsg);
+    localStorage.setItem('tomada_planejamento_mensagens', JSON.stringify(this.mensagens));
+    this.render();
+  },
+
+  registrarAtividade(texto) {
+    const tempo = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    const novaAtividade = { texto, hora: `hoje às ${tempo}` };
+    this.atividades = this.atividades || [];
+    this.atividades.unshift(novaAtividade);
+    if (this.atividades.length > 20) this.atividades.pop();
+    localStorage.setItem('tomada_planejamento_atividades', JSON.stringify(this.atividades));
+  },
+
+  carregarDados() {
+    try {
+      const savedCaixas = localStorage.getItem('tomada_planejamento_caixas');
+      const savedCards = localStorage.getItem('tomada_planejamento_cards');
+
+      this.activeTabRight = 'cards';
+      this.mensagens = JSON.parse(localStorage.getItem('tomada_planejamento_mensagens')) || [
+        { autor: 'Editor Tomada', texto: 'O roteiro do card "Setup Produtivo 2026" ficou excelente! Já preparei os assets de edição.', hora: 'há 2 horas' },
+        { autor: 'Diretor Tomada', texto: 'Não esqueça de colocar um gancho nos primeiros 5 segundos no vídeo de IA.', hora: 'há 5 horas' }
+      ];
+      this.atividades = JSON.parse(localStorage.getItem('tomada_planejamento_atividades')) || [
+        { texto: 'Módulo de planejamento inicializado.', hora: 'há 1 dia' },
+        { texto: 'Caixa Organizadora "💡 Ideias Brutas & Roteiros" criada.', hora: 'há 12 horas' }
+      ];
+
+      if (savedCaixas) {
+        this.caixas = JSON.parse(savedCaixas);
+      } else {
+        this.caixas = [
+          { id: 'cx_1', nome: '💡 Ideias Brutas & Roteiros', cor: '#E55A2B', tema: 'theme-orange', aberta: true },
+          { id: 'cx_2', nome: '🎬 Em Gravação & Produção', cor: '#1C1A14', tema: 'theme-dark', aberta: true },
+          { id: 'cx_3', nome: '✅ Prontos para Editar/Postar', cor: '#8B5CF6', tema: 'theme-purple', aberta: true }
+        ];
+        this.salvarCaixas();
+      }
+
+      if (!this.activeCaixaId && this.caixas.length > 0) {
+        this.activeCaixaId = this.caixas[0].id;
+      }
+
+      if (savedCards) {
+        this.cards = JSON.parse(savedCards);
+      } else {
+        this.cards = [
+          {
+            id: 'card_1',
+            caixaId: 'cx_1',
+            titulo: 'Setup Completo do Estúdio 2026',
+            descricao: 'Revisão detalhada dos novos equipamentos de iluminação dinâmicos e microfones.',
+            thumbnail: 'https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=600&q=80',
+            tag: { nome: 'YouTube Longo', cor: '#E55A2B' },
+            horario: 'Hoje 10:00 - 11:45',
+            checklist: [
+              { texto: 'Escrever Roteiro de Introdução', feito: true },
+              { texto: 'Gravar B-Roll das luzes e suportes', feito: false },
+              { texto: 'Gravar voz de sobreposição', feito: false }
+            ],
+            criadoEm: new Date().toISOString()
+          },
+          {
+            id: 'card_2',
+            caixaId: 'cx_2',
+            titulo: '5 Erros Fatais ao Criar Conteúdo de IA',
+            descricao: 'Vídeo rápido em 60 segundos com edição acelerada para retenção máxima.',
+            thumbnail: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80',
+            tag: { nome: 'Shorts / Reels', cor: '#EC4899' },
+            horario: 'Hoje 14:00 - 15:30',
+            checklist: [
+              { texto: 'Gravar áudio no mic de lapela', feito: true },
+              { texto: 'Inserir legendas dinâmicas coloridas', feito: true },
+              { texto: 'Exportar em 4K 60fps', feito: false }
+            ],
+            criadoEm: new Date().toISOString()
+          },
+          {
+            id: 'card_3',
+            caixaId: 'cx_3',
+            titulo: 'Review de Equipamentos da Semana',
+            descricao: 'Edição final concluída e miniatura aprovada para postagem.',
+            thumbnail: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80',
+            tag: { nome: 'Tech Review', cor: '#8B5CF6' },
+            horario: 'Hoje 18:00 - 19:00',
+            checklist: [
+              { texto: 'Exportar em 4K 60fps', feito: true },
+              { texto: 'Agendar publicação no YouTube', feito: true }
+            ],
+            criadoEm: new Date().toISOString()
+          }
+        ];
+        this.salvarCards();
+      }
+    } catch (e) {
+      console.error('Erro ao carregar dados do Planejamento:', e);
+    }
+  },
+
+  salvarCaixas() {
+    localStorage.setItem('tomada_planejamento_caixas', JSON.stringify(this.caixas));
+  },
+
+  salvarCards() {
+    localStorage.setItem('tomada_planejamento_cards', JSON.stringify(this.cards));
+  },
+
+  iniciarRelogio() {
+    if (this.clockTimer) clearInterval(this.clockTimer);
+    this.clockTimer = setInterval(() => {
+      const timeEl = document.getElementById('ref-live-time');
+      if (timeEl) {
+        const now = new Date();
+        timeEl.textContent = now.toLocaleTimeString('pt-BR');
+      }
+    }, 1000);
+  },
+
+  filtrar(query) {
+    this.searchQuery = query.toLowerCase();
+    this.render();
+  },
+
+  selecionarCaixa(caixaId) {
+    this.activeCaixaId = caixaId;
+    this.render();
+  },
+
+  toggleCheckItem(cardId, itemIndex) {
+    const card = this.cards.find(c => c.id === cardId);
+    if (card && card.checklist[itemIndex]) {
+      card.checklist[itemIndex].feito = !card.checklist[itemIndex].feito;
+      this.salvarCards();
+      this.render();
+    }
+  },
+
+  deletarCard(cardId) {
+    if (confirm('Deseja realmente remover este card?')) {
+      const card = this.cards.find(c => c.id === cardId);
+      const cardTitulo = card ? card.titulo : '';
+      this.cards = this.cards.filter(c => c.id !== cardId);
+      this.salvarCards();
+      this.registrarAtividade(`Card "${cardTitulo}" excluído.`);
+      Components.closeModal();
+      this.render();
+      if (typeof Components !== 'undefined') Components.toast('Card removido com sucesso!', 'success');
+    }
+  },
+
+  deletarCaixa(caixaId) {
+    const cardsNaCaixa = this.cards.filter(c => c.caixaId === caixaId);
+    if (cardsNaCaixa.length > 0) {
+      alert(`Esta caixa contém ${cardsNaCaixa.length} card(s). Mova ou exclua os cards antes de excluí-la.`);
+      return;
+    }
+    if (confirm('Deseja excluir esta caixa?')) {
+      const cx = this.caixas.find(c => c.id === caixaId);
+      const cxNome = cx ? cx.nome : '';
+      this.caixas = this.caixas.filter(c => c.id !== caixaId);
+      if (this.activeCaixaId === caixaId) {
+        this.activeCaixaId = this.caixas[0]?.id || null;
+      }
+      this.salvarCaixas();
+      this.registrarAtividade(`Caixa Organizadora "${cxNome}" excluída.`);
+      Components.closeModal();
+      this.render();
+      if (typeof Components !== 'undefined') Components.toast('Caixa excluída!', 'success');
+    }
+  },
+
+  // Drag and Drop
+  handleDragStart(event, cardId) {
+    this.draggedCardId = cardId;
+    event.dataTransfer.setData('text/plain', cardId);
+    event.dataTransfer.effectAllowed = 'move';
+  },
+
+  handleDragOver(event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  },
+
+  handleDrop(event, novaCaixaId) {
+    event.preventDefault();
+    const cardId = event.dataTransfer.getData('text/plain') || this.draggedCardId;
+    if (cardId) {
+      this.moverCardDeCaixa(cardId, novaCaixaId);
+    }
+  },
+
+  moverCardDeCaixa(cardId, novaCaixaId) {
+    const card = this.cards.find(c => c.id === cardId);
+    if (card && card.caixaId !== novaCaixaId) {
+      const cx = this.caixas.find(c => c.id === novaCaixaId);
+      const cxNome = cx ? cx.nome : 'outra caixa';
+      card.caixaId = novaCaixaId;
+      this.salvarCards();
+      this.registrarAtividade(`Card "${card.titulo}" movido para a caixa "${cxNome}".`);
+      this.render();
+      if (typeof Components !== 'undefined') Components.toast('Card movido com sucesso!', 'success');
+    }
+  },
+
+  // RENDERIZADOR PRINCIPAL
+  render() {
+    const container = document.getElementById('page-container') || document.getElementById('planejamento-root');
+    if (!container) return;
+
+    const user = (window.API && API.getUser) ? API.getUser() : { nome: 'Criador Tomada', email: 'canal@youtube.com', role: 'criador' };
+    const initials = (user.nome || 'Criador').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('pt-BR');
+    const dateStr = now.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'short' });
+
+    // Filtrar cards com base na busca
+    const cardsFiltrados = this.cards.filter(c => {
+      if (!this.searchQuery) return true;
+      return c.titulo.toLowerCase().includes(this.searchQuery) || (c.descricao && c.descricao.toLowerCase().includes(this.searchQuery));
+    });
+
+    // 1. Renderizar Hero Cards de Caixas (Topo Bento)
+    const heroCardsHTML = this.caixas.map((cx, idx) => {
+      const cardsInCx = cardsFiltrados.filter(c => c.caixaId === cx.id);
+      let totalChk = 0;
+      let doneChk = 0;
+      cardsInCx.forEach(c => {
+        (c.checklist || []).forEach(i => {
+          totalChk++;
+          if (i.feito) doneChk++;
+        });
+      });
+      const pct = totalChk > 0 ? Math.round((doneChk / totalChk) * 100) : 0;
+      const isActive = this.activeCaixaId === cx.id;
+
+      const temas = ['theme-orange', 'theme-dark', 'theme-purple', 'theme-green'];
+      const temaClass = cx.tema || temas[idx % temas.length];
+
+      return `
+        <div class="ref-hero-card ${isActive ? 'active-open' : ''}" 
+             style="background: linear-gradient(135deg, ${cx.cor} 0%, ${this.escurecerCor(cx.cor, 20)} 100%);"
+             onclick="Planejamento.selecionarCaixa('${cx.id}')"
+             ondragover="Planejamento.handleDragOver(event)"
+             ondrop="Planejamento.handleDrop(event, '${cx.id}')">
+          <div class="ref-hero-card-header">
+            <h4 class="ref-hero-card-title">${cx.nome}</h4>
+            <button class="ref-hero-card-dots" onclick="event.stopPropagation(); Planejamento.openModalEditarCaixa('${cx.id}')" title="Configurar Caixa">
+              <i data-lucide="settings" style="width: 16px; height: 16px;"></i>
+            </button>
+          </div>
+
+          <div class="ref-hero-card-progress">
+            <div class="ref-hero-progress-info">
+              <span>Progresso</span>
+              <span>${pct}%</span>
+            </div>
+            <div class="ref-hero-progress-track">
+              <div class="ref-hero-progress-fill" style="width: ${pct}%;"></div>
+            </div>
+          </div>
+
+          <div class="ref-hero-card-footer">
+            <div class="ref-card-count-badge" style="background: rgba(255, 255, 255, 0.22); border: 1px solid rgba(255, 255, 255, 0.35); color: #FFFFFF !important; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; font-size: 12px; font-weight: 800; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); box-shadow: 0 4px 10px rgba(0,0,0,0.08);" title="${cardsInCx.length} cards cadastrados nesta caixa">
+              ${cardsInCx.length}
+            </div>
+            <span class="ref-date-pill">
+              <i data-lucide="${isActive ? 'folder-open' : 'folder'}" style="width: 12px; height: 12px;"></i> ${isActive ? 'Caixa Aberta' : `${cardsInCx.length} cards`}
+            </span>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // 2. Renderizar os Cards da Caixa Selecionada (DESIGN DA IMAGEM 3 - ULTRA PREMIUM CARDS COMPACTADOS)
+    const caixaAtiva = this.caixas.find(c => c.id === this.activeCaixaId) || this.caixas[0];
+    const cardsDaCaixaAtiva = caixaAtiva ? cardsFiltrados.filter(c => c.caixaId === caixaAtiva.id) : [];
+
+    const img3CardsHTML = cardsDaCaixaAtiva.map(card => {
+      const totalChk = (card.checklist || []).length;
+      const doneChk = (card.checklist || []).filter(i => i.feito).length;
+      const pctCard = totalChk > 0 ? Math.round((doneChk / totalChk) * 100) : 0;
+      const tagCor = card.tag?.cor || '#E55A2B';
+      const thumbUrl = card.thumbnail || 'https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=600&q=80';
+
+      const checklistHTML = (card.checklist || []).map((item, idx) => `
+        <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: ${item.feito ? 'var(--ref-text-sub)' : 'var(--ref-text)'}; text-decoration: ${item.feito ? 'line-through' : 'none'}; cursor: pointer; padding: 3px 0;">
+          <input type="checkbox" ${item.feito ? 'checked' : ''} onchange="Planejamento.toggleCheckItem('${card.id}', ${idx})" style="accent-color: var(--ref-primary); width: 15px; height: 15px; cursor: pointer;">
+          <span>${item.texto}</span>
+        </label>
+      `).join('');
+
+      return `
+        <!-- CARD ESTILO IMAGEM 3 -->
+        <div class="img3-card" draggable="true" ondragstart="Planejamento.handleDragStart(event, '${card.id}')">
+          
+          <!-- Top Cover Banner (Thumbnail) + Avatar Badge + Tag Glass Badge -->
+          <div class="img3-banner">
+            <img src="${thumbUrl}" alt="Thumb" class="img3-banner-img" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80'">
+            
+            <div class="img3-avatar-badge">${initials}</div>
+            
+            <div class="img3-glass-badge" style="color: ${tagCor}; font-weight: 800;">
+              <span style="width: 6px; height: 6px; border-radius: 50%; background: ${tagCor}; display: inline-block;"></span>
+              ${card.tag?.nome || 'Geral'}
+            </div>
+          </div>
+
+          <!-- Body do Card -->
+          <div class="img3-body">
+            <div class="img3-header-row">
+              <h4 class="img3-title">${card.titulo}</h4>
+              <button class="img3-bookmark-btn" onclick="Planejamento.openModalEditarCard('${card.id}')" title="Editar Card">
+                <i data-lucide="edit-3" style="width: 14px; height: 14px;"></i>
+              </button>
+            </div>
+            
+            <p class="img3-subtitle">${card.descricao || 'Sem descrição cadastrada.'}</p>
+
+            <!-- Barra de Progresso do Checklist Premium (Solicitada pelo Usuário) -->
+            <div class="img3-premium-progress-container">
+              <div class="img3-premium-progress-header">
+                <span>Progresso</span>
+                <span style="color: ${tagCor}; font-weight: 800;">${pctCard}%</span>
+              </div>
+              <div class="img3-premium-progress-track">
+                <div class="img3-premium-progress-fill" style="width: ${pctCard}%; --tag-color: ${tagCor};"></div>
+              </div>
+            </div>
+
+            <!-- Três Ícones de Status / Métricas da Imagem 3 (Star, Flag, Clock) -->
+            <div class="img3-stats-row">
+              <div class="img3-stat-item">
+                <div class="img3-stat-icon" style="background: rgba(245, 158, 11, 0.15); color: #F59E0B;">★</div>
+                <div>
+                  <span class="img3-stat-val">${doneChk}/${totalChk}</span>
+                  <span class="img3-stat-lbl">Checklist</span>
+                </div>
+              </div>
+
+              <div class="img3-stat-item">
+                <div class="img3-stat-icon" style="background: rgba(59, 130, 246, 0.15); color: #3B82F6;">🚩</div>
+                <div>
+                  <span class="img3-stat-val">${pctCard}%</span>
+                  <span class="img3-stat-lbl">Progresso</span>
+                </div>
+              </div>
+
+              <div class="img3-stat-item">
+                <div class="img3-stat-icon" style="background: rgba(139, 92, 246, 0.15); color: #8B5CF6;">🕒</div>
+                <div>
+                  <span class="img3-stat-val">14h</span>
+                  <span class="img3-stat-lbl">Horário</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lista de Checklist Expansível -->
+            ${totalChk > 0 ? `
+              <div style="background: #F8F6F1; border-radius: 14px; padding: 10px; margin-bottom: 12px; border: 1px solid var(--ref-border);">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--ref-text-sub); margin-bottom: 4px;">
+                  <span>ETAPAS</span>
+                  <span style="color: var(--ref-primary);">${pctCard}%</span>
+                </div>
+                ${checklistHTML}
+              </div>
+            ` : ''}
+
+            <!-- Botão Pílula Preto Destaque "Get In Touch" da Imagem 3 -->
+            <button class="img3-pill-btn" onclick="Planejamento.openModalEditarCard('${card.id}')">
+              <span>Editar & Gerenciar Card</span>
+              <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i>
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // 3. Renderizar Lista de Tasks do Painel Direito (Today's Task)
+    const cntTodos = cardsFiltrados.length;
+    const cntAbertos = cardsFiltrados.filter(card => {
+      return !((card.checklist || []).length > 0 && (card.checklist || []).every(i => i.feito));
+    }).length;
+    const cntConcluidos = cardsFiltrados.filter(card => {
+      return (card.checklist || []).length > 0 && (card.checklist || []).every(i => i.feito);
+    }).length;
+
+    const cardsPainelDireito = cardsFiltrados.filter(card => {
+      const isConcluido = (card.checklist || []).length > 0 && (card.checklist || []).every(i => i.feito);
+      if (this.activeFilterRight === 'abertos') return !isConcluido;
+      if (this.activeFilterRight === 'concluidos') return isConcluido;
+      return true;
+    });
+
+    const tasksRightHTML = cardsPainelDireito.map(card => {
+      const isConcluido = (card.checklist || []).length > 0 && (card.checklist || []).every(i => i.feito);
+      const tagCor = card.tag?.cor || '#E55A2B';
+
+      return `
+        <div class="ref-task-card">
+          <div style="flex: 1;">
+            <h5 style="margin: 0 0 4px 0; font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 700;">${card.titulo}</h5>
+            <p style="margin: 0 0 8px 0; font-size: 12px; color: var(--ref-text-sub);">${card.descricao || 'Sem descrição'}</p>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <span style="background: ${tagCor}1A; color: ${tagCor}; padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: 700;">
+                ${card.tag?.nome || 'Geral'}
+              </span>
+              <span style="font-size: 11px; color: var(--ref-text-sub);">${card.horario || 'Hoje 10:00 - 12:00'}</span>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+            <div class="ref-task-check ${isConcluido ? 'checked' : ''}" onclick="Planejamento.toggleCardConcluido('${card.id}')" title="Marcar Concluído">
+              ${isConcluido ? '<i data-lucide="check" style="width: 14px; height: 14px;"></i>' : ''}
+            </div>
+            <button onclick="Planejamento.deletarCard('${card.id}')" style="background: none; border: none; color: var(--ref-text-sub); cursor: pointer; padding: 2px;">
+              <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i>
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    container.innerHTML = `
+      <div class="ref-dashboard-wrapper">
+        
+        <!-- Corpo Principal (Main Content + Right Panel) -->
+        <div class="ref-body-layout-nosidebar">
+          
+          <!-- Coluna Principal (Conteúdo & Cards Re-enquadrados) -->
+          <main class="ref-main-content-nosidebar">
+            
+            <!-- Projetos & Caixas Top Bento Grid -->
+            <div class="ref-section-header">
+              <div>
+                <h3 class="ref-section-title">Caixas Organizadoras</h3>
+                <div class="ref-section-sub">Clique em uma caixa para abrir e visualizar seus cards armazenados abaixo</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="ref-search-bar">
+                  <i data-lucide="search" class="ref-search-icon"></i>
+                  <input type="text" class="ref-search-input" placeholder="Buscar cards..." value="${this.searchQuery}" oninput="Planejamento.filtrar(this.value)">
+                </div>
+                <button class="btn-ref-add" onclick="Planejamento.openModalCriarCaixa()">
+                  <i data-lucide="plus" style="width: 16px; height: 16px;"></i> Nova Caixa
+                </button>
+              </div>
+            </div>
+
+            <!-- Grid de Caixas Fechadas/Abertas -->
+            <div class="ref-cards-grid">
+              ${heroCardsHTML}
+            </div>
+
+            <!-- SEÇÃO INFERIOR RE-ENQUADRADA (ESTILO IMAGEM 3 - ULTRA PREMIUM CARDS) -->
+            <div class="ref-bottom-re-enquadrado">
+              <div class="ref-bottom-header-row">
+                <h3 class="ref-bottom-caixa-title">
+                  <span style="width: 12px; height: 12px; border-radius: 50%; background: ${caixaAtiva?.cor || 'var(--ref-primary)'};"></span>
+                  ${caixaAtiva ? caixaAtiva.nome : 'Cards Guardados'}
+                  <span style="font-size: 13px; font-weight: 600; color: var(--ref-text-sub); font-family: var(--font-main);">(${cardsDaCaixaAtiva.length} cards armazenados)</span>
+                </h3>
+
+                <button class="btn-ref-add" onclick="Planejamento.openModalCriarCardComCaixa('${caixaAtiva?.id}')">
+                  <i data-lucide="plus" style="width: 16px; height: 16px;"></i> Novo Card Nesta Caixa
+                </button>
+              </div>
+
+              <!-- Grid de Cards do Design da Imagem 3 -->
+              <div class="img3-cards-grid">
+                ${cardsDaCaixaAtiva.length > 0 ? img3CardsHTML : `
+                  <div style="grid-column: 1 / -1; text-align: center; padding: 60px 24px; color: var(--ref-text-sub); border: 2px dashed var(--ref-border); border-radius: 24px;">
+                    <i data-lucide="inbox" style="width: 48px; height: 48px; margin-bottom: 12px; color: var(--ref-primary);"></i>
+                    <h4 style="margin: 0 0 6px 0; font-family: 'Outfit', sans-serif; font-size: 18px; color: var(--ref-text);">Esta caixa está vazia</h4>
+                    <p style="margin: 0 0 16px 0; font-size: 13px;">Adicione o primeiro card de conteúdo para esta caixa organizadora.</p>
+                    <button class="btn-ref-add" onclick="Planejamento.openModalCriarCardComCaixa('${caixaAtiva?.id}')">
+                      <i data-lucide="plus" style="width: 16px; height: 16px;"></i> Adicionar Primeiro Card
+                    </button>
+                  </div>
+                `}
+              </div>
+            </div>
+
+          </main>
+
+          <!-- Coluna Direita (Tarefas de Hoje / Right Task Panel) -->
+          <aside class="ref-right-panel">
+            <div class="ref-panel-tabs">
+              <div class="ref-panel-tab ${this.activeTabRight === 'messages' ? 'active' : ''}" onclick="Planejamento.changeRightTab('messages')">Mensagens</div>
+              <div class="ref-panel-tab ${this.activeTabRight === 'cards' ? 'active' : ''}" onclick="Planejamento.changeRightTab('cards')">Cards do Dia</div>
+              <div class="ref-panel-tab ${this.activeTabRight === 'activities' ? 'active' : ''}" onclick="Planejamento.changeRightTab('activities')">Atividades</div>
+            </div>
+
+            ${this.activeTabRight === 'cards' ? `
+              <div class="ref-panel-header">
+                <h4 class="ref-panel-title">Tarefas de Hoje</h4>
+                <button class="btn-ref-add" onclick="Planejamento.openModalCriarCard()" style="font-size: 12px; padding: 6px 12px;">
+                  <i data-lucide="plus" style="width: 14px; height: 14px;"></i> Card
+                </button>
+              </div>
+
+              <div class="ref-filters-row">
+                <span class="ref-filter-pill ${this.activeFilterRight === 'todos' ? 'active' : ''}" onclick="Planejamento.changeRightFilter('todos')">Todos ${cntTodos}</span>
+                <span class="ref-filter-pill ${this.activeFilterRight === 'abertos' ? 'active' : ''}" onclick="Planejamento.changeRightFilter('abertos')">Abertos ${cntAbertos}</span>
+                <span class="ref-filter-pill ${this.activeFilterRight === 'concluidos' ? 'active' : ''}" onclick="Planejamento.changeRightFilter('concluidos')">Concluídos ${cntConcluidos}</span>
+              </div>
+
+              <div class="ref-task-list">
+                ${tasksRightHTML.length > 0 ? tasksRightHTML : `
+                  <div style="text-align: center; padding: 40px 0; color: var(--ref-text-sub);">
+                    <i data-lucide="check-circle-2" style="width: 36px; height: 36px; margin-bottom: 8px; color: var(--ref-primary);"></i>
+                    <p style="margin: 0; font-size: 13px;">Nenhum card agendado para hoje.</p>
+                  </div>
+                `}
+              </div>
+            ` : this.activeTabRight === 'messages' ? `
+              <div class="ref-panel-header">
+                <h4 class="ref-panel-title">Chat de Feedbacks</h4>
+              </div>
+              <div class="ref-chat-messages-container" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; padding-bottom: 8px; min-height: 480px;">
+                <div class="ref-chat-list" style="overflow-y: auto; flex: 1; padding: 10px 0; display: flex; flex-direction: column; gap: 12px; max-height: 440px;">
+                  ${this.mensagens.map(msg => `
+                    <div class="chat-msg-bubble" style="background: ${msg.autor.includes('Você') ? 'rgba(229, 90, 43, 0.08)' : '#F8F6F1'}; border: 1px solid ${msg.autor.includes('Você') ? 'rgba(229, 90, 43, 0.15)' : 'var(--ref-border)'}; padding: 10px 12px; border-radius: 16px; margin-right: ${msg.autor.includes('Você') ? '8px' : '32px'}; margin-left: ${msg.autor.includes('Você') ? '32px' : '8px'};">
+                      <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: ${msg.autor.includes('Você') ? 'var(--ref-primary)' : 'var(--ref-text)'}; margin-bottom: 4px;">
+                        <span>${msg.autor}</span>
+                        <span style="font-weight: 500; color: var(--ref-text-sub);">${msg.hora}</span>
+                      </div>
+                      <div style="font-size: 13px; line-height: 1.45; color: var(--ref-text);">${msg.texto}</div>
+                    </div>
+                  `).join('')}
+                </div>
+                
+                <div style="display: flex; gap: 8px; padding-top: 10px; border-top: 1px solid var(--ref-border); background: #FAF8F5; margin-top: auto;">
+                  <input type="text" id="chat-input-text" placeholder="Escreva uma mensagem..." style="flex: 1; background: #FFF; border: 1px solid var(--ref-border); border-radius: 12px; padding: 8px 12px; font-size: 13px; color: var(--ref-text); outline: none;" onkeydown="if(event.key === 'Enter') { Planejamento.enviarMensagem(this.value); this.value=''; }">
+                  <button type="button" onclick="const input = document.getElementById('chat-input-text'); Planejamento.enviarMensagem(input.value); input.value='';" style="background: var(--ref-primary); border: none; border-radius: 12px; padding: 8px 12px; color: #FFF; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                    <i data-lucide="send" style="width: 15px; height: 15px;"></i>
+                  </button>
+                </div>
+              </div>
+            ` : `
+              <div class="ref-panel-header">
+                <h4 class="ref-panel-title">Atividades Recentes</h4>
+              </div>
+              <div class="ref-activities-container" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding-top: 10px; max-height: 480px;">
+                ${this.atividades.map(act => `
+                  <div style="display: flex; gap: 10px; align-items: flex-start; padding: 0 4px;">
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--ref-primary); margin-top: 5px; flex-shrink: 0; box-shadow: 0 0 0 3px rgba(229, 90, 43, 0.15);"></div>
+                    <div style="flex: 1;">
+                      <div style="font-size: 13px; font-weight: 500; color: var(--ref-text); line-height: 1.45;">${act.texto}</div>
+                      <div style="font-size: 10px; color: var(--ref-text-sub); margin-top: 2px;">${act.hora}</div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            `}
+          </aside>
+
+        </div>
+      </div>
+    `;
+
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  },
+
+  toggleCardConcluido(cardId) {
+    const card = this.cards.find(c => c.id === cardId);
+    if (card) {
+      const allDone = (card.checklist || []).every(i => i.feito);
+      (card.checklist || []).forEach(i => i.feito = !allDone);
+      this.salvarCards();
+      this.render();
+    }
+  },
+
+  // MODAIS E FORMULÁRIOS NO PADRÃO DE DESIGN PREMIUM DO SISTEMA (premium-task-modal)
+  openModalCriarCardComCaixa(caixaId) {
+    this.openModalCardForm(null, caixaId);
+  },
+
+  openModalCriarCaixa() {
+    this.openModalCriarEditarCaixaForm();
+  },
+
+  openModalEditarCaixa(caixaId) {
+    const caixa = this.caixas.find(c => c.id === caixaId);
+    if (caixa) {
+      this.openModalCriarEditarCaixaForm(caixa);
+    }
+  },
+
+  openModalCriarEditarCaixaForm(caixaExistente = null) {
+    if (typeof Components === 'undefined') { console.error('[PLANEJAMENTO] Components não encontrado!'); return; }
+
+    const isEdit = !!caixaExistente;
+
+    const modalHTML = `
+      <form id="form-caixa-planejamento" onsubmit="Planejamento.handleSalvarCaixa(event, '${caixaExistente ? caixaExistente.id : ''}')" class="premium-desktop-form">
+        <div class="p-bento-container" style="grid-template-columns: 1fr; gap: 16px;">
+          <div class="p-bento-card">
+            <h4 class="p-bento-title"><i data-lucide="folder"></i> Detalhes da Caixa Organizadora</h4>
+            
+            <div class="p-form-group">
+              <label>Nome da Caixa</label>
+              <input type="text" id="cx-nome" class="p-input" value="${caixaExistente?.nome || ''}" placeholder="Ex: 🎬 Ideias de Reels, 📝 Roteiros Em Escrita" required>
+            </div>
+
+            <div class="p-form-group">
+              <label>Cor Temática</label>
+              <div style="display: flex; gap: 12px; align-items: center;">
+                <input type="color" id="cx-cor" value="${caixaExistente?.cor || '#E55A2B'}" style="width: 60px; height: 44px; border-radius: 12px; border: 1px solid var(--ref-border); cursor: pointer; padding: 2px;">
+                <span style="font-size: 13px; color: var(--ref-text-sub);">Cor utilizada nos destaques visuais do painel</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    `;
+
+    const deleteBtn = isEdit ? `<button type="button" class="btn-premium-danger" onclick="Planejamento.deletarCaixa('${caixaExistente.id}')">Excluir Caixa</button>` : '';
+
+    const actionsHTML = `
+      ${deleteBtn}
+      <button type="button" class="btn-premium-secondary" onclick="Components.closeModal()">Cancelar</button>
+      <button type="submit" form="form-caixa-planejamento" class="btn-premium-primary">${isEdit ? 'Salvar Alterações' : 'Criar Caixa'}</button>
+    `;
+
+    Components.showModal(isEdit ? 'Editar Caixa Organizadora' : 'Criar Nova Caixa Organizadora', modalHTML, actionsHTML, 'premium-task-modal');
+    if (window.lucide) lucide.createIcons();
+  },
+
+  handleSalvarCaixa(event, editId) {
+    event.preventDefault();
+    const nome = document.getElementById('cx-nome').value;
+    const cor = document.getElementById('cx-cor').value;
+
+    if (editId) {
+      const caixa = this.caixas.find(c => c.id === editId);
+      if (caixa) {
+        caixa.nome = nome;
+        caixa.cor = cor;
+      }
+    } else {
+      const temas = ['theme-orange', 'theme-dark', 'theme-purple', 'theme-green'];
+      const novaCaixa = {
+        id: 'cx_' + Date.now(),
+        nome,
+        cor,
+        tema: temas[Math.floor(Math.random() * temas.length)],
+        aberta: true
+      };
+      this.caixas.push(novaCaixa);
+      this.activeCaixaId = novaCaixa.id;
+    }
+
+    this.salvarCaixas();
+    this.registrarAtividade(editId ? `Caixa Organizadora "${nome}" atualizada.` : `Caixa Organizadora "${nome}" criada.`);
+    Components.closeModal();
+    this.render();
+    if (typeof Components !== 'undefined') Components.toast(editId ? 'Caixa atualizada com sucesso!' : 'Caixa criada com sucesso!', 'success');
+  },
+
+  openModalCriarCard() {
+    this.openModalCardForm();
+  },
+
+  openModalEditarCard(cardId) {
+    const card = this.cards.find(c => c.id === cardId);
+    if (card) {
+      this.openModalCardForm(card);
+    }
+  },
+
+  openModalCardForm(cardExistente = null, targetCaixaId = null) {
+    if (typeof Components === 'undefined') { console.error('[PLANEJAMENTO] Components não encontrado!'); return; }
+
+    this.tempCardId = cardExistente ? cardExistente.id : '';
+    const isEdit = !!cardExistente;
+    const defaultCaixaId = targetCaixaId || (cardExistente ? cardExistente.caixaId : (this.activeCaixaId || this.caixas[0]?.id || ''));
+    this.tempCaixaId = defaultCaixaId;
+
+    const caixasOptions = this.caixas.map(cx => `
+      <option value="${cx.id}" ${defaultCaixaId === cx.id ? 'selected' : ''}>${cx.nome}</option>
+    `).join('');
+
+    const tagColorsHTML = this.tagColors.map(tc => `
+      <button type="button" onclick="Planejamento.selecionarCorTag('${tc.hex}')" style="width: 32px; height: 32px; border-radius: 50%; background: ${tc.hex}; border: 2px solid #FFFFFF; box-shadow: 0 0 0 1px #EBE5DF; cursor: pointer; transition: transform 0.15s;" title="${tc.name}" onmouseover="this.style.transform='scale(1.15)'" onmouseout="this.style.transform='scale(1)'"></button>
+    `).join('');
+
+    const currentTagCor = cardExistente?.tag?.cor || '#E55A2B';
+    const currentTagName = cardExistente?.tag?.nome || '';
+
+    const checklistItems = cardExistente?.checklist || [];
+    const checklistInputsHTML = checklistItems.map((item) => `
+      <div class="chk-input-row" style="display: flex; gap: 8px; margin-bottom: 8px; align-items: center;">
+        <input type="text" class="card-chk-item p-input" value="${item.texto}" placeholder="Ex: Escrever roteiro" style="flex: 1;">
+        <button type="button" onclick="this.parentElement.remove()" style="background: none; border: 1px solid var(--ref-border); color: #EF4444; border-radius: 12px; padding: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; height: 44px; width: 44px;">✕</button>
+      </div>
+    `).join('');
+
+    const modalHTML = `
+      <form id="form-card-planejamento" onsubmit="Planejamento.handleSalvarCard(event, '${cardExistente ? cardExistente.id : ''}')" class="premium-desktop-form">
+        <div class="p-bento-container">
+          
+          <!-- Coluna Esquerda: Dados Principais e Checklist -->
+          <div class="p-bento-col">
+            <div class="p-bento-card">
+              <h4 class="p-bento-title"><i data-lucide="text-quote"></i> Informações do Conteúdo</h4>
+              
+              <div class="p-form-group">
+                <label>Título do Conteúdo</label>
+                <input type="text" id="card-titulo" class="p-input" value="${cardExistente?.titulo || ''}" placeholder="Ex: Como montar um estúdio gastando pouco" required>
+              </div>
+
+              <div class="p-form-group">
+                <label>Caixa Organizadora Destino</label>
+                <select id="card-caixa" class="p-input trello-select">
+                  ${caixasOptions}
+                </select>
+              </div>
+
+              <div class="p-form-group">
+                <label>Descrição / Briefing</label>
+                <textarea id="card-descricao" class="p-input" rows="3" placeholder="Resumo da ideia, tópicos abordados, ganchos de roteiro...">${cardExistente?.descricao || ''}</textarea>
+              </div>
+            </div>
+
+            <div class="p-bento-card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h4 class="p-bento-title" style="margin-bottom: 0;"><i data-lucide="list-todo"></i> Checklist de Etapas</h4>
+                <button type="button" onclick="Planejamento.addChecklistInputRow()" style="background: none; border: none; color: var(--ref-primary); font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;">
+                  <i data-lucide="plus-circle" style="width: 16px; height: 16px;"></i> Adicionar Etapa
+                </button>
+              </div>
+              <div id="card-checklist-container">
+                ${checklistInputsHTML.length > 0 ? checklistInputsHTML : `
+                  <div class="chk-input-row" style="display: flex; gap: 8px; margin-bottom: 8px; align-items: center;">
+                    <input type="text" class="card-chk-item p-input" placeholder="Ex: Escrever roteiro" style="flex: 1;">
+                    <button type="button" onclick="this.parentElement.remove()" style="background: none; border: 1px solid var(--ref-border); color: #EF4444; border-radius: 12px; padding: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; height: 44px; width: 44px;">✕</button>
+                  </div>
+                `}
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna Direita: Thumbnail e Tags Personalizadas -->
+          <div class="p-bento-col">
+            <div class="p-bento-card">
+              <h4 class="p-bento-title"><i data-lucide="image"></i> Capa do Card (Thumbnail)</h4>
+              <input type="hidden" id="card-thumb" value="${cardExistente?.thumbnail || ''}">
+              <input type="file" id="card-thumb-file" accept="image/*" style="display: none;" onchange="Planejamento.handleThumbFileSelect(event)">
+              <div id="card-thumb-dropzone" class="card-thumb-dropzone" 
+                   onclick="document.getElementById('card-thumb-file').click()"
+                   ondragover="Planejamento.handleThumbDragOver(event)"
+                   ondragleave="Planejamento.handleThumbDragLeave(event)"
+                   ondrop="Planejamento.handleThumbDrop(event)"
+                   style="margin-top: 12px;">
+                <img id="card-thumb-preview" src="${cardExistente?.thumbnail || ''}" style="width: 100%; height: 100%; object-fit: cover; display: ${cardExistente?.thumbnail ? 'block' : 'none'};">
+                <div id="card-thumb-preview-placeholder" style="font-size: 11px; color: var(--ref-text-sub); display: ${cardExistente?.thumbnail ? 'none' : 'flex'}; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-align: center; padding: 12px 8px; width: 100%; height: 100%; box-sizing: border-box;">
+                  <span style="font-size: 24px; font-weight: 700; color: var(--ref-primary); line-height: 1; margin-bottom: 2px;">+</span>
+                  <i data-lucide="upload-cloud" style="width: 22px; height: 22px; opacity: 0.7; color: var(--ref-primary);"></i>
+                  <span style="font-weight: 600;">Clique ou arraste uma imagem aqui</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-bento-card">
+              <h4 class="p-bento-title"><i data-lucide="tag"></i> Tag Personalizada</h4>
+              <div class="p-form-group">
+                <label>Nome da Tag</label>
+                <input type="text" id="card-tag-nome" class="p-input" value="${currentTagName}" placeholder="Ex: YouTube Longo, Shorts, Reels">
+              </div>
+              <div class="p-form-group">
+                <label>Cor da Tag</label>
+                <div style="display: flex; gap: 12px; align-items: center;">
+                  <input type="color" id="card-tag-cor" value="${currentTagCor}" style="width: 60px; height: 44px; border-radius: 12px; border: 1px solid var(--ref-border); cursor: pointer; padding: 2px;">
+                  <span style="font-size: 13px; color: var(--ref-text-sub);">Escolha uma cor para a tag</span>
+                </div>
+              </div>
+              <div style="margin-top: 16px;">
+                <label style="display: block; font-size: 12px; font-weight: 700; color: var(--ref-text-sub); margin-bottom: 8px; text-transform: uppercase;">Cores Rápidas</label>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                  ${tagColorsHTML}
+                </div>
+              </div>
+            </div>
+
+            <!-- Bento Card: Template de Card -->
+            <div class="p-bento-card">
+              <h4 class="p-bento-title"><i data-lucide="copy"></i> Template de Card</h4>
+              <div class="p-form-group">
+                <label>Modelos Salvos</label>
+                <div style="display: flex; gap: 8px;">
+                  <select id="card-template-selector" class="p-input trello-select" onchange="Planejamento.carregarTemplatePlanejamento(this.value)" style="flex: 1;">
+                    <option value="">Selecione um template...</option>
+                    ${this.getTemplatesOptionsHTML()}
+                  </select>
+                  <button type="button" class="btn-premium-danger" onclick="Planejamento.excluirTemplatePlanejamento()" title="Excluir Template" style="padding: 0 12px; height: 44px; display: flex; align-items: center; justify-content: center; width: 44px; border-radius: 12px;">
+                    <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                  </button>
+                </div>
+              </div>
+              <div style="display: flex; gap: 8px; margin-top: 10px;">
+                <button type="button" class="btn-premium-secondary" onclick="Planejamento.salvarComoTemplatePlanejamento()" style="flex: 1; font-size: 12px; padding: 8px 12px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                  <i data-lucide="save" style="width: 14px; height: 14px;"></i>
+                  Salvar Atual
+                </button>
+                <button type="button" class="btn-premium-primary" onclick="Planejamento.abrirModalAplicarEmMassa()" style="flex: 1; font-size: 12px; padding: 8px 12px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                  <i data-lucide="layers" style="width: 14px; height: 14px;"></i>
+                  Aplicar em Massa
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </form>
+    `;
+
+    const deleteBtn = isEdit ? `<button type="button" class="btn-premium-danger" onclick="Planejamento.deletarCard('${cardExistente.id}')">Excluir Card</button>` : '';
+
+    const actionsHTML = `
+      ${deleteBtn}
+      <button type="button" class="btn-premium-secondary" onclick="Components.closeModal()">Cancelar</button>
+      <button type="submit" form="form-card-planejamento" class="btn-premium-primary">${isEdit ? 'Salvar Alterações' : 'Criar Card'}</button>
+    `;
+
+    Components.showModal(isEdit ? 'Editar Card de Conteúdo' : 'Novo Card de Conteúdo', modalHTML, actionsHTML, 'premium-task-modal');
+    if (window.lucide) lucide.createIcons();
+
+    // Inicializar mini pop-up customizado do select no padrão do sistema
+    if (typeof HigPopovers !== 'undefined') {
+      setTimeout(() => HigPopovers.init(), 50);
+    }
+  },
+
+  selecionarCorTag(hex) {
+    const inputCor = document.getElementById('card-tag-cor');
+    if (inputCor) inputCor.value = hex;
+  },
+
+  atualizarPreviewThumb(url) {
+    const img = document.getElementById('card-thumb-preview');
+    const placeholder = document.getElementById('card-thumb-preview-placeholder');
+    if (img && placeholder) {
+      if (url && (url.startsWith('http') || url.startsWith('data:image/'))) {
+        img.src = url;
+        img.style.display = 'block';
+        placeholder.style.setProperty('display', 'none', 'important');
+      } else {
+        img.style.display = 'none';
+        placeholder.style.setProperty('display', 'flex', 'important');
+      }
+    }
+  },
+
+  getTemplatesOptionsHTML() {
+    try {
+      const templates = JSON.parse(localStorage.getItem('tomada_planejamento_templates') || '[]');
+      return templates.map(t => `<option value="${t.nome}">${t.nome}</option>`).join('');
+    } catch (e) {
+      return '';
+    }
+  },
+
+  salvarComoTemplatePlanejamento() {
+    if (typeof Components === 'undefined') return;
+
+    // Coletar checklist atual
+    const chkElements = document.querySelectorAll('.card-chk-item');
+    const checklist = [];
+    chkElements.forEach(input => {
+      const val = input.value.trim();
+      if (val) checklist.push({ texto: val, feito: false });
+    });
+
+    this.tempTemplateSaveData = {
+      titulo: document.getElementById('card-titulo').value,
+      descricao: document.getElementById('card-descricao').value,
+      thumbnail: document.getElementById('card-thumb').value,
+      tag: {
+        nome: document.getElementById('card-tag-nome').value,
+        cor: document.getElementById('card-tag-cor').value
+      },
+      checklist
+    };
+
+    const modalHTML = `
+      <div class="premium-desktop-form" style="padding: 4px;">
+        <div class="p-form-group" style="margin-bottom: 0;">
+          <label style="font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--ref-text); display: block; margin-bottom: 8px;">Nome do Template</label>
+          <input type="text" id="temp-template-name" class="p-input" placeholder="Ex: Modelo de Roteiro Padrão" required style="width: 100%; border: 1px solid var(--ref-border); border-radius: 12px; padding: 12px; font-size: 14px; background: #FFF;">
+        </div>
+      </div>
+    `;
+
+    const actionsHTML = `
+      <button type="button" class="btn-premium-secondary" onclick="Planejamento.cancelarSalvarTemplate()">Cancelar</button>
+      <button type="button" class="btn-premium-primary" onclick="Planejamento.confirmarSalvarTemplatePlanejamento()">Salvar Template</button>
+    `;
+
+    Components.showModal('Salvar como Template', modalHTML, actionsHTML, 'premium-task-modal');
+  },
+
+  confirmarSalvarTemplatePlanejamento() {
+    const inputNome = document.getElementById('temp-template-name');
+    if (!inputNome || !inputNome.value.trim()) {
+      alert('Por favor, digite um nome para o template.');
+      return;
+    }
+
+    const nome = inputNome.value.trim();
+    const data = this.tempTemplateSaveData;
+    if (!data) return;
+
+    const templates = JSON.parse(localStorage.getItem('tomada_planejamento_templates') || '[]');
+
+    const novoTemplate = {
+      nome,
+      titulo: data.titulo,
+      descricao: data.descricao,
+      thumbnail: data.thumbnail,
+      tag: data.tag,
+      checklist: data.checklist
+    };
+
+    const idx = templates.findIndex(t => t.nome.toLowerCase() === nome.toLowerCase());
+    if (idx >= 0) {
+      templates[idx] = novoTemplate;
+    } else {
+      templates.push(novoTemplate);
+    }
+
+    localStorage.setItem('tomada_planejamento_templates', JSON.stringify(templates));
+
+    Components.closeModal();
+
+    // Reabrir o modal do card restaurando o estado
+    const cardFake = {
+      id: this.tempCardId || '',
+      titulo: data.titulo,
+      descricao: data.descricao,
+      thumbnail: data.thumbnail,
+      tag: data.tag,
+      checklist: data.checklist
+    };
+
+    setTimeout(() => {
+      this.openModalCardForm(cardFake.id ? cardFake : null, cardFake.id ? null : this.tempCaixaId);
+      
+      // Forçar atualização do selector de templates para mostrar o novo modelo
+      setTimeout(() => {
+        const selector = document.getElementById('card-template-selector');
+        if (selector) {
+          selector.innerHTML = '<option value="">Selecione um template...</option>' + this.getTemplatesOptionsHTML();
+          selector.value = nome;
+          selector.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }, 50);
+    }, 100);
+
+    if (typeof Components !== 'undefined') Components.toast('Template de card salvo!', 'success');
+  },
+
+  cancelarSalvarTemplate() {
+    Components.closeModal();
+    const data = this.tempTemplateSaveData;
+    if (!data) return;
+
+    // Voltar para o modal do card
+    const cardFake = {
+      id: this.tempCardId || '',
+      titulo: data.titulo,
+      descricao: data.descricao,
+      thumbnail: data.thumbnail,
+      tag: data.tag,
+      checklist: data.checklist
+    };
+
+    setTimeout(() => {
+      this.openModalCardForm(cardFake.id ? cardFake : null, cardFake.id ? null : this.tempCaixaId);
+    }, 100);
+  },
+
+  carregarTemplatePlanejamento(nome) {
+    if (!nome) return;
+    const templates = JSON.parse(localStorage.getItem('tomada_planejamento_templates') || '[]');
+    const t = templates.find(x => x.nome === nome);
+    if (!t) return;
+
+    document.getElementById('card-titulo').value = t.titulo || '';
+    document.getElementById('card-descricao').value = t.descricao || '';
+    document.getElementById('card-thumb').value = t.thumbnail || '';
+    this.atualizarPreviewThumb(t.thumbnail || '');
+    document.getElementById('card-tag-nome').value = t.tag?.nome || '';
+    document.getElementById('card-tag-cor').value = t.tag?.cor || '#E55A2B';
+
+    // Reconstruir checklist
+    const container = document.getElementById('card-checklist-container');
+    if (container) {
+      container.innerHTML = '';
+      const items = t.checklist || [];
+      if (items.length > 0) {
+        items.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'chk-input-row';
+          div.style.cssText = 'display: flex; gap: 8px; margin-bottom: 8px; align-items: center;';
+          div.innerHTML = `
+            <input type="text" class="card-chk-item p-input" value="${item.texto}" placeholder="Ex: Escrever roteiro" style="flex: 1;">
+            <button type="button" onclick="this.parentElement.remove()" style="background: none; border: 1px solid var(--ref-border); color: #EF4444; border-radius: 12px; padding: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; height: 44px; width: 44px;">✕</button>
+          `;
+          container.appendChild(div);
+        });
+      } else {
+        // Linha vazia padrão
+        container.innerHTML = `
+          <div class="chk-input-row" style="display: flex; gap: 8px; margin-bottom: 8px; align-items: center;">
+            <input type="text" class="card-chk-item p-input" placeholder="Ex: Escrever roteiro" style="flex: 1;">
+            <button type="button" onclick="this.parentElement.remove()" style="background: none; border: 1px solid var(--ref-border); color: #EF4444; border-radius: 12px; padding: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; height: 44px; width: 44px;">✕</button>
+          </div>
+        `;
+      }
+    }
+  },
+
+  excluirTemplatePlanejamento() {
+    const selector = document.getElementById('card-template-selector');
+    if (!selector || !selector.value) {
+      if (typeof Components !== 'undefined') Components.toast('Selecione um template para excluir.', 'warning');
+      return;
+    }
+
+    const nome = selector.value;
+    if (!confirm(`Deseja realmente excluir o template "${nome}"?`)) return;
+
+    let templates = JSON.parse(localStorage.getItem('tomada_planejamento_templates') || '[]');
+    templates = templates.filter(t => t.nome !== nome);
+    localStorage.setItem('tomada_planejamento_templates', JSON.stringify(templates));
+
+    selector.innerHTML = '<option value="">Selecione um template...</option>' + this.getTemplatesOptionsHTML();
+    selector.value = '';
+    
+    // Forçar atualização do seletor estilizado
+    selector.dispatchEvent(new Event('change', { bubbles: true }));
+
+    if (typeof Components !== 'undefined') Components.toast('Template excluído!', 'success');
+  },
+
+  abrirModalAplicarEmMassa() {
+    if (typeof Components === 'undefined') return;
+
+    // Validar se tem dados para replicar
+    const titulo = document.getElementById('card-titulo').value.trim();
+    if (!titulo) {
+      alert('Por favor, defina um Título para o card antes de aplicar em massa.');
+      return;
+    }
+
+    // HTML para criar novos cards nas caixas
+    const caixasCheckboxes = this.caixas.map(cx => `
+      <label style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #F8F6F1; border: 1px solid var(--ref-border); border-radius: 12px; margin-bottom: 8px; cursor: pointer;">
+        <input type="checkbox" name="caixa-replica" value="${cx.id}" style="width: 18px; height: 18px; accent-color: var(--ref-primary);">
+        <span style="font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--ref-text);">${cx.nome}</span>
+      </label>
+    `).join('');
+
+    // HTML para aplicar em cards existentes
+    let cardsAgrupadosHTML = this.caixas.map(cx => {
+      const cardsDaCx = this.cards.filter(c => c.caixaId === cx.id && c.id !== this.tempCardId);
+      if (cardsDaCx.length === 0) return '';
+      
+      const cardsInputs = cardsDaCx.map(card => `
+        <label style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: #FFF; border: 1px solid var(--ref-border); border-radius: 10px; margin-bottom: 4px; cursor: pointer;">
+          <input type="checkbox" name="card-replica-existente" value="${card.id}" style="width: 16px; height: 16px; accent-color: var(--ref-primary);">
+          <span style="font-family: var(--font-main); font-size: 13px; color: var(--ref-text); font-weight: 600;">${card.titulo}</span>
+        </label>
+      `).join('');
+
+      return `
+        <div style="margin-bottom: 16px;">
+          <div style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 14px; color: var(--ref-primary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: ${cx.cor};"></span>
+            ${cx.nome}
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px; margin-left: 14px;">
+            ${cardsInputs}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    if (!cardsAgrupadosHTML.trim()) {
+      cardsAgrupadosHTML = `<div style="text-align: center; padding: 20px; color: var(--ref-text-sub); font-size: 13px;">Nenhum outro card existente encontrado para atualizar.</div>`;
+    }
+
+    const modalHTML = `
+      <div class="premium-desktop-form" style="padding: 4px;">
+        <div class="p-form-group" style="margin-bottom: 16px;">
+          <label style="font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--ref-text); display: block; margin-bottom: 8px;">Tipo de Operação</label>
+          <select id="replica-tipo-operacao" class="p-input" onchange="Planejamento.alternarPainelReplica(this.value)" style="width: 100%; border: 1px solid var(--ref-border); border-radius: 12px; padding: 12px; font-size: 14px; background: #FFF;">
+            <option value="criar">Replicar Card (Criar novo em outras Caixas)</option>
+            <option value="atualizar">Aplicar Atributos (Checklist/Tags em Cards Existentes)</option>
+          </select>
+        </div>
+
+        <!-- Painel 1: Criar Novos Cards -->
+        <div id="painel-replica-criar" style="display: block;">
+          <p style="font-size: 13px; color: var(--ref-text-sub); margin-bottom: 12px;">
+            Selecione as caixas onde deseja criar um novo card idêntico a este (sem capa).
+          </p>
+          <div style="max-height: 220px; overflow-y: auto;">
+            ${caixasCheckboxes}
+          </div>
+        </div>
+
+        <!-- Painel 2: Atualizar Cards Existentes -->
+        <div id="painel-replica-atualizar" style="display: none;">
+          <p style="font-size: 13px; color: var(--ref-text-sub); margin-bottom: 12px;">
+            Selecione os cards existentes que devem receber a mesma <strong>tag</strong> e o mesmo <strong>checklist</strong> deste card.
+          </p>
+          <div style="max-height: 220px; overflow-y: auto; padding-right: 4px;">
+            ${cardsAgrupadosHTML}
+          </div>
+        </div>
+      </div>
+    `;
+
+    const actionsHTML = `
+      <button type="button" class="btn-premium-secondary" onclick="Components.closeModal()">Cancelar</button>
+      <button type="button" class="btn-premium-primary" onclick="Planejamento.executarAplicarEmMassa()">Confirmar Operação</button>
+    `;
+
+    // Salvar temporariamente os dados atuais para replicação
+    const chkElements = document.querySelectorAll('.card-chk-item');
+    const checklist = [];
+    chkElements.forEach(input => {
+      const val = input.value.trim();
+      if (val) checklist.push({ texto: val, feito: false });
+    });
+
+    this.tempReplicaData = {
+      titulo,
+      descricao: document.getElementById('card-descricao').value,
+      tag: {
+        nome: document.getElementById('card-tag-nome').value,
+        cor: document.getElementById('card-tag-cor').value
+      },
+      checklist
+    };
+
+    Components.showModal('Aplicar em Massa', modalHTML, actionsHTML, 'premium-task-modal');
+  },
+
+  alternarPainelReplica(tipo) {
+    const painelCriar = document.getElementById('painel-replica-criar');
+    const painelAtualizar = document.getElementById('painel-replica-atualizar');
+    if (painelCriar && painelAtualizar) {
+      if (tipo === 'criar') {
+        painelCriar.style.display = 'block';
+        painelAtualizar.style.display = 'none';
+      } else {
+        painelCriar.style.display = 'none';
+        painelAtualizar.style.display = 'block';
+      }
+    }
+  },
+
+  executarAplicarEmMassa() {
+    const tipo = document.getElementById('replica-tipo-operacao')?.value || 'criar';
+    const data = this.tempReplicaData;
+    if (!data) return;
+
+    if (tipo === 'criar') {
+      const checkboxes = document.querySelectorAll('input[name="caixa-replica"]:checked');
+      if (checkboxes.length === 0) {
+        alert('Por favor, selecione ao menos uma caixa.');
+        return;
+      }
+
+      checkboxes.forEach(cb => {
+        const caixaId = cb.value;
+        const novoCard = {
+          id: 'card_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+          caixaId,
+          titulo: data.titulo,
+          descricao: data.descricao,
+          thumbnail: '', // Imagem EXCLUÍDA na replicação em massa conforme pedido
+          tag: { nome: data.tag.nome, cor: data.tag.cor },
+          horario: 'Hoje 14:00 - 15:30',
+          checklist: data.checklist.map(item => ({ ...item })), // Clonar etapas
+          criadoEm: new Date().toISOString()
+        };
+        this.cards.push(novoCard);
+      });
+
+      this.salvarCards();
+      Components.closeModal();
+      this.render();
+
+      if (typeof Components !== 'undefined') {
+        Components.toast(`Replicado em massa para ${checkboxes.length} caixas!`, 'success');
+      }
+    } else {
+      const checkboxes = document.querySelectorAll('input[name="card-replica-existente"]:checked');
+      if (checkboxes.length === 0) {
+        alert('Por favor, selecione ao menos um card.');
+        return;
+      }
+
+      checkboxes.forEach(cb => {
+        const cardId = cb.value;
+        const card = this.cards.find(c => c.id === cardId);
+        if (card) {
+          card.tag = { nome: data.tag.nome, cor: data.tag.cor };
+          card.checklist = data.checklist.map(item => ({ ...item }));
+        }
+      });
+
+      this.salvarCards();
+      Components.closeModal();
+      this.render();
+
+      if (typeof Components !== 'undefined') {
+        Components.toast(`Atributos (Tag/Checklist) replicados em massa para ${checkboxes.length} cards!`, 'success');
+      }
+    }
+  },
+
+  addChecklistInputRow() {
+    const container = document.getElementById('card-checklist-container');
+    if (!container) return;
+
+    const div = document.createElement('div');
+    div.className = 'chk-input-row';
+    div.style.cssText = 'display: flex; gap: 8px; margin-bottom: 8px; align-items: center;';
+    div.innerHTML = `
+      <input type="text" class="card-chk-item p-input" placeholder="Nova etapa do checklist..." style="flex: 1;">
+      <button type="button" onclick="this.parentElement.remove()" style="background: none; border: 1px solid var(--ref-border); color: #EF4444; border-radius: 12px; padding: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; height: 44px; width: 44px;">✕</button>
+    `;
+    container.appendChild(div);
+  },
+
+  handleSalvarCard(event, editId) {
+    event.preventDefault();
+
+    const titulo = document.getElementById('card-titulo').value;
+    const caixaId = document.getElementById('card-caixa').value;
+    const descricao = document.getElementById('card-descricao').value;
+    const thumbnail = document.getElementById('card-thumb').value;
+
+    const tagNome = document.getElementById('card-tag-nome').value || 'Geral';
+    const tagCor = document.getElementById('card-tag-cor').value || '#E55A2B';
+
+    const chkElements = document.querySelectorAll('.card-chk-item');
+    const checklist = [];
+    chkElements.forEach(input => {
+      const val = input.value.trim();
+      if (val) checklist.push({ texto: val, feito: false });
+    });
+
+    if (editId) {
+      const card = this.cards.find(c => c.id === editId);
+      if (card) {
+        card.titulo = titulo;
+        card.caixaId = caixaId;
+        card.descricao = descricao;
+        card.thumbnail = thumbnail;
+        card.tag = { nome: tagNome, cor: tagCor };
+        card.checklist = checklist;
+      }
+    } else {
+      const novoCard = {
+        id: 'card_' + Date.now(),
+        caixaId,
+        titulo,
+        descricao,
+        thumbnail,
+        tag: { nome: tagNome, cor: tagCor },
+        horario: 'Hoje 14:00 - 15:30',
+        checklist,
+        criadoEm: new Date().toISOString()
+      };
+      this.cards.push(novoCard);
+    }
+
+    this.activeCaixaId = caixaId;
+    this.salvarCards();
+    this.registrarAtividade(editId ? `Card "${titulo}" atualizado.` : `Card "${titulo}" criado.`);
+    Components.closeModal();
+    this.render();
+    if (typeof Components !== 'undefined') Components.toast(editId ? 'Card atualizado!' : 'Novo card criado com sucesso!', 'success');
+  }
+};
+
+// Auto-inicializar quando o DOM estiver pronto
+document.addEventListener('DOMContentLoaded', () => {
+  if (document.getElementById('planejamento-root')) {
+    Planejamento.init();
+  }
+});

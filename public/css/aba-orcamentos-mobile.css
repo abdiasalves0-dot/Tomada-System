@@ -1,0 +1,1059 @@
+/* =====================================================
+   Mobile Premium Design — Bancada Orçamentos Tab
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+  /* Reset page padding on mobile for budgets tab so the header spans edge-to-edge */
+  body.orcamentos-page-active #page-container {
+    padding: 0 !important;
+  }
+
+  /* Set global background color for all orçamentos screens on mobile */
+  body,
+  body #page-container,
+  body.orcamentos-page-active #page-container,
+  .m-orc-layout-shell {
+    background-color: #f8f6ef !important;
+    background: #f8f6ef !important;
+  }
+
+  /* General mobile layout container */
+  .m-orc-layout-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0 0 calc(110px + env(safe-area-inset-bottom)) 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', -apple-system, sans-serif;
+    width: 100%;
+  }
+
+  /* ---------------------------------------------------
+     1. WALLET HEADER CARD (ORANGE GRADIENT)
+     --------------------------------------------------- */
+  .m-orc-header-card {
+    background: linear-gradient(135deg, #E55A2B 0%, #FF8A00 100%);
+    border-radius: 0 0 36px 36px;
+    padding: 56px 24px 36px 24px;
+    color: #FFFFFF;
+    box-shadow: 0 12px 30px rgba(229, 90, 43, 0.25);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Concentric circles in wallet background for premium depth */
+  .m-orc-header-card::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 0 0 30px transparent,
+      0 0 0 31.5px rgba(255, 255, 255, 0.05),
+      0 0 0 60px transparent,
+      0 0 0 61.5px rgba(255, 255, 255, 0.025);
+    pointer-events: none;
+  }
+
+  /* Header Top elements: Greet and Actions */
+  .m-orc-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    z-index: 2;
+    position: relative;
+  }
+
+  .m-orc-user-greet {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .m-orc-avatar-placeholder {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .m-orc-greet-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .m-orc-greet-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: -0.2px;
+  }
+
+  .m-orc-greet-subtitle {
+    font-size: 11.5px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .m-orc-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .m-orc-icon-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s, background-color 0.2s;
+  }
+
+  .m-orc-icon-btn:active {
+    transform: scale(0.92);
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .m-orc-icon-btn.grid-icon {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .m-orc-notif-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #EF4444;
+    border: 1.5px solid #E55A2B;
+  }
+
+  /* Balance Information block */
+  .m-orc-balance-block {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4px;
+    z-index: 2;
+    position: relative;
+  }
+
+  .m-orc-balance-label-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .m-orc-balance-currency-pill {
+    background: rgba(255, 255, 255, 0.16);
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: 0.5px;
+  }
+
+  .m-orc-eye-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+  }
+
+  .m-orc-eye-btn:active {
+    color: #FFFFFF;
+  }
+
+  .m-orc-balance-value {
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -1.2px;
+    color: #FFFFFF;
+    margin: 6px 0;
+    font-family: inherit;
+  }
+
+  .m-orc-trend-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 0.5px solid rgba(255, 255, 255, 0.12);
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #FFFFFF;
+    width: fit-content;
+  }
+
+  /* ---------------------------------------------------
+     2. QUICK ACTIONS CAPSULE ROW (FINTECH STYLE)
+     --------------------------------------------------- */
+  .m-orc-actions-container {
+    width: 100%;
+    padding: 0 24px;
+    box-sizing: border-box;
+    margin-top: -28px;
+    margin-bottom: 24px;
+    z-index: 10;
+    position: relative;
+  }
+
+  .m-orc-actions-capsule {
+    background: #1C1A14;
+    border-radius: 28px;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 10px 25px rgba(28, 26, 20, 0.3);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .m-orc-action-btn {
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 10px 18px;
+    border-radius: 22px;
+    font-size: 13.5px;
+    font-weight: 700;
+    transition: transform 0.2s, background-color 0.2s;
+  }
+
+  .m-orc-action-btn:active {
+    transform: scale(0.96);
+  }
+
+  .m-orc-action-btn.primary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+  }
+
+  .m-orc-action-btn.primary:active {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .m-orc-action-btn.secondary {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .m-orc-action-btn.secondary:active {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .m-orc-action-btn-middle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    color: #1C1A14;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s;
+  }
+
+  .m-orc-action-btn-middle:active {
+    transform: scale(0.9);
+  }
+
+  /* ---------------------------------------------------
+     3. SPLIT LAYOUT GRID (CLIENTS & INCOME STATS)
+     --------------------------------------------------- */
+  .m-orc-split-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 14px;
+    margin: 0 20px 24px 20px;
+    box-sizing: border-box;
+  }
+
+  .m-orc-split-card {
+    background: #FFFFFF;
+    border-radius: 24px;
+    padding: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.025);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    min-height: 146px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .m-orc-card-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #1C1A14;
+    margin: 0 0 12px 0;
+    letter-spacing: -0.2px;
+  }
+
+  /* Left Card: Clientes Recentes (Send Again list) */
+  .m-orc-clients-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px 8px;
+    align-items: center;
+    justify-items: center;
+    width: 100%;
+  }
+
+  .m-orc-client-btn {
+    background: transparent;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 0;
+    width: 100%;
+    outline: none;
+    transition: transform 0.2s;
+  }
+
+  .m-orc-client-btn:active {
+    transform: scale(0.92);
+  }
+
+  .m-orc-client-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #F3F4F6;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4B5563;
+    font-size: 12px;
+    font-weight: 800;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  }
+
+  .m-orc-client-btn.add-new .m-orc-client-avatar.add {
+    background: #FFE5DC;
+    border: 1px dashed rgba(229, 90, 43, 0.3);
+    color: #E55A2B;
+  }
+
+  .m-orc-client-name {
+    font-size: 9.5px;
+    font-weight: 600;
+    color: #6B7280;
+    text-align: center;
+    max-width: 44px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .m-orc-no-clients {
+    grid-column: span 3;
+    font-size: 10px;
+    color: #9CA3AF;
+    text-align: center;
+    padding: 16px 0;
+  }
+
+  /* Right Card: Your Income mini line chart */
+  .m-orc-income-meta {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+  }
+
+  .m-orc-income-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: #9CA3AF;
+  }
+
+  .m-orc-income-val {
+    font-size: 14.5px;
+    font-weight: 800;
+    color: #10B981;
+    letter-spacing: -0.3px;
+  }
+
+  .m-orc-mini-chart-box {
+    position: relative;
+    width: 100%;
+    height: 42px;
+    margin-top: auto;
+  }
+
+  .m-orc-svg-chart {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .m-orc-mini-chart-badge {
+    position: absolute;
+    bottom: 24px;
+    right: 0;
+    background: #D1FAE5;
+    color: #065F46;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 1px 4px;
+    border-radius: 6px;
+  }
+
+  /* ---------------------------------------------------
+     4. ATIVIDADES RECENTES (RECENT ACTIVITY)
+     --------------------------------------------------- */
+  .m-orc-activity-section {
+    margin: 0 20px;
+  }
+
+  .m-orc-activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .m-orc-section-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1C1A14;
+    margin: 0;
+    letter-spacing: -0.3px;
+  }
+
+  .m-orc-see-all-btn {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4B5563;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s;
+  }
+
+  .m-orc-see-all-btn:active {
+    transform: scale(0.9);
+  }
+
+  .m-orc-activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .m-orc-activity-item {
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.015);
+    transition: transform 0.2s;
+    cursor: pointer;
+  }
+
+  .m-orc-activity-item:active {
+    transform: scale(0.98);
+    background: #F9FAFB;
+  }
+
+  .m-orc-activity-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .m-orc-activity-icon-box {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .m-orc-activity-icon-box.green {
+    background: #D1FAE5;
+    color: #10B981;
+  }
+
+  .m-orc-activity-icon-box.orange {
+    background: #FFE5DC;
+    color: #E55A2B;
+  }
+
+  .m-orc-activity-icon-box.gray {
+    background: #F3F4F6;
+    color: #6B7280;
+  }
+
+  .m-orc-activity-icon-box.red {
+    background: #FEE2E2;
+    color: #EF4444;
+  }
+
+  .m-orc-activity-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .m-orc-activity-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #1C1A14;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .m-orc-activity-subtitle {
+    font-size: 11px;
+    color: #9CA3AF;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 1px;
+  }
+
+  .m-orc-activity-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+    gap: 3px;
+  }
+
+  .m-orc-activity-value {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #1C1A14;
+  }
+
+  .m-orc-activity-status-badge {
+    font-size: 9px;
+    font-weight: 800;
+    padding: 1px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .m-orc-activity-status-badge.green {
+    background: #D1FAE5;
+    color: #065F46;
+  }
+
+  .m-orc-activity-status-badge.orange {
+    background: #FFE5DC;
+    color: #C8461B;
+  }
+
+  .m-orc-activity-status-badge.gray {
+    background: #F3F4F6;
+    color: #374151;
+  }
+
+  .m-orc-activity-status-badge.red {
+    background: #FEE2E2;
+    color: #991B1B;
+  }
+
+  .m-orc-no-activity {
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 24px;
+    text-align: center;
+    font-size: 12px;
+    color: #9CA3AF;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+  }
+
+  /* ---------------------------------------------------
+     5. INNER VIEW LISTS (ORÇAMENTOS / CONTRATOS LISTS)
+     --------------------------------------------------- */
+  .m-orc-layout-shell.inner-view {
+    padding: 24px 20px calc(110px + env(safe-area-inset-bottom)) 20px;
+  }
+
+  .m-orc-inner-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .m-orc-back-btn {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #E55A2B;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .m-orc-inner-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #1C1A14;
+    margin: 0;
+    letter-spacing: -0.3px;
+  }
+
+  .m-orc-action-circle-btn {
+    background: #E55A2B;
+    color: #FFFFFF;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(229, 90, 43, 0.3);
+    transition: transform 0.2s;
+  }
+
+  .m-orc-action-circle-btn:active {
+    transform: scale(0.9);
+  }
+
+  /* Search row in listings */
+  .m-orc-search-bar-row {
+    margin-bottom: 16px;
+    width: 100%;
+  }
+
+  .m-orc-search-box {
+    position: relative;
+    width: 100%;
+  }
+
+  .m-orc-search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9CA3AF;
+    pointer-events: none;
+    width: 16px;
+    height: 16px;
+  }
+
+  .m-orc-search-field {
+    width: 100%;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 16px;
+    padding: 12px 14px 12px 38px;
+    font-size: 14.5px;
+    color: #1C1A14;
+    outline: none;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.01);
+  }
+
+  .m-orc-search-field::placeholder {
+    color: #9CA3AF;
+  }
+
+  /* List Cards list styling */
+  .m-orc-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .m-orc-card-item {
+    background: #FFFFFF;
+    border-radius: 22px;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .m-orc-card-top {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  .m-orc-card-top:active {
+    background: #F9FAFB;
+  }
+
+  .m-orc-card-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 2px;
+  }
+
+  .m-orc-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1C1A14;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .m-orc-card-desc {
+    font-size: 11.5px;
+    color: #4B5563;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .m-orc-card-date {
+    font-size: 10px;
+    color: #9CA3AF;
+    margin-top: 4px;
+  }
+
+  .m-orc-card-value-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+    gap: 4px;
+  }
+
+  .m-orc-card-value {
+    font-size: 14px;
+    font-weight: 800;
+    color: #1C1A14;
+  }
+
+  .m-orc-card-badge {
+    font-size: 9.5px;
+    font-weight: 800;
+    padding: 1px 6px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .m-orc-card-badge.green {
+    background: #D1FAE5;
+    color: #065F46;
+  }
+
+  .m-orc-card-badge.orange {
+    background: #FFE5DC;
+    color: #C8461B;
+  }
+
+  .m-orc-card-badge.gray {
+    background: #F3F4F6;
+    color: #374151;
+  }
+
+  .m-orc-card-badge.red {
+    background: #FEE2E2;
+    color: #991B1B;
+  }
+
+  .m-orc-card-badge.blue {
+    background: #DBEAFE;
+    color: #1E40AF;
+  }
+
+  /* Card Actions footer row */
+  .m-orc-card-actions {
+    background: #FAF8F5;
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    padding: 8px 12px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .m-orc-card-btn {
+    flex: 1;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    color: #4B5563;
+    padding: 8px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.01);
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .m-orc-card-btn:active {
+    background: #F3F4F6;
+  }
+
+  .m-orc-card-btn.contract {
+    background: #FFE5DC;
+    border-color: rgba(229, 90, 43, 0.15);
+    color: #E55A2B;
+  }
+
+  .m-orc-card-btn.contract:active {
+    background: #FFD4C5;
+  }
+
+  .m-orc-card-btn-link {
+    flex: 1;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    color: #4B5563;
+    padding: 8px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.01);
+  }
+
+  .m-orc-card-btn-link:active {
+    background: #F3F4F6;
+  }
+
+  /* ============================================================
+     RESPONSIVIDADE DO MODAL DE NOVO/EDITAR ORÇAMENTO (MOBILE)
+     ============================================================ */
+
+  /* Ajustes do container principal do modal */
+  .modal-content.orcamento-modal {
+    width: 96% !important;
+    max-width: 100% !important;
+    margin: 10px auto !important;
+    max-height: 94vh !important;
+    border-radius: 45px !important;
+  }
+
+  /* Ajuste de arredondamento dos cartões internos */
+  .orcamento-modal .orc-modal-card {
+    border-radius: 20px !important;
+  }
+
+  .orcamento-modal .modal-body {
+    padding: 14px !important;
+  }
+
+  /* Layout de colunas do orçamento */
+  .orcamento-modal .orc-modal-layout {
+    flex-direction: column !important;
+    gap: 16px !important;
+    min-height: auto !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  .orcamento-modal .orc-modal-left,
+  .orcamento-modal .orc-modal-right {
+    width: 100% !important;
+    flex: none !important;
+    gap: 16px !important;
+  }
+
+  /* Stack grid de 2 colunas para 1 coluna no mobile */
+  .orcamento-modal .orc-modal-card div[style*="display:grid"],
+  .orcamento-modal .orc-modal-card div[style*="display: grid"],
+  .orcamento-modal .orc-modal-card div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Garantir que inputs e selects ocupem toda a largura */
+  .orcamento-modal .orc-input,
+  .orcamento-modal .orc-textarea,
+  .orcamento-modal select {
+    width: 100% !important;
+  }
+
+  /* Totais distribuídos verticalmente */
+  .orcamento-modal .orc-total-section {
+    margin-top: 14px !important;
+    padding: 12px !important;
+    gap: 10px !important;
+  }
+
+  .orcamento-modal .orc-total-row:not(.grand-total) {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 6px !important;
+  }
+
+  .orcamento-modal .orc-total-row:not(.grand-total) input {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .orcamento-modal .orc-total-row:not(.grand-total) div {
+    width: 100% !important;
+  }
+
+  .orcamento-modal .orc-total-row.grand-total {
+    font-size: 18px !important;
+    padding-top: 10px !important;
+  }
+
+  /* Botões do Footer com layout 2x1 (Salvar e Enviar + Salvar Rascunho lado a lado, Cancelar embaixo) */
+  .orcamento-modal .modal-footer {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    padding: 14px !important;
+    background: #FFFFFF !important;
+  }
+
+  .orcamento-modal .modal-footer button {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+    display: block !important;
+  }
+
+  .orcamento-modal .modal-footer .orc-btn-primary {
+    grid-row: 1 !important;
+    grid-column: 2 !important;
+  }
+
+  .orcamento-modal .modal-footer .orc-modal-btn-outline {
+    grid-row: 1 !important;
+    grid-column: 1 !important;
+  }
+
+  .orcamento-modal .modal-footer .orc-modal-btn-cancel {
+    grid-row: 2 !important;
+    grid-column: 1 / span 2 !important;
+  }
+
+  /* ============================================================
+     CASCADING STAGGERED ANIMATIONS FOR BUDGETS TAB & SUB-TABS
+     ============================================================ */
+  
+  /* Animação dos blocos principais do dashboard */
+  .m-orc-layout-shell > * {
+    opacity: 0;
+    animation: cascadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  
+  .m-orc-layout-shell > :nth-child(1) { animation-delay: 0.05s; } /* Header Card */
+  .m-orc-layout-shell > :nth-child(2) { animation-delay: 0.12s; } /* Actions Capsule */
+  .m-orc-layout-shell > :nth-child(3) { animation-delay: 0.19s; } /* Split Grid */
+  .m-orc-layout-shell > :nth-child(4) { animation-delay: 0.26s; } /* Activity Section */
+
+  /* Animação dos itens dentro do split grid */
+  .m-orc-split-grid > * {
+    opacity: 0;
+    animation: cascadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .m-orc-split-grid > :nth-child(1) { animation-delay: 0.22s; }
+  .m-orc-split-grid > :nth-child(2) { animation-delay: 0.28s; }
+
+  /* Animação das atividades recentes (lista de últimos orçamentos) */
+  .m-orc-activity-list > * {
+    opacity: 0;
+    animation: cascadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .m-orc-activity-list > :nth-child(1) { animation-delay: 0.3s; }
+  .m-orc-activity-list > :nth-child(2) { animation-delay: 0.36s; }
+  .m-orc-activity-list > :nth-child(3) { animation-delay: 0.42s; }
+  .m-orc-activity-list > :nth-child(4) { animation-delay: 0.48s; }
+  .m-orc-activity-list > :nth-child(n+5) { animation-delay: 0.54s; }
+
+  /* Animação das sub-abas (lista de orçamentos e contratos) */
+  .m-orc-layout-shell.inner-view > * {
+    opacity: 0;
+    animation: cascadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .m-orc-layout-shell.inner-view > :nth-child(1) { animation-delay: 0.05s; } /* Inner Header */
+  .m-orc-layout-shell.inner-view > :nth-child(2) { animation-delay: 0.12s; } /* Search Bar */
+  .m-orc-layout-shell.inner-view > :nth-child(3) { animation-delay: 0.19s; } /* List Container */
+
+  /* Animação dos cards de orçamentos e contratos nas listas */
+  .m-orc-list-container > * {
+    opacity: 0;
+    animation: cascadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .m-orc-list-container > :nth-child(1) { animation-delay: 0.22s; }
+  .m-orc-list-container > :nth-child(2) { animation-delay: 0.28s; }
+  .m-orc-list-container > :nth-child(3) { animation-delay: 0.34s; }
+  .m-orc-list-container > :nth-child(4) { animation-delay: 0.4s; }
+  .m-orc-list-container > :nth-child(5) { animation-delay: 0.46s; }
+  .m-orc-list-container > :nth-child(6) { animation-delay: 0.52s; }
+  .m-orc-list-container > :nth-child(7) { animation-delay: 0.58s; }
+  .m-orc-list-container > :nth-child(8) { animation-delay: 0.64s; }
+  .m-orc-list-container > :nth-child(9) { animation-delay: 0.7s; }
+  .m-orc-list-container > :nth-child(10) { animation-delay: 0.76s; }
+  .m-orc-list-container > :nth-child(n+11) { animation-delay: 0.82s; }
+}
